@@ -127,7 +127,14 @@
             </a></div>
         </td>
     </tr>
-
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-assistant">
+            <a href="assistant.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Assistant</p>
+            </a></div>
+        </td>
+    </tr>
     </table>
     </div>
     <div class="dash-body" style="margin-top: 15px">
@@ -345,7 +352,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">NIC: </label>
+                                    <label for="nic" class="form-label">Aadhar: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -477,7 +484,7 @@
                                     
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="nic" class="form-label">NIC: </label>
+                                            <label for="nic" class="form-label">Aadhar: </label>
                                         </td>
                                     </tr>
                                     <tr>

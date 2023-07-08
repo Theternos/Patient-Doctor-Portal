@@ -385,7 +385,14 @@ input[type=search]:focus {
 .menu-icon-settings{
   background-image: url('../img/icons/settings.svg');
 }
-
+.menu-icon-assistant{
+  background-image: url('../img/icons/assistant.svg');
+  background-size: 25px 25px;
+}
+.menu-icon-assistant:hover{
+  background-image: url('../img/icons/assistant-iceblue.svg');
+  background-size: 25px 25px;
+}
 .menu-icon-session{
   background-image: url('../img/icons/session.svg');
 }
@@ -438,7 +445,11 @@ input[type=search]:focus {
   
   background-image: url('../img/icons/home-iceblue.svg');
 }
-
+.menu-icon-assistant:hover,.menu-icon-assistant-active{
+  color: var(--primarycolor);
+  background-image: url('../img/icons/assistant-iceblue.svg');
+  background-size: 25px 25px;
+}
 
 
 
