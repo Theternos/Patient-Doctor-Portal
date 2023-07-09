@@ -18,6 +18,55 @@
         .sub-table {
             animation: transitionIn-Y-bottom 0.5s;
         }
+
+        .checkbox-container {
+            display: block;
+            position: absolute;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            height: 30px;
+            width: 30px;
+            background-color: #eee;
+            border-radius: 30px;
+        }
+
+        .checkbox-container:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        .checkbox-container input:checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 11px;
+            top: 5px;
+            width: 7.5px;
+            height: 16px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
     </style>
 </head>
 
@@ -142,7 +191,7 @@
                         $today = date('Y-m-d');
                         echo $today;
 
-                        $list110 = $database->query("select * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid ");
+                        $list110 = $database->query("SELECT * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid and appointment.status=0");
 
                         ?>
                     </p>
@@ -204,7 +253,7 @@
             <?php
 
 
-            $sqlmain = "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid ";
+            $sqlmain = "SELECT appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid and appointment.status=0";
 
             if ($_POST) {
                 //print_r($_POST);
@@ -301,14 +350,9 @@
                                             $pname = $row["pname"];
                                             $apponum = $row["apponum"];
                                             $appodate = $row["appodate"];
-                                            echo '<tr >
-                                        <td style="font-weight:600;"> &nbsp;' .
-
-                                                substr($pname, 0, 25)
-                                                . '</td >
-                                        <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
-                                        ' . $apponum . '
-                                        
+                                            echo '<tr>
+                                        <td style="font-weight:600; text-align:center;"> ' . substr($pname, 0, 25) . '</td >
+                                        <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">' . $apponum . '
                                         </td>
                                         <td>
                                         ' . substr($title, 0, 15) . '
@@ -323,11 +367,12 @@
 
                                         <td>
                                         <div style="display:flex;justify-content: center;">
-                                        
-                                        <!--<a href="?action=view&id=' . $appoid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;-->
-                                       <a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;</div>
+                                    
+                                        <a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text"></font>Cancel</button></a>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a href="update-status.php?action=update&id=' . $appoid . '"><button  class="btn-primary-soft btn button-icon btn-task"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Seen</font></button></a>
+                                        &nbsp;&nbsp;&nbsp;
+                                       </div>
                                         </td>
                                     </tr>';
                                         }

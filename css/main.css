@@ -401,9 +401,10 @@ input[type=search]:focus {
   background-image: url('../img/icons/recent.svg');
   background-size: 25px 25px;
 }
-.menu-icon-conversation{
-  background-image: url('../img/icons/conversation.svg');
-  background-size: 30px 30px;}
+.menu-icon-recent{
+  background-image: url('../img/icons/recent.svg');
+  background-size: 25px 25px;
+}
 .menu-icon-session{
   background-image: url('../img/icons/session.svg');
 }
@@ -499,7 +500,14 @@ input[type=search]:focus {
 .btn-view:hover{
   background-image: url('../img/icons/view-white.svg');
 }
-
+.btn-task{
+  background-image: url('../img/icons/task-blue.svg');
+  background-size: 20px 20px;
+}
+.btn-task:hover{
+  background-image: url('../img/icons/task-white.svg');
+  background-size: 20px 20px;
+}
 .btn-delete{
   background-image: url('../img/icons/delete-iceblue.svg');
 }
