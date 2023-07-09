@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
 
-    <title>Dashboard</title>
+    <title>Virtual Assistant</title>
     <style>
         .dashbord-tables {
             animation: transitionIn-Y-over 0.5s;
@@ -124,11 +124,12 @@
         </td>
     </tr>
     <tr class="menu-row">
-        <td class="menu-btn menu-icon-settings">
-            <a href="settings.php" class="non-style-link-menu">
+        <td class="menu-btn menu-icon-recent">
+            <a href="recent.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Settings</p>
-            </a></div>
+                    <p class="menu-text">Recent Consultancy</p>
+                </div>
+            </a>
         </td>
     </tr>
     <tr class="menu-row">
@@ -136,6 +137,14 @@
             <a href="settings.php" class="non-style-link-menu non-style-link-menu-active">
                 <div>
                     <p class="menu-text">Assistant</p>
+            </a></div>
+        </td>
+    </tr>
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-settings">
+            <a href="settings.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Settings</p>
             </a></div>
         </td>
     </tr>
@@ -248,10 +257,6 @@
 
             <head>
                 <style>
-                    body {
-                        font-family: Arial, sans-serif;
-                    }
-
                     .chat-container {
                         max-height: calc(100vh - 150px);
                         min-height: calc(100vh - 150px);
@@ -324,7 +329,6 @@
                         box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
                         border: 20px;
                         animation: transitionIn-Y-bottom 0.5s;
-
                     }
 
                     .user-input {

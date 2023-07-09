@@ -108,11 +108,12 @@
         </td>
     </tr>
     <tr class="menu-row">
-        <td class="menu-btn menu-icon-settings">
-            <a href="settings.php" class="non-style-link-menu">
+        <td class="menu-btn menu-icon-recent">
+            <a href="recent.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Settings</p>
-            </a></div>
+                    <p class="menu-text">Recent Consultancy</p>
+                </div>
+            </a>
         </td>
     </tr>
     <tr class="menu-row">
@@ -123,6 +124,15 @@
             </a></div>
         </td>
     </tr>
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-settings">
+            <a href="settings.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Settings</p>
+            </a></div>
+        </td>
+    </tr>
+
     </table>
     </div>
     <div class="dash-body">

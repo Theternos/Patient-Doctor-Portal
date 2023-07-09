@@ -1,30 +1,158 @@
-version: "3.1"
+version: "2.0"
 
 stories:
+  - story: greet and ask condition
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_condition
+      - action: utter_ask_condition
 
-- story: happy path
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+  - story: greet and ask treatment
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_treatment
+      - action: utter_ask_treatment
 
-- story: sad path 1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+  - story: greet and ask medication
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_medication
+      - action: utter_ask_medication
 
-- story: sad path 2
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+  - story: greet and ask doctor
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_doctor
+      - action: utter_ask_doctor
+
+  - story: greet and ask payment
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_payment
+      - action: utter_ask_payment
+
+  - story: greet and ask contact
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_contact
+      - action: utter_ask_contact
+
+  - story: greet and ask emergency
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_emergency
+      - action: utter_ask_emergency
+
+  - story: thank and goodbye
+    steps:
+      - intent: thank
+      - action: utter_thank
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: fallback
+    steps:
+      - intent: other
+      - action: utter_other
+
+  - story: bot challenge
+    steps:
+      - intent: bot_challenge
+      - action: utter_bot_challenge
+
+  - story: greet, deny, and fallback
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: deny
+      - action: utter_deny
+      - action: utter_default
+
+  - story: greet, affirm, and fallback
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: affirm
+      - action: utter_affirm
+      - action: utter_default
+
+  - story: greet, ask_condition, affirm, and goodbye
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_condition
+      - action: utter_ask_condition
+      - intent: affirm
+      - action: utter_affirm
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: greet, ask_treatment, deny, and fallback
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_treatment
+      - action: utter_ask_treatment
+      - intent: deny
+      - action: utter_deny
+      - action: utter_default
+
+  - story: greet, ask_medication, thank, and goodbye
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_medication
+      - action: utter_ask_medication
+      - intent: thank
+      - action: utter_thank
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: greet, ask_doctor, affirm, and fallback
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_doctor
+      - action: utter_ask_doctor
+      - intent: affirm
+      - action: utter_affirm
+      - action: utter_default
+
+  - story: greet, ask_payment, deny, and fallback
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_payment
+      - action: utter_ask_payment
+      - intent: deny
+      - action: utter_deny
+      - action: utter_default
+
+  - story: greet, ask_contact, affirm, and goodbye
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_contact
+      - action: utter_ask_contact
+      - intent: affirm
+      - action: utter_affirm
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: greet, ask_emergency, thank, and goodbye
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: ask_emergency
+      - action: utter_ask_emergency
+      - intent: thank
+      - action: utter_thank
+      - intent: goodbye
+      - action: utter_goodbye

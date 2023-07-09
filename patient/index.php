@@ -124,11 +124,12 @@
         </td>
     </tr>
     <tr class="menu-row">
-        <td class="menu-btn menu-icon-settings">
-            <a href="settings.php" class="non-style-link-menu">
+        <td class="menu-btn menu-icon-recent">
+            <a href="recent.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Settings</p>
-            </a></div>
+                    <p class="menu-text">Recent Consultancy</p>
+                </div>
+            </a>
         </td>
     </tr>
     <tr class="menu-row">
@@ -136,7 +137,17 @@
             <a href="assistant.php" class="non-style-link-menu">
                 <div>
                     <p class="menu-text">Assistant</p>
-            </a></div>
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-settings">
+            <a href="settings.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Settings</p>
+                </div>
+            </a>
         </td>
     </tr>
     </table>
@@ -242,7 +253,7 @@
                             <table class="filter-container" style="border: none;" border="0">
                                 <tr>
                                     <td colspan="4">
-                                        <p style="font-size: 20px;font-weight:600;padding-left: 12px;">Status</p>
+                                        <p style="font-size: 20px;font-weight:600;padding-left: 12px;">Live Status</p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -253,7 +264,7 @@
                                                     <?php echo $doctorrow->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
-                                                    All Doctors &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    All Doctors &nbsp;
                                                 </div>
                                             </div>
                                             <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
@@ -266,7 +277,7 @@
                                                     <?php echo $patientrow->num_rows  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
-                                                    All Patients &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    All Patients
                                                 </div>
                                             </div>
                                             <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/patients-hover.svg');"></div>
@@ -278,13 +289,13 @@
                                         <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex; ">
                                             <div>
                                                 <div class="h1-dashboard">
-                                                    <?php echo $appointmentrow->num_rows  ?>
+                                                    <?php echo "96%"  ?>
                                                 </div><br>
                                                 <div class="h3-dashboard">
-                                                    NewBooking &nbsp;&nbsp;
+                                                    Oxygen Level&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
                                             </div>
-                                            <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/book-hover.svg');"></div>
+                                            <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/oxygen-iceblue.svg'); background-size: 25px 25px;"></div>
                                         </div>
 
                                     </td>
@@ -293,13 +304,13 @@
                                         <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex;padding-top:21px;padding-bottom:21px;">
                                             <div>
                                                 <div class="h1-dashboard">
-                                                    <?php echo $schedulerow->num_rows  ?>
+                                                    <?php echo "72"  ?>
                                                 </div><br>
-                                                <div class="h3-dashboard" style="font-size: 15px">
-                                                    Today Sessions
+                                                <div class="h3-dashboard">
+                                                    Heart Rate&nbsp;
                                                 </div>
                                             </div>
-                                            <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/session-iceblue.svg');"></div>
+                                            <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/pulse-iceblue.svg'); background-size: 25px 25px;"></div>
                                         </div>
                                     </td>
 

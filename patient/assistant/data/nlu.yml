@@ -1,91 +1,100 @@
 version: "3.1"
 
 nlu:
-- intent: greet
-  examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+  - intent: greet
+    examples: |
+      - Hello
+      - Hi
+      - Hey there
+      - Good morning
 
-- intent: goodbye
-  examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+  - intent: goodbye
+    examples: |
+      - Goodbye
+      - Bye
+      - See you later
+      - Take care
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+  - intent: thank
+    examples: |
+      - Thank you
+      - Thanks a lot
+      - I appreciate your help
+      - Thanks for your support
 
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+  - intent: deny
+    examples: |
+      - No
+      - I don't think so
+      - Not really
+      - I'm not sure
 
-- intent: mood_great
-  examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+  - intent: affirm
+    examples: |
+      - Yes
+      - Definitely
+      - Absolutely
+      - I agree
 
-- intent: mood_unhappy
-  examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+  - intent: ask_condition
+    examples: |
+      - What are the common symptoms of [condition]?
+      - How do I know if I have [condition]?
+      - What are the signs of [condition]?
+      - What should I look out for in [condition]?
 
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+  - intent: ask_treatment
+    examples: |
+      - How is [condition] treated?
+      - What are the treatment options for [condition]?
+      - What medications are usually prescribed for [condition]?
+      - Can you suggest any remedies for [condition]?
+
+  - intent: ask_medication
+    examples: |
+      - What is [medication] used for?
+      - Are there any side effects of [medication]?
+      - How should I take [medication]?
+      - Is [medication] available over the counter?
+
+  - intent: ask_doctor
+    examples: |
+      - Can you recommend a doctor for [specialty]?
+      - How can I find a good doctor for [specialty]?
+      - Do you know any specialists for [condition]?
+      - Where can I get medical help for [condition]?
+
+  - intent: ask_payment
+    examples: |
+      - How much does [treatment] cost?
+      - Are there any discounts or insurance options available?
+      - What are the payment options for [treatment]?
+      - Can I pay in installments for [treatment]?
+
+  - intent: ask_contact
+    examples: |
+      - How can I contact your clinic?
+      - What is your phone number?
+      - Do you have an email address?
+      - Where are you located?
+
+  - intent: ask_emergency
+    examples: |
+      - What should I do in case of an emergency?
+      - How can I reach the nearest hospital?
+      - Is there a helpline for emergencies?
+      - Can you provide first aid advice for [condition]?
+
+  - intent: other
+    examples: |
+      - Can you repeat that?
+      - I don't understand
+      - Could you explain further?
+      - I have a different question
+
+  - intent: bot_challenge
+    examples: |
+      - Are you a bot?
+      - Is this an automated service?
+      - Am I talking to a real person?
+      - Are you human?

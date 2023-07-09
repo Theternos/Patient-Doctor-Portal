@@ -24,6 +24,12 @@
             pointer-events: none;
             opacity: 0.5;
         }
+
+        .enabled-link {
+            cursor: pointer;
+            pointer-events: all;
+            opacity: 1;
+        }
     </style>
 </head>
 
@@ -128,11 +134,12 @@
         </td>
     </tr>
     <tr class="menu-row">
-        <td class="menu-btn menu-icon-settings">
-            <a href="settings.php" class="non-style-link-menu">
+        <td class="menu-btn menu-icon-recent">
+            <a href="recent.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Settings</p>
-            </a></div>
+                    <p class="menu-text">Recent Consultancy</p>
+                </div>
+            </a>
         </td>
     </tr>
     <tr class="menu-row">
@@ -140,6 +147,14 @@
             <a href="assistant.php" class="non-style-link-menu">
                 <div>
                     <p class="menu-text">Assistant</p>
+            </a></div>
+        </td>
+    </tr>
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-settings">
+            <a href="settings.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Settings</p>
             </a></div>
         </td>
     </tr>
@@ -189,10 +204,6 @@
                         echo '<datalist id="doctors">';
                         $list11 = $database->query("select DISTINCT * from  doctor;");
                         $list12 = $database->query("select DISTINCT * from  schedule GROUP BY title;");
-
-
-
-
 
                         for ($y = 0; $y < $list11->num_rows; $y++) {
                             $row00 = $list11->fetch_assoc();
@@ -376,7 +387,7 @@
 
 </body>
 <script>
-    var seatleft = 0;
+    var seatleft = <?php echo $seatleft ?>;
     var bookingLink = document.getElementById("bookingLink");
 
     if (seatleft === 0) {

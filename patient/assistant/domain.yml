@@ -3,32 +3,66 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - affirm
+  - thank
   - deny
-  - mood_great
-  - mood_unhappy
+  - affirm
+  - ask_condition
+  - ask_treatment
+  - ask_medication
+  - ask_doctor
+  - ask_payment
+  - ask_contact
+  - ask_emergency
+  - other
   - bot_challenge
+  - utter_iamabot
+  - utter_default
 
 responses:
   utter_greet:
-  - text: "Hey! How are you?"
-
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
+    - text: "Hello! How can I assist you today?"
 
   utter_goodbye:
-  - text: "Bye"
+    - text: "Goodbye! Take care."
+
+  utter_thank:
+    - text: "You're welcome! If you have any more questions, feel free to ask."
+
+  utter_deny:
+    - text: "Alright, let me know if you change your mind."
+
+  utter_affirm:
+    - text: "Great! How can I help you further?"
+
+  utter_ask_condition:
+    - text: "Common symptoms of [condition] may include [symptoms]. However, it's always best to consult a healthcare professional for a proper diagnosis."
+
+  utter_ask_treatment:
+    - text: "The treatment for [condition] depends on various factors. It may include [treatment_options]. It's recommended to consult a healthcare professional for personalized advice."
+
+  utter_ask_medication:
+    - text: "The medication [medication] is commonly used for [condition]. However, it's important to consult a healthcare professional for proper guidance, as they can provide information about potential side effects and proper usage."
+
+  utter_ask_doctor:
+    - text: "To find a doctor specializing in [specialty], you can try searching online directories, asking for recommendations from friends and family, or contacting local medical organizations."
+
+  utter_ask_payment:
+    - text: "The cost of [treatment] can vary depending on various factors. It's best to contact the healthcare provider directly to get accurate information about pricing, insurance options, and payment plans."
+
+  utter_ask_contact:
+    - text: "You can reach our clinic at [phone_number] or email us at [email_address]. Our location is [clinic_address]."
+
+  utter_ask_emergency:
+    - text: "In case of an emergency, please call your local emergency number immediately. It's important to have the contact information for your nearest hospital or emergency services readily available."
+
+  utter_other:
+    - text: "I'm sorry, I didn't understand your question. Could you please rephrase it or provide more details?"
+
+  utter_bot_challenge:
+    - text: "Yes, I'm an AI-powered assistant here to help you. How can I assist you today?"
 
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+    - text: "Yes, I'm an AI-powered assistant here to help you. How can I assist you today?"
 
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  utter_default:
+    - text: "I'm sorry, but I didn't understand that. Can you please rephrase or provide more information?"

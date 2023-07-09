@@ -393,6 +393,14 @@ input[type=search]:focus {
   background-image: url('../img/icons/send.svg');
   background-size: 25px 25px;
 }
+.menu-icon-pulse{
+  background-image: url('../img/icons/pulse.svg');
+  background-size: 25px 25px;
+}
+.menu-icon-recent{
+  background-image: url('../img/icons/recent.svg');
+  background-size: 25px 25px;
+}
 .menu-icon-conversation{
   background-image: url('../img/icons/conversation.svg');
   background-size: 30px 30px;}
@@ -458,7 +466,11 @@ input[type=search]:focus {
   background-image: url('../img/icons/send-iceblue.svg');
   background-size: 25px 25px;
 }
-
+.menu-icon-recent:hover,.menu-icon-recent-active{
+  color: var(--primarycolor);
+  background-image: url('../img/icons/recent-iceblue.svg');
+  background-size: 25px 25px;
+}
 
 
 .btn-icon-back{
