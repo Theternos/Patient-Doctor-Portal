@@ -213,7 +213,7 @@ body{
     left: 0;
     right: 0;
     background: rgba(0, 0, 0, 0.7);
-    transition: opacity 500ms;
+    transition: opacity .1s;
     opacity: 1;
   }
   .overlay:target {
@@ -389,10 +389,13 @@ input[type=search]:focus {
   background-image: url('../img/icons/assistant.svg');
   background-size: 25px 25px;
 }
-.menu-icon-assistant:hover{
-  background-image: url('../img/icons/assistant-iceblue.svg');
+.menu-icon-send{
+  background-image: url('../img/icons/send.svg');
   background-size: 25px 25px;
 }
+.menu-icon-conversation{
+  background-image: url('../img/icons/conversation.svg');
+  background-size: 30px 30px;}
 .menu-icon-session{
   background-image: url('../img/icons/session.svg');
 }
@@ -450,7 +453,11 @@ input[type=search]:focus {
   background-image: url('../img/icons/assistant-iceblue.svg');
   background-size: 25px 25px;
 }
-
+.menu-icon-send:hover,.menu-icon-send-active{
+  color: var(--primarycolor);
+  background-image: url('../img/icons/send-iceblue.svg');
+  background-size: 25px 25px;
+}
 
 
 

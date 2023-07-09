@@ -30,11 +30,11 @@
 
 <body>
     <?php
-
-    //learn from w3schools.com
+    #rasa run --enable-api --cors "*"
+    #rasa run actions
 
     session_start();
-
+    error_reporting(0);
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
             header("location: ../login.php");
@@ -174,8 +174,246 @@
                 </td>
             </tr>
         </table>
-    </div>
+        <div class="chat">
+            <?php
+            session_start();
 
+            // Initialize conversation history if not set
+            if (!isset($_SESSION['conversation'])) {
+                $_SESSION['conversation'] = [];
+            }
+
+            // Rasa server URL
+            $rasaServerURL = 'http://localhost:5005/webhooks/rest/webhook';
+
+            // Function to send a message to Rasa server and get bot responses
+            function getBotResponses($message)
+            {
+                global $rasaServerURL;
+
+                // Create JSON payload
+                $data = array(
+                    'sender' => 'user',
+                    'message' => $message
+                );
+
+                $options = array(
+                    'http' => array(
+                        'header'  => "Content-type: application/json\r\n",
+                        'method'  => 'POST',
+                        'content' => json_encode($data),
+                    ),
+                );
+
+                // Send request to Rasa server
+                $context = stream_context_create($options);
+                $result = file_get_contents($rasaServerURL, false, $context);
+
+                // Decode the response
+                $response = json_decode($result, true);
+
+                // Extract the bot responses
+                $botResponses = [];
+                foreach ($response as $message) {
+                    $botResponses[] = $message['text'];
+                }
+
+                return $botResponses;
+            }
+
+            if (isset($_POST['user_input'])) {
+                $userInput = $_POST['user_input'];
+
+                // Add user input to conversation history
+                $_SESSION['conversation'][] = array(
+                    'role' => 'user',
+                    'message' => $userInput
+                );
+
+                // Get bot responses
+                $botResponses = getBotResponses($userInput);
+
+                // Add bot responses to conversation history
+                foreach ($botResponses as $botResponse) {
+                    $_SESSION['conversation'][] = array(
+                        'role' => 'bot',
+                        'message' => $botResponse
+                    );
+                }
+            }
+            ?>
+
+            <!DOCTYPE html>
+            <html>
+
+            <head>
+                <style>
+                    body {
+                        font-family: Arial, sans-serif;
+                    }
+
+                    .chat-container {
+                        max-height: calc(100vh - 150px);
+                        min-height: calc(100vh - 150px);
+                        overflow-y: hidden;
+                        padding: 20px 20px 70px 20px;
+                        background-color: #fff;
+                        margin: 20px 60px 20px 20px;
+                        border-radius: 7px;
+                        border: 1px solid rgb(226, 226, 226);
+
+                    }
+
+                    .inner-container {
+                        max-height: 65vh;
+                        overflow-y: scroll !important;
+                        display: flex;
+                        flex-direction: column;
+                    }
+
+                    .chat-bubble {
+                        display: flex;
+                        justify-content: flex-start;
+                        margin-bottom: 10px;
+                    }
+
+                    .chat-bubble-user {
+                        justify-content: flex-end;
+                    }
+
+                    .chat-bubble-logo {
+                        width: 30px;
+                        height: 30px;
+                        margin: 18px 10px 0 10px;
+                        border-radius: 50%;
+                    }
+
+                    .chat-bubble-content {
+                        background-color: #f0f0f0;
+                        padding: 3px 10px 3px 10px;
+                        border-top-right-radius: 20px;
+                        border-top-left-radius: 20px;
+                        max-width: 80%;
+                        word-wrap: break-word;
+                    }
+
+                    .chat-bubble-content-user {
+                        background-color: #4285f4;
+                        color: #fff;
+                        text-align: right;
+                        border-bottom-left-radius: 20px;
+                        border-bottom-right-radius: 0;
+                    }
+
+                    .chat-bubble-content-bot {
+                        background-color: #efefef;
+                        color: #000;
+                        border-bottom-right-radius: 20px;
+                        border-bottom-left-radius: 0;
+                    }
+
+                    .chat-input {
+                        position: absolute;
+                        bottom: 50px;
+                        display: flex;
+                        align-items: center;
+                        padding: 20px 20px 70px 20px;
+                        width: 70.7%;
+                        padding: 5px;
+                        background-color: #fff;
+                        box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.1);
+                        border: 20px;
+                        animation: transitionIn-Y-bottom 0.5s;
+
+                    }
+
+                    .user-input {
+                        flex-grow: 1;
+                        padding: 10px;
+                        border: none;
+                        border-radius: 5px;
+                        margin-right: 10px;
+                    }
+
+                    .send-button {
+                        height: 25px;
+                        width: 25px;
+                        border: none;
+                        background-color: #fff;
+                        border-radius: 5px;
+                        cursor: pointer;
+                    }
+
+                    .inner-container::-webkit-scrollbar {
+                        width: 0;
+                    }
+
+                    .start-conversation {
+                        display: <?php echo (!empty($_SESSION['conversation'])) ? 'none' : 'block'; ?>;
+                        margin: 20px;
+                        padding: 20px;
+                        text-align: center;
+                        margin-top: 25vh;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        letter-spacing: 1px;
+                        font-size: 18px;
+                    }
+                </style>
+            </head>
+
+            <body>
+                <div class="chat-container">
+                    <div class="inner-container">
+                        <div class="start-conversation">
+                            <img src="../img/icons/conversation.svg" alt="conversation image" width="45px" height="45px">
+                            <p>Start a new conversation</p>
+                        </div>
+                        <?php
+                        foreach ($_SESSION['conversation'] as $message) {
+                            $role = $message['role'];
+                            $text = $message['message'];
+
+                            if ($role === 'user') { ?>
+                                <div class="chat-bubble chat-bubble-user">
+                                    <div class="chat-bubble-content chat-bubble-content-user">
+                                        <p class="user-message"><?php echo $text ?></p>
+                                    </div>
+                                    <img src="../img/user.png" alt="User Logo" class="chat-bubble-logo">
+                                </div>
+                            <?php } else { ?>
+                                <div class="chat-bubble">
+                                    <img src="../img/icons/assistant.svg" alt="Bot Logo" class="chat-bubble-logo">
+                                    <div class="chat-bubble-content chat-bubble-content-bot">
+                                        <p class="bot-message"><?php echo $text ?></p>
+                                    </div>
+                                </div>
+                        <?php }
+                        }
+                        ?>
+                    </div>
+                    <form id="chat-form" method="POST" action="" class="chat-input">
+                        <input type="text" id="user-input" name="user_input" class="user-input" placeholder="Type your message" required />
+                        <button type="submit" class="send-button menu-icon-send"></button>
+                    </form>
+                </div>
+                <script>
+                    // Scroll to the bottom of the chat container
+                    const chatContainer = document.querySelector(".inner-container");
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                    // Hide the "Start a new conversation" message when the conversation starts
+                    const startConversation = document.getElementById(".start-conversation");
+                    if (startConversation) {
+                        startConversation.style.display = "<?php echo (!empty($_SESSION['conversation'])) ? 'none' : 'block'; ?>";
+                    }
+                </script>
+            </body>
+
+            </html>
+
+        </div>
+    </div>
 </body>
 
 </html>
