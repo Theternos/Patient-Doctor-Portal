@@ -405,6 +405,10 @@ input[type=search]:focus {
   background-image: url('../img/icons/recent.svg');
   background-size: 25px 25px;
 }
+.menu-icon-add{
+  background-image: url('../img/icons/add.svg');
+  background-size: 23px 23px;
+}
 .menu-icon-session{
   background-image: url('../img/icons/session.svg');
 }
@@ -472,7 +476,11 @@ input[type=search]:focus {
   background-image: url('../img/icons/recent-iceblue.svg');
   background-size: 25px 25px;
 }
-
+.menu-icon-add:hover,.menu-icon-add-active{
+  color: var(--primarycolor);
+  background-image: url('../img/icons/add-iceblue.svg');
+  background-size: 23px 23px;
+}
 
 .btn-icon-back{
   background-image: url('../img/icons/back-iceblue.svg');
@@ -522,7 +530,14 @@ input[type=search]:focus {
 .btn-filter:hover{
   background-image: url('../img/icons/filter-white.svg');
 }
-
+.btn-add{
+  background-image: url('../img/icons/add-iceblue.svg');
+  background-size: 20px 20px;
+}
+.btn-add:hover{
+  background-image: url('../img/icons/add-white.svg');
+  background-size: 20px 20px;
+}
 
 
 
@@ -590,6 +605,13 @@ input[type=search]:focus {
   background-image: url(../img/b3.jpg);
 }
 
+.reception-header{
+  background-image: url(../img/bg02.jpg);
+}
+
+.pharmacy-header{
+  background-image: url(../img/b4.jpg);
+}
 .search-items{
   padding:20px;
   margin:10px;

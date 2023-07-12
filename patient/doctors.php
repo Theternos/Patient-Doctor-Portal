@@ -77,175 +77,167 @@
                             <div>
                                 <p class="menu-text">Home</p>
                         </a>
-        </div></a>
-        </td>
-        </tr>
-        <tr class="menu-row">
-            <td class="menu-btn menu-icon-doctor menu-active menu-icon-doctor-active">
-                <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active">
-                    <div>
-                        <p class="menu-text">All Doctors</p>
-                </a>
-    </div>
-    </td>
-    </tr>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-doctor menu-active menu-icon-doctor-active">
+                        <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active">
+                            <div>
+                                <p class="menu-text">All Doctors</p>
+                        </a>
+                    </td>
+                </tr>
 
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-session">
-            <a href="schedule.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Scheduled Sessions</p>
-                </div>
-            </a>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-appoinment">
-            <a href="appointment.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">My Bookings</p>
-            </a></div>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-recent">
-            <a href="recent.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Recent Consultancy</p>
-                </div>
-            </a>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-assistant">
-            <a href="assistant.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Assistant</p>
-            </a></div>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-settings">
-            <a href="settings.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Settings</p>
-            </a></div>
-        </td>
-    </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-session">
+                        <a href="schedule.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Scheduled Sessions</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-appoinment">
+                        <a href="appointment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">My Bookings</p>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-recent">
+                        <a href="recent.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Recent Consultancy</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-assistant">
+                        <a href="assistant.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Assistant</p>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-settings">
+                        <a href="settings.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Settings</p>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="dash-body">
+            <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
+                <tr>
+                    <td width="13%">
+                        <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                                <font class="tn-in-text">Back</font>
+                            </button></a>
+                    </td>
+                    <td>
+                        <form action="" method="post" class="header-search">
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
+                            <?php
+                            echo '<datalist id="doctors">';
+                            $list11 = $database->query("select  docname,docemail from  doctor;");
 
-    </table>
-    </div>
-    <div class="dash-body">
-        <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
-            <tr>
-                <td width="13%">
-                    <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                            <font class="tn-in-text">Back</font>
-                        </button></a>
-                </td>
-                <td>
+                            for ($y = 0; $y < $list11->num_rows; $y++) {
+                                $row00 = $list11->fetch_assoc();
+                                $d = $row00["docname"];
+                                $c = $row00["docemail"];
+                                echo "<option value='$d'><br/>";
+                                echo "<option value='$c'><br/>";
+                            };
 
-                    <form action="" method="post" class="header-search">
+                            echo ' </datalist>';
+                            ?>
+                            <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
 
-                        <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
+                        </form>
 
-                        <?php
-                        echo '<datalist id="doctors">';
-                        $list11 = $database->query("select  docname,docemail from  doctor;");
+                    </td>
+                    <td width="15%">
+                        <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
+                            Today's Date
+                        </p>
+                        <p class="heading-sub12" style="padding: 0;margin: 0;">
+                            <?php
+                            date_default_timezone_set('Asia/Kolkata');
 
-                        for ($y = 0; $y < $list11->num_rows; $y++) {
-                            $row00 = $list11->fetch_assoc();
-                            $d = $row00["docname"];
-                            $c = $row00["docemail"];
-                            echo "<option value='$d'><br/>";
-                            echo "<option value='$c'><br/>";
-                        };
-
-                        echo ' </datalist>';
-                        ?>
-
-
-                        <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
-
-                    </form>
-
-                </td>
-                <td width="15%">
-                    <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                        Today's Date
-                    </p>
-                    <p class="heading-sub12" style="padding: 0;margin: 0;">
-                        <?php
-                        date_default_timezone_set('Asia/Kolkata');
-
-                        $date = date('Y-m-d');
-                        echo $date;
-                        ?>
-                    </p>
-                </td>
-                <td width="10%">
-                    <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
-                </td>
+                            $date = date('Y-m-d');
+                            echo $date;
+                            ?>
+                        </p>
+                    </td>
+                    <td width="10%">
+                        <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                    </td>
 
 
-            </tr>
+                </tr>
 
 
-            <tr>
-                <td colspan="4" style="padding-top:10px;">
-                    <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Doctors (<?php echo $list11->num_rows; ?>)</p>
-                </td>
+                <tr>
+                    <td colspan="4" style="padding-top:10px;">
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Doctors (<?php echo $list11->num_rows; ?>)</p>
+                    </td>
 
-            </tr>
-            <?php
-            if ($_POST) {
-                $keyword = $_POST["search"];
+                </tr>
+                <?php
+                if ($_POST) {
+                    $keyword = $_POST["search"];
 
-                $sqlmain = "select * from doctor where docemail='$keyword' or docname='$keyword' or docname like '$keyword%' or docname like '%$keyword' or docname like '%$keyword%'";
-            } else {
-                $sqlmain = "select * from doctor order by docid desc";
-            }
+                    $sqlmain = "select * from doctor where docemail='$keyword' or docname='$keyword' or docname like '$keyword%' or docname like '%$keyword' or docname like '%$keyword%'";
+                } else {
+                    $sqlmain = "select * from doctor order by docid desc";
+                }
 
 
 
-            ?>
+                ?>
 
-            <tr>
-                <td colspan="4">
-                    <center>
-                        <div class="abc scroll">
-                            <table width="93%" class="sub-table scrolldown" border="0">
-                                <thead>
-                                    <tr>
-                                        <th class="table-headin">
-
-
-                                            Doctor Name
-
-                                        </th>
-                                        <th class="table-headin">
-                                            Email
-                                        </th>
-                                        <th class="table-headin">
-
-                                            Specialties
-
-                                        </th>
-                                        <th class="table-headin">
-
-                                            Events
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <?php
+                <tr>
+                    <td colspan="4">
+                        <center>
+                            <div class="abc scroll">
+                                <table width="93%" class="sub-table scrolldown" border="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-headin">
 
 
-                                    $result = $database->query($sqlmain);
+                                                Doctor Name
 
-                                    if ($result->num_rows == 0) {
-                                        echo '<tr>
+                                            </th>
+                                            <th class="table-headin">
+                                                Email
+                                            </th>
+                                            <th class="table-headin">
+
+                                                Specialties
+
+                                            </th>
+                                            <th class="table-headin">
+
+                                                Events
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <?php
+
+
+                                        $result = $database->query($sqlmain);
+
+                                        if ($result->num_rows == 0) {
+                                            echo '<tr>
                                     <td colspan="4">
                                     <br><br><br><br>
                                     <center>
@@ -259,20 +251,20 @@
                                     <br><br><br><br>
                                     </td>
                                     </tr>';
-                                    } else {
-                                        for ($x = 0; $x < $result->num_rows; $x++) {
-                                            $row = $result->fetch_assoc();
-                                            $docid = $row["docid"];
-                                            $name = $row["docname"];
-                                            $email = $row["docemail"];
-                                            $spe = $row["specialties"];
-                                            $spcil_res = $database->query("select sname from specialties where id='$spe'");
-                                            $spcil_array = $spcil_res->fetch_assoc();
-                                            $spcil_name = $spcil_array["sname"];
-                                            echo '<tr>
+                                        } else {
+                                            for ($x = 0; $x < $result->num_rows; $x++) {
+                                                $row = $result->fetch_assoc();
+                                                $docid = $row["docid"];
+                                                $name = $row["docname"];
+                                                $email = $row["docemail"];
+                                                $spe = $row["specialties"];
+                                                $spcil_res = $database->query("select sname from specialties where id='$spe'");
+                                                $spcil_array = $spcil_res->fetch_assoc();
+                                                $spcil_name = $spcil_array["sname"];
+                                                echo '<tr>
                                         <td> &nbsp;' .
-                                                substr($name, 0, 30)
-                                                . '</td>
+                                                    substr($name, 0, 30)
+                                                    . '</td>
                                         <td>
                                         ' . substr($email, 0, 20) . '
                                         </td>
@@ -289,23 +281,23 @@
                                         </div>
                                         </td>
                                     </tr>';
+                                            }
                                         }
-                                    }
 
-                                    ?>
+                                        ?>
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
-                        </div>
-                    </center>
-                </td>
-            </tr>
-
+                                </table>
+                            </div>
+                        </center>
+                    </td>
+                </tr>
 
 
-        </table>
-    </div>
+
+            </table>
+        </div>
     </div>
     <?php
     if ($_GET) {

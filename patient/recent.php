@@ -279,16 +279,19 @@
 
                                         <td>
                                         <div style="display:flex;justify-content: center;">
-                                        
-                                        <!--<a href="?action=view&id=' . $appoid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;-->
-                                       <a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                       <a href="detailed-recent.php?view&id=' . $appoid . '&appodate=' . $appodate . '&session=' . $title . '&apponum=' . $apponum . '&docname=' . $docname . '&scheduledate=' . $scheduledate . '&scheduletime=' . $scheduletime . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
                                        &nbsp;&nbsp;&nbsp;</div>
                                         </td>
                                     </tr>';
                                     }
                                 } ?>
+                            </tbody>
+                        </table>
                     </div>
+                </center>
+            </td>
+        </tr>
+    </div>
 </body>
 
 </html>
