@@ -534,6 +534,11 @@ input[type=search]:focus {
   background-image: url('../img/icons/add-iceblue.svg');
   background-size: 20px 20px;
 }
+.btn-add-session{
+  background-image: url('../img/icons/add-white.svg');
+  background-size: 20px 20px;
+}
+
 .btn-add:hover{
   background-image: url('../img/icons/add-white.svg');
   background-size: 20px 20px;

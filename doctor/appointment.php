@@ -191,7 +191,7 @@
                         $today = date('Y-m-d');
                         echo $today;
 
-                        $list110 = $database->query("SELECT * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid and appointment.status=0");
+                        $list110 = $database->query("SELECT * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid where doctor.docid=$userid and appointment.status=0 and schedule.scheduledate >='$today'");
 
                         ?>
                     </p>
@@ -207,7 +207,7 @@
                 <td colspan="4">
                     <div style="display: flex;margin-top: 40px;">
                         <div class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49);margin-top: 5px;">Schedule a Session</div>
-                        <a href="?action=add-session&id=none&error=0" class="non-style-link"><button class="login-btn btn-primary btn button-icon" style="margin-left:25px;background-image: url('../img/icons/add.svg');">Add a Session</font></button>
+                        <a href="?action=add-session&id=none&error=0" class="non-style-link"><button class="login-btn btn-primary btn button-icon btn-add" style="margin-left:25px;background-image: url('../img/icons/add-white.svg');">Add a Session</font></button>
                         </a>
                     </div>
                 </td>
@@ -253,7 +253,7 @@
             <?php
 
 
-            $sqlmain = "SELECT appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid and appointment.status=0";
+            $sqlmain = "SELECT patient.pid, appointment.appoid,`schedule`.scheduleid,`schedule`.title,doctor.docname,patient.pname,`schedule`.scheduledate,`schedule`.scheduletime,appointment.apponum,appointment.appodate from `schedule` inner join appointment on `schedule`.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid and appointment.status=0";
 
             if ($_POST) {
                 //print_r($_POST);
@@ -263,7 +263,7 @@
 
                 if (!empty($_POST["sheduledate"])) {
                     $sheduledate = $_POST["sheduledate"];
-                    $sqlmain .= " and schedule.scheduledate='$sheduledate' ";
+                    $sqlmain .= " and `schedule`.scheduledate='$sheduledate' ";
                 };
 
 
@@ -282,6 +282,9 @@
                             <table width="93%" class="sub-table scrolldown" border="0">
                                 <thead>
                                     <tr>
+                                        <th class="table-headin">
+                                            Patient ID
+                                        </th>
                                         <th class="table-headin">
                                             Patient name
                                         </th>
@@ -322,7 +325,6 @@
 
 
                                     $result = $database->query($sqlmain);
-
                                     if ($result->num_rows == 0) {
                                         echo '<tr>
                                     <td colspan="7">
@@ -341,6 +343,7 @@
                                     } else {
                                         for ($x = 0; $x < $result->num_rows; $x++) {
                                             $row = $result->fetch_assoc();
+                                            $pid = $row["pid"];
                                             $appoid = $row["appoid"];
                                             $scheduleid = $row["scheduleid"];
                                             $title = $row["title"];
@@ -351,7 +354,8 @@
                                             $apponum = $row["apponum"];
                                             $appodate = $row["appodate"];
                                             echo '<tr>
-                                        <td style="font-weight:600; text-align:center;"> ' . substr($pname, 0, 25) . '</td >
+                                            <td style="text-align:center;">P-' . $pid . '</td>
+                                            <td style="font-weight:600; text-align:center;">' . substr($pname, 0, 25) . '</td >
                                         <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">' . $apponum . '
                                         </td>
                                         <td>
