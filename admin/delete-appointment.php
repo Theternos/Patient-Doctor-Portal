@@ -23,6 +23,4 @@
         //print_r($email);
         header("location: appointment.php");
     }
-
-
 ?>
