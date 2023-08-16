@@ -106,7 +106,7 @@
         <td class="menu-btn menu-icon-session">
             <a href="schedule.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Scheduled Sessions</p>
+                    <p class="menu-text">Book Appointment</p>
                 </div>
             </a>
         </td>

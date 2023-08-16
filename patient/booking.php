@@ -27,7 +27,7 @@
     //learn from w3schools.com
 
     session_start();
-
+    error_reporting(0);
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
             header("location: ../login.php");
@@ -37,8 +37,6 @@
     } else {
         header("location: ../login.php");
     }
-
-
     //import database
     include("../connection.php");
 
@@ -50,11 +48,7 @@
     $userfetch = $result->fetch_assoc();
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
-
-
-    //echo $userid;
-    //echo $username;
-
+    $phone_number = $userfetch["ptel"];
 
 
     date_default_timezone_set('Asia/Kolkata');
@@ -62,7 +56,38 @@
     $today = date('Y-m-d');
 
 
-    //echo $userid;
+    if ($_GET) {
+        $id = $_GET['id'];
+        $payment_id = $_GET['payment_id'];
+        setcookie("id", $id, time() + (60 * 5), "/"); // 60 = 1 minute
+        $urlid = $_COOKIE['id'];
+        if ($payment_id !== NULL) {
+            $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduleid=? order by schedule.scheduledate desc";
+            $stmt = $database->prepare($sqlmain);
+            $stmt->bind_param("i", $urlid);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            //echo $sqlmain;
+            $row = $result->fetch_assoc();
+            $scheduleid = $row["scheduleid"];
+            $title = $row["title"];
+            $docname = $row["docname"];
+            $docemail = $row["docemail"];
+            $scheduledate = $row["scheduledate"];
+            $scheduletime = $row["scheduletime"];
+            $sql2 = "select * from appointment where scheduleid=$urlid";
+            //echo $sql2;
+            $result12 = $database->query($sql2);
+            $apponum = ($result12->num_rows) + 1;
+            $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
+            $output = shell_exec($command);
+            // echo $command;
+            $sql2 = "insert into appointment(pid,apponum,scheduleid,appodate) values ($userid,$apponum,$scheduleid,'$date')";
+            $result = $database->query($sql2);
+
+            header("location: appointment.php?action=booking-added&id=" . $apponum . "&titleget=none");
+        }
+    }
     ?>
     <div class="container">
         <div class="menu">
@@ -88,7 +113,7 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-home ">
+                    <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
                                 <p class="menu-text">Home</p>
@@ -110,7 +135,7 @@
         <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
             <a href="schedule.php" class="non-style-link-menu non-style-link-menu-active">
                 <div>
-                    <p class="menu-text">Scheduled Sessions</p>
+                    <p class="menu-text">Book Appointment</p>
                 </div>
             </a>
         </td>
@@ -124,6 +149,23 @@
         </td>
     </tr>
     <tr class="menu-row">
+        <td class="menu-btn menu-icon-recent">
+            <a href="recent.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Recent Consultancy</p>
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-assistant">
+            <a href="assistant.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Assistant</p>
+            </a></div>
+        </td>
+    </tr>
+    <tr class="menu-row">
         <td class="menu-btn menu-icon-settings">
             <a href="settings.php" class="non-style-link-menu">
                 <div>
@@ -131,7 +173,6 @@
             </a></div>
         </td>
     </tr>
-
     </table>
     </div>
 
@@ -248,51 +289,34 @@
                                             $result12 = $database->query($sql2);
                                             $apponum = ($result12->num_rows) + 1;
 
-                                            echo '
-                                        <form action="booking-complete.php" method="post">
-                                            <input type="hidden" name="scheduleid" value="' . $scheduleid . '" >
-                                            <input type="hidden" name="apponum" value="' . $apponum . '" >
-                                            <input type="hidden" name="date" value="' . $today . '" >
-
-                                        
-                                    
-                                    ';
-
 
                                             echo '
-                                    <td style="width: 50%;" rowspan="2">
+                                        <td style="width: 50%;" rowspan="2">
                                             <div  class="dashboard-items search-items"  >
-                                            
-                                                <div style="width:100%">
-                                                        <div class="h1-search" style="font-size:25px;">
-                                                            Session Details
-                                                        </div><br><br>
-                                                        <div class="h3-search" style="font-size:18px;line-height:30px">
-                                                            Doctor name:  &nbsp;&nbsp;<b>' . $docname . '</b><br>
-                                                            Doctor Email:  &nbsp;&nbsp;<b>' . $docemail . '</b> 
-                                                        </div>
-                                                        <div class="h3-search" style="font-size:18px;">
-                                                          
-                                                        </div><br>
-                                                        <div class="h3-search" style="font-size:18px;">
-                                                            Session Title: ' . $title . '<br>
-                                                            Session Scheduled Date: ' . $scheduledate . '<br>
-                                                            Session Starts : ' . $scheduletime . '<br>
-                                                            Channeling fee : <b>INR. 2,000.00</b>
-
-                                                        </div>
-                                                        <br>
+                                                <div style="width:100">
+                                                    <div class="h1-search" style="font-size:25px;">
+                                                        Session Details
+                                                    </div><br>
+                                                    <div class="h3-search" style="font-size:18px;line-height:30px">
+                                                        Doctor name:  &nbsp;&nbsp;<b>' . $docname . '</b><br>
+                                                        Doctor Email:  &nbsp;&nbsp;<b>' . $docemail . '</b> 
+                                                    </div>
+                                                    <div class="h3-search" style="font-size:18px;">
                                                         
-                                                </div>
-                                                        
+                                                    </div><br>
+                                                    <div class="h3-search" style="font-size:18px;">
+                                                        Session Title: ' . $title . '<br>
+                                                        Session Scheduled Date: ' . $scheduledate . '<br>
+                                                        Session Starts : ' . $scheduletime . '<br>
+                                                        Booking fee : <b>INR. 100 </b><black style= "color:#000; font-size:13px">[</black><red style= "color:red; font-size:13px"> Non-refundable </red><black style= "color:#000; font-size:13px">]</black>
+                                                    </div>
+                                                        <br>  
+                                                </div>      
                                             </div>
                                         </td>
                                         
-                                        
-                                        
                                         <td style="width: 25%;">
                                             <div  class="dashboard-items search-items"  >
-                                            
                                                 <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
                                                         <div class="h1-search" style="font-size:20px;line-height: 35px;margin-left:8px;text-align:center;">
                                                             Your Appointment Number
@@ -312,34 +336,43 @@
                                         </tr>
                                         <tr>
                                             <td>
-                                                <input type="Submit" class="login-btn btn-primary btn btn-book" style="margin-left:10px;padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;width:95%;text-align: center;" value="Book now" name="booknow"></button>
-                                            </form>
+                                            <form style="margin-left:10px;padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;width:100%;text-align: center;">
+                                                <script src="../js/payment-button.js" data-payment_button_id="pl_MQciFl4IXO0PBg" async> </script> </form>
                                             </td>
                                         </tr>
                                         ';
                                         }
-                                    }
-
-                                    ?>
-
+                                    } else { ?>
+                                        <td style="width: 50%;" rowspan="2">
+                                            <div class="dashboard-items search-items">
+                                                <div style="width:100%; margin-top:0">
+                                                    <div class="h3-search" style="font-size:18px;line-height:30px">
+                                                        <center>
+                                                            <br><br>
+                                                            <img src="../img/notfound.svg" width="25%">
+                                                            <br><br>
+                                                            <p class="heading-main12" style="margin-left: 30px;font-size:20px;color:rgb(49, 49, 49)">No Schedule found !</p>
+                                                            <a class="non-style-link" href="schedule.php"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Check Again! &nbsp;</font></button>
+                                                            </a>
+                                                        </center>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td> <?php
+                                            }
+                                                ?>
                                 </tbody>
-
                             </table>
                         </div>
                     </center>
                 </td>
             </tr>
-
-
-
         </table>
     </div>
     </div>
-
-
-
     </div>
 
 </body>
+
 
 </html>

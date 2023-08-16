@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jul 12, 2023 at 07:50 PM
+-- Generation Time: Aug 10, 2023 at 03:57 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -28,9 +28,10 @@ SET time_zone = "+00:00";
 --
 
 DROP TABLE IF EXISTS `admin`;
-CREATE TABLE `admin` (
+CREATE TABLE IF NOT EXISTS `admin` (
   `aemail` varchar(255) NOT NULL,
-  `apassword` varchar(255) DEFAULT NULL
+  `apassword` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`aemail`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -47,19 +48,26 @@ INSERT INTO `admin` (`aemail`, `apassword`) VALUES
 --
 
 DROP TABLE IF EXISTS `appointment`;
-CREATE TABLE `appointment` (
-  `appoid` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `appointment` (
+  `appoid` int NOT NULL AUTO_INCREMENT,
   `pid` int DEFAULT NULL,
   `apponum` int DEFAULT NULL,
   `scheduleid` int DEFAULT NULL,
   `appodate` date DEFAULT NULL,
-  `status` int DEFAULT '0'
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `status` int DEFAULT '0',
+  PRIMARY KEY (`appoid`),
+  KEY `pid` (`pid`),
+  KEY `scheduleid` (`scheduleid`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `appointment`
 --
 
+INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`) VALUES
+(17, 1, 2, 16, '2023-07-13', 1),
+(16, 1, 1, 15, '2023-07-12', 0),
+(18, 1, 1, 17, '2023-07-26', 1);
 
 -- --------------------------------------------------------
 
@@ -68,15 +76,17 @@ CREATE TABLE `appointment` (
 --
 
 DROP TABLE IF EXISTS `doctor`;
-CREATE TABLE `doctor` (
-  `docid` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `doctor` (
+  `docid` int NOT NULL AUTO_INCREMENT,
   `docemail` varchar(255) DEFAULT NULL,
   `docname` varchar(255) DEFAULT NULL,
   `docpassword` varchar(255) DEFAULT NULL,
   `docnic` varchar(15) DEFAULT NULL,
   `doctel` varchar(15) DEFAULT NULL,
-  `specialties` int DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `specialties` int DEFAULT NULL,
+  PRIMARY KEY (`docid`),
+  KEY `specialties` (`specialties`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `doctor`
@@ -84,6 +94,7 @@ CREATE TABLE `doctor` (
 
 INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `specialties`) VALUES
 (1, 'doctor@bitsathy.ac.in', 'Test Doctor', '123', '000000000', '0110000000', 1),
+(2, 'sanjay.ad21@bitsathy.ac.in', 'Sanjay A R', 'vinu', '641879279568', '9826879642', 35);
 
 -- --------------------------------------------------------
 
@@ -92,8 +103,8 @@ INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `
 --
 
 DROP TABLE IF EXISTS `metrices`;
-CREATE TABLE `metrices` (
-  `uid` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `metrices` (
+  `uid` int NOT NULL AUTO_INCREMENT,
   `pid` int DEFAULT NULL,
   `docid` int DEFAULT NULL,
   `appoid` int DEFAULT NULL,
@@ -104,13 +115,10 @@ CREATE TABLE `metrices` (
   `bp` varchar(7) DEFAULT NULL,
   `temp` varchar(6) DEFAULT NULL,
   `reason` varchar(200) DEFAULT NULL,
-  `allergy` varchar(3) DEFAULT 'No'
+  `allergy` varchar(3) DEFAULT 'No',
+  PRIMARY KEY (`uid`),
+  UNIQUE KEY `uid_UNIQUE` (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `metrices`
---
-
 
 -- --------------------------------------------------------
 
@@ -119,13 +127,15 @@ CREATE TABLE `metrices` (
 --
 
 DROP TABLE IF EXISTS `others`;
-CREATE TABLE `others` (
-  `oid` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `others` (
+  `oid` int NOT NULL AUTO_INCREMENT,
   `oemail` varchar(100) DEFAULT NULL,
   `oname` varchar(100) DEFAULT NULL,
   `opassword` varchar(100) DEFAULT NULL,
-  `designation` varchar(45) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `designation` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`oid`),
+  UNIQUE KEY `oid_UNIQUE` (`oid`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `others`
@@ -142,16 +152,17 @@ INSERT INTO `others` (`oid`, `oemail`, `oname`, `opassword`, `designation`) VALU
 --
 
 DROP TABLE IF EXISTS `patient`;
-CREATE TABLE `patient` (
-  `pid` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `patient` (
+  `pid` int NOT NULL AUTO_INCREMENT,
   `pemail` varchar(255) DEFAULT NULL,
   `pname` varchar(255) DEFAULT NULL,
   `ppassword` varchar(255) DEFAULT NULL,
   `paddress` varchar(255) DEFAULT NULL,
   `pnic` varchar(15) DEFAULT NULL,
   `pdob` date DEFAULT NULL,
-  `ptel` varchar(15) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `ptel` varchar(15) DEFAULT NULL,
+  PRIMARY KEY (`pid`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patient`
@@ -159,6 +170,7 @@ CREATE TABLE `patient` (
 
 INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
 (1, 'patient@bitsathy.ac.in', 'Test Patient', '123', 'Sathy', '0000000000', '2000-01-01', '0120000000'),
+(3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947');
 
 -- --------------------------------------------------------
 
@@ -167,19 +179,23 @@ INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`
 --
 
 DROP TABLE IF EXISTS `schedule`;
-CREATE TABLE `schedule` (
-  `scheduleid` int NOT NULL,
+CREATE TABLE IF NOT EXISTS `schedule` (
+  `scheduleid` int NOT NULL AUTO_INCREMENT,
   `docid` varchar(255) DEFAULT NULL,
   `title` varchar(255) DEFAULT NULL,
   `scheduledate` date DEFAULT NULL,
   `scheduletime` time DEFAULT NULL,
-  `nop` int DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `nop` int DEFAULT NULL,
+  PRIMARY KEY (`scheduleid`),
+  KEY `docid` (`docid`)
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `schedule`
 --
 
+INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`) VALUES
+(18, '2', 'General [OP]', '2023-07-26', '18:00:00', 10);
 
 -- --------------------------------------------------------
 
@@ -188,9 +204,10 @@ CREATE TABLE `schedule` (
 --
 
 DROP TABLE IF EXISTS `specialties`;
-CREATE TABLE `specialties` (
+CREATE TABLE IF NOT EXISTS `specialties` (
   `id` int NOT NULL,
-  `sname` varchar(50) DEFAULT NULL
+  `sname` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -262,9 +279,10 @@ INSERT INTO `specialties` (`id`, `sname`) VALUES
 --
 
 DROP TABLE IF EXISTS `webuser`;
-CREATE TABLE `webuser` (
+CREATE TABLE IF NOT EXISTS `webuser` (
   `email` varchar(255) NOT NULL,
-  `usertype` char(1) DEFAULT NULL
+  `usertype` char(1) DEFAULT NULL,
+  PRIMARY KEY (`email`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -275,112 +293,10 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('admin@bitsathy.ac.in', 'a'),
 ('doctor@bitsathy.ac.in', 'd'),
 ('patient@bitsathy.ac.in', 'p'),
+('kavinkumar.cs21@bitsathy.ac.in', 'p'),
+('sanjay.ad21@bitsathy.ac.in', 'd'),
 ('reception@bitsathy.ac.in', 'r'),
 ('pharmacy@bitsathy.ac.in', 'm');
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`aemail`);
-
---
--- Indexes for table `appointment`
---
-ALTER TABLE `appointment`
-  ADD PRIMARY KEY (`appoid`),
-  ADD KEY `pid` (`pid`),
-  ADD KEY `scheduleid` (`scheduleid`);
-
---
--- Indexes for table `doctor`
---
-ALTER TABLE `doctor`
-  ADD PRIMARY KEY (`docid`),
-  ADD KEY `specialties` (`specialties`);
-
---
--- Indexes for table `metrices`
---
-ALTER TABLE `metrices`
-  ADD PRIMARY KEY (`uid`),
-  ADD UNIQUE KEY `uid_UNIQUE` (`uid`);
-
---
--- Indexes for table `others`
---
-ALTER TABLE `others`
-  ADD PRIMARY KEY (`oid`),
-  ADD UNIQUE KEY `oid_UNIQUE` (`oid`);
-
---
--- Indexes for table `patient`
---
-ALTER TABLE `patient`
-  ADD PRIMARY KEY (`pid`);
-
---
--- Indexes for table `schedule`
---
-ALTER TABLE `schedule`
-  ADD PRIMARY KEY (`scheduleid`),
-  ADD KEY `docid` (`docid`);
-
---
--- Indexes for table `specialties`
---
-ALTER TABLE `specialties`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `webuser`
---
-ALTER TABLE `webuser`
-  ADD PRIMARY KEY (`email`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `appointment`
---
-ALTER TABLE `appointment`
-  MODIFY `appoid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT for table `doctor`
---
-ALTER TABLE `doctor`
-  MODIFY `docid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT for table `metrices`
---
-ALTER TABLE `metrices`
-  MODIFY `uid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT for table `others`
---
-ALTER TABLE `others`
-  MODIFY `oid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT for table `patient`
---
-ALTER TABLE `patient`
-  MODIFY `pid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
---
--- AUTO_INCREMENT for table `schedule`
---
-ALTER TABLE `schedule`
-  MODIFY `scheduleid` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -267,7 +267,6 @@
                                         </td>
                                         <td>
                                         <center>' . substr($appodate, 0, 20) . ' <b>@</b> ' . substr($appotime, 0, 20) . '</center>
-
                                         </td>
                                         <td>
                                         <div style="display:flex;justify-content: center;">';
@@ -285,19 +284,13 @@
                                     </tr>';
                                             }
                                         }
-
                                         ?>
-
                                     </tbody>
-
                                 </table>
                             </div>
                         </center>
                     </td>
                 </tr>
-
-
-
             </table>
         </div>
     </div>
@@ -308,7 +301,6 @@
         $appoid = $_GET["appoid"];
         $scheduleid = $_GET["scheduleid"];
         $action = $_GET["action"];
-
         if ($action == 'add') { ?>
 
             <div id="popup1" class="overlay">

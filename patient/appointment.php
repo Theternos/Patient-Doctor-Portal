@@ -27,7 +27,7 @@
     //learn from w3schools.com
 
     session_start();
-
+    error_reporting(0);
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
             header("location: ../login.php");
@@ -125,7 +125,7 @@
         <td class="menu-btn menu-icon-session">
             <a href="schedule.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Scheduled Sessions</p>
+                    <p class="menu-text">Book Appointment</p>
                 </div>
             </a>
         </td>
@@ -425,7 +425,8 @@
                         <h2>Are you sure?</h2>
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
-                            You want to Cancel this Appointment?<br><br>
+                            You want to Cancel this Appointment?<br>
+                            <red style = "color:red; font-size:13px">No Refund will be initiated! </red><br><br>
                             Session Name: &nbsp;<b>' . substr($title, 0, 40) . '</b><br>
                             Doctor name&nbsp; : <b>' . substr($docname, 0, 40) . '</b><br><br>
                             
