@@ -305,7 +305,7 @@
                                                 $totalbooked = $row['nop'];
 
                                                 $sqlmain12 = "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.scheduleid='$scheduleid';";
-                                                $result12 = $database->query($sqlmain12);
+                                                $result12 = $database->query($sqlmain12);   
                                                 $seatbooked = $result12->num_rows;
                                                 if ($seatbooked != 0) {
                                                     $seatleft = $totalbooked - $seatbooked;
