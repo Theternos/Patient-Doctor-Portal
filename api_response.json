@@ -1,0 +1,565 @@
+{
+    "count": 20,
+    "food": [
+        {
+            "_id": "646e44df0e77ec175b88cf32",
+            "food_name": "Aloo Paratha",
+            "quantity": "1 paratha",
+            "calories": 330,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Paratha",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 47.72,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 13.45,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 5.94,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf41",
+            "food_name": "Aloo Matar",
+            "quantity": "1 serving (125 g)",
+            "calories": 123,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Matar",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 20.6,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 3.7,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 4.11,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf48",
+            "food_name": "Aloo Tikki",
+            "quantity": "1 serving (125 g)",
+            "calories": 111,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Tikki",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 18.15,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 4.23,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 2.38,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf4f",
+            "food_name": "Aloo Palak",
+            "quantity": "1 serving (125 g)",
+            "calories": 116,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Palak",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 17.63,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 4.81,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 3.53,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf56",
+            "food_name": "Aloo Gosht",
+            "quantity": "1 serving (86 g)",
+            "calories": 118,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Gosht",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 5.95,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 7.6,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 6.76,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf5d",
+            "food_name": "Dum Aloo",
+            "quantity": "1 serving (125 g)",
+            "calories": 164,
+            "uri": "https://indnutrientsapi.tech/food/name/Dum-Aloo",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 24.68,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 6.96,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 3.99,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf64",
+            "food_name": "Aloo Baingan",
+            "quantity": "1 cup",
+            "calories": 190,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Baingan",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 25.41,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 10.2,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 4.41,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf3a",
+            "food_name": "Aloo Sabzi",
+            "quantity": "100 g",
+            "calories": 96,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Sabzi",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 17.52,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 2.89,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 2.34,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44e00e77ec175b88cf74",
+            "food_name": "Aloo Beans",
+            "quantity": "100 g",
+            "calories": 92,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Beans",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 11.8,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 4.65,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 1.74,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44e00e77ec175b88cf7b",
+            "food_name": "Aloo Ka Bharta",
+            "quantity": "100 g",
+            "calories": 102,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Ka-Bharta",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 19.67,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 2.08,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 2.2,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e44df0e77ec175b88cf6b",
+            "food_name": "Aloo Gobi",
+            "quantity": "1 serving (125 g)",
+            "calories": 108,
+            "uri": "https://indnutrientsapi.tech/food/name/Aloo-Gobi",
+            "type": "Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Vegetarian",
+            "core": "Aloo",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Aloo",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 17.02,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 4.39,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 2.86,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d054",
+            "food_name": "Chicken",
+            "quantity": "100 g",
+            "calories": 237,
+            "uri": "https://indnutrientsapi.tech/food/name/Chicken",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 13.49,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 27.07,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d05b",
+            "food_name": "Chicken Schnitzel",
+            "quantity": "1 fillet",
+            "calories": 300,
+            "uri": "https://indnutrientsapi.tech/food/name/Chicken-Schnitzel",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 16.48,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 19.01,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 15.75,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d062",
+            "food_name": "Chicken Drumstick Meat And Skin",
+            "quantity": "1 drumstick, bone removed",
+            "calories": 118,
+            "uri": "https://indnutrientsapi.tech/food/name/Chicken-Drumstick-Meat-And-Skin",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 6.34,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 14.07,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d069",
+            "food_name": "Chicken Breast",
+            "quantity": "100 g",
+            "calories": 195,
+            "uri": "https://indnutrientsapi.tech/food/name/Chicken-Breast",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 7.72,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 29.55,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d070",
+            "food_name": "Chicken Meat",
+            "quantity": "100 g",
+            "calories": 119,
+            "uri": "https://indnutrientsapi.tech/food/name/Chicken-Meat",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 3.08,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 21.39,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d077",
+            "food_name": "Roasted Grilled Or Baked Chicken",
+            "quantity": "100 g",
+            "calories": 237,
+            "uri": "https://indnutrientsapi.tech/food/name/Roasted-Grilled-Or-Baked-Chicken",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 13.49,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 27.07,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d085",
+            "food_name": "Chicken Breast Meat And Skin",
+            "quantity": "1/2 breast, bone removed (yield from 450 g ready-to-cook chicken)",
+            "calories": 150,
+            "uri": "https://indnutrientsapi.tech/food/name/Chicken-Breast-Meat-And-Skin",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 8.05,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 18.14,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d093",
+            "food_name": "Roasted Grilled Or Baked Chicken Leg",
+            "quantity": "1 medium",
+            "calories": 262,
+            "uri": "https://indnutrientsapi.tech/food/name/Roasted-Grilled-Or-Baked-Chicken-Leg",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 0,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 15.22,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 29.34,
+                    "unit": "g"
+                }
+            ]
+        },
+        {
+            "_id": "646e45950e77ec175b88d08c",
+            "food_name": "Crumbed Chicken Schnitzel",
+            "quantity": "1 serving (110 g)",
+            "calories": 201,
+            "uri": "https://indnutrientsapi.tech/food/name/Crumbed-Chicken-Schnitzel",
+            "type": "Non Vegetarian",
+            "type_uri": "https://indnutrientsapi.tech/food?type=Non-Vegetarian",
+            "core": "Chicken",
+            "core_uri": "https://indnutrientsapi.tech/food?core=Chicken",
+            "food_nutrition": [
+                {
+                    "nutrient_name": "carbohydrates",
+                    "value": 4.9,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "fat",
+                    "value": 10.3,
+                    "unit": "g"
+                },
+                {
+                    "nutrient_name": "protein",
+                    "value": 21.2,
+                    "unit": "g"
+                }
+            ]
+        }
+    ]
+}

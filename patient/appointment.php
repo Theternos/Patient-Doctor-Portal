@@ -62,18 +62,10 @@
 
     if ($_POST) {
         //print_r($_POST);
-
-
-
-
         if (!empty($_POST["sheduledate"])) {
             $sheduledate = $_POST["sheduledate"];
             $sqlmain .= " and schedule.scheduledate='$sheduledate'";
         };
-
-
-
-        echo $sqlmain;
     }
 
     $sqlmain .= " order by appointment.appodate asc";
@@ -123,7 +115,7 @@
 
     <tr class="menu-row">
         <td class="menu-btn menu-icon-session">
-            <a href="schedule.php" class="non-style-link-menu">
+            <a href="specialities.php" class="non-style-link-menu">
                 <div>
                     <p class="menu-text">Book Appointment</p>
                 </div>
@@ -275,7 +267,6 @@
                                     </td>
                                     </tr>';
                                     } else {
-
                                         for ($x = 0; $x < ($result->num_rows); $x++) {
                                             echo "<tr>";
                                             for ($q = 0; $q < 3; $q++) {
@@ -299,7 +290,7 @@
                                                 echo '
                                             <td style="width: 25%;">
                                                     <div  class="dashboard-items search-items"  >
-                                                    
+
                                                         <div style="width:100%;">
                                                         <div class="h3-search">
                                                                     Booking Date: ' . substr($appodate, 0, 30) . '<br>
@@ -314,63 +305,71 @@
                                                                 <div class="h3-search">
                                                                     ' . substr($docname, 0, 30) . '
                                                                 </div>
-                                                                
-                                                                
+
+
                                                                 <div class="h4-search">
                                                                     Scheduled Date: ' . $scheduledate . '<br>Starts: <b>@' . substr($scheduletime, 0, 5) . '</b> (24h)
                                                                 </div>
                                                                 <br>
                                                                 <a href="?action=drop&id=' . $appoid . '&title=' . $title . '&doc=' . $docname . '" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a>
                                                         </div>
-                                                                
+
                                                     </div>
                                                 </td>';
                                             }
                                             echo "</tr>";
-
-                                            // for ( $x=0; $x<$result->num_rows;$x++){
-                                            //     $row=$result->fetch_assoc();
-                                            //     $appoid=$row["appoid"];
-                                            //     $scheduleid=$row["scheduleid"];
-                                            //     $title=$row["title"];
-                                            //     $docname=$row["docname"];
-                                            //     $scheduledate=$row["scheduledate"];
-                                            //     $scheduletime=$row["scheduletime"];
-                                            //     $pname=$row["pname"];
-                                            //     
-                                            //     
-                                            //     echo '<tr >
-                                            //         <td style="font-weight:600;"> &nbsp;'.
-
-                                            //         substr($pname,0,25)
-                                            //         .'</td >
-                                            //         <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
-                                            //         '.$apponum.'
-
-                                            //         </td>
-                                            //         <td>
-                                            //         '.substr($title,0,15).'
-                                            //         </td>
-                                            //         <td style="text-align:center;;">
-                                            //             '.substr($scheduledate,0,10).' @'.substr($scheduletime,0,5).'
-                                            //         </td>
-
-                                            //         <td style="text-align:center;">
-                                            //             '.$appodate.'
-                                            //         </td>
-
-                                            //         <td>
-                                            //         <div style="display:flex;justify-content: center;">
-
-                                            //         <!--<a href="?action=view&id='.$appoid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                            //        &nbsp;&nbsp;&nbsp;-->
-                                            //        <a href="?action=drop&id='.$appoid.'&name='.$pname.'&session='.$title.'&apponum='.$apponum.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>
-                                            //        &nbsp;&nbsp;&nbsp;</div>
-                                            //         </td>
-                                            //     </tr>';
-
                                         }
+                                        // for ($q = 0; $q < 3; $q++) {
+                                        //     $row = $result->fetch_assoc();
+                                        //     if (!isset($row)) {
+                                        //         break;
+                                        //     };
+                                        //     $scheduleid = $row["scheduleid"];
+                                        //     $title = $row["title"];
+                                        //     $docname = $row["docname"];
+                                        //     $scheduledate = $row["scheduledate"];
+                                        //     $scheduletime = $row["scheduletime"];
+                                        //     $apponum = $row["apponum"];
+                                        //     $appodate = $row["appodate"];
+                                        //     $appoid = $row["appoid"];
+
+                                        //     if ($scheduleid == "") {
+                                        //         break;
+                                        //     }
+
+
+                                        //     echo '<tr >
+                                        //             <td style="font-weight:600;"> &nbsp;' .
+
+                                        //         substr($pname, 0, 25)
+                                        //         . '</td >
+                                        //             <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
+                                        //             ' . $apponum . '
+
+                                        //             </td>
+                                        //             <td>
+                                        //             ' . substr($title, 0, 15) . '
+                                        //             </td>
+                                        //             <td style="text-align:center;;">
+                                        //                 ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletime, 0, 5) . '
+                                        //             </td>
+
+                                        //             <td style="text-align:center;">
+                                        //                 ' . $appodate . '
+                                        //             </td>
+
+                                        //             <td>
+                                        //             <div style="display:flex;justify-content: center;">
+
+                                        //             <!--<a href="?action=view&id=' . $appoid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                        //            &nbsp;&nbsp;&nbsp;-->
+                                        //            <a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>
+                                        //            &nbsp;&nbsp;&nbsp;</div>
+                                        //             </td>
+                                        //         </tr>';
+                                        // }
                                     }
+
 
                                     ?>
 

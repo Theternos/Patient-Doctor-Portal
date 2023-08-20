@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Sessions</title>
     <style>
@@ -29,6 +30,36 @@
             cursor: pointer;
             pointer-events: all;
             opacity: 1;
+        }
+
+        .image-display,
+        .image-display a {
+            display: flex;
+            flex-direction: row;
+            text-decoration: none;
+
+        }
+
+        .special-box {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin: 15px;
+            width: 370px;
+            text-align: left;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            color: #000;
+        }
+
+        .special-box img {
+            margin: 0 20px 0 5px;
+        }
+
+        .special-box:hover {
+            border: 1px solid #4c4c4c;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -118,7 +149,7 @@
 
     <tr class="menu-row">
         <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
-            <a href="schedule.php" class="non-style-link-menu non-style-link-menu-active">
+            <a href="specialities.php" class="non-style-link-menu non-style-link-menu-active">
                 <div>
                     <p class="menu-text">Book Appointment</p>
                 </div>
@@ -162,7 +193,7 @@
     </div>
     <?php
 
-    $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduledate>='$today'  order by schedule.scheduledate asc";
+    $sqlmain = "SELECT * from specialties";
     $sqlpt1 = "";
     $insertkey = "";
     $q = '';
@@ -173,16 +204,17 @@
         if (!empty($_POST["search"])) {
             /*TODO: make and understand */
             $keyword = $_POST["search"];
-            $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where (doctor.docname='$keyword' or doctor.docname like '$keyword%' or doctor.docname like '%$keyword' or doctor.docname like '%$keyword%' or schedule.title='$keyword' or schedule.title like '$keyword%' or schedule.title like '%$keyword' or schedule.title like '%$keyword%')  order by schedule.scheduledate asc";
-            //echo $sqlmain;
+            $sqlmain = "select * from specialties where (sname='$keyword' or sname like '$keyword%' or sname like '%$keyword' or sname like '%$keyword%') order by sname asc";
+            #echo $sqlmain;
             $insertkey = $keyword;
             $searchtype = "Search Result : ";
             $q = '"';
         }
     }
 
-
-    $result = $database->query($sqlmain);
+    $stmt = $database->prepare($sqlmain);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 
     ?>
@@ -191,14 +223,14 @@
         <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
             <tr>
                 <td width="13%">
-                    <a href="schedule.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                    <a href="index.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                             <font class="tn-in-text">Back</font>
                         </button></a>
                 </td>
                 <td>
                     <form action="" method="post" class="header-search">
 
-                        <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email or Date (YYYY-MM-DD)" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
+                        <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
 
                         <?php
                         echo '<datalist id="doctors">';
@@ -252,7 +284,7 @@
 
             <tr>
                 <td colspan="4" style="padding-top:10px;width: 100%;">
-                    <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Specialities ( 56 )"; ?> </p>
+                    <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Sessions" . "(" . $result->num_rows . ")"; ?> </p>
                     <p class="heading-main12" style="margin-left: 45px;font-size:22px;color:rgb(49, 49, 49)"><?php echo $q . $insertkey . $q; ?> </p>
                 </td>
 
@@ -267,8 +299,39 @@
                             <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none">
 
                                 <tbody>
+                                    <tr>
+                                        <?php
 
-
+                                        $a = 0;
+                                        while ($userrow = $result->fetch_assoc()) {
+                                            $sname = $userrow['sname'];
+                                            $imgname = $userrow['imgname'];
+                                            $sid = $userrow['id'];
+                                            if ($a % 3 == 0) {
+                                        ?> <div class="image-display">
+                                                    <a href="schedule.php?id=<?php echo $sid ?>">
+                                                        <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                            <p><?php echo $sname; ?></p>
+                                                        </div>
+                                                    </a>
+                                                <?php } else if ($a % 3 == 1) { ?>
+                                                    <a href="schedule.php?id=<?php echo $sid ?>">
+                                                        <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                            <p><?php echo $sname; ?></p>
+                                                        </div>
+                                                    </a>
+                                                <?php } else { ?>
+                                                    <a href="schedule.php?id=<?php echo $sid ?>">
+                                                        <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                            <p><?php echo $sname; ?></p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                        <?php    }
+                                            $a++;
+                                        }
+                                        ?>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

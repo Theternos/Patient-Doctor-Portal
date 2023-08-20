@@ -18,6 +18,32 @@
         .sub-table {
             animation: transitionIn-Y-bottom 0.5s;
         }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: relative;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content label {
+            display: block;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .dropdown-content label:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
     </style>
 </head>
 
@@ -260,10 +286,10 @@
                                                 substr($name, 0, 30)
                                                 . '</td>
                                         <td>
-                                        ' . substr($email, 0, 20) . '
+                                        ' . substr($email, 0, 30) . '
                                         </td>
                                         <td>
-                                            ' . substr($spcil_name, 0, 20) . '
+                                            ' . substr($spcil_name, 0, 40) . '
                                         </td>
 
                                         <td>
@@ -372,7 +398,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">Aadhar: </label>
+                                    <label for="nic" class="form-label">Licence No: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -392,8 +418,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label">Specialties: </label>
-                                    
+                                    <label for="spec" class="form-label">Specialties: </label>  
                                 </td>
                             </tr>
                             <tr>
@@ -401,23 +426,40 @@
                             ' . $spcil_name . '<br><br>
                             </td>
                             </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <a href="doctors.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn" ></a>
-                                
-                                    
-                                </td>
-                
-                            </tr>
-                           
+                            <tr> '; ?>
+            <tr>
+                <td class="label-td" colspan="2">
+                    <label for="spec" class="form-label">Languages known: </label>
+                </td>
+            </tr>
+            <td class="label-td" colspan="2">
+                <?php
+                $doc_lang = "SELECT `language` from doc_language WHERE docid = '$id'";
+                $doc_lang_result = $database->query($doc_lang);
+                $languages = array(); // Initialize an array to hold languages
 
-                        </table>
-                        </div>
-                    </center>
-                    <br><br>
+                while ($doc_lang_row = $doc_lang_result->fetch_assoc()) {
+                    $languages[] = $doc_lang_row['language'];
+                }
+                echo implode(', ', $languages);
+                ?><br><br>
+            </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href="doctors.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn"></a>
+                </td>
+
+            </tr>
+
+
+            </table>
+            </div>
+            </center>
+            <br><br>
             </div>
             </div>
-            ';
+    <?php
         } elseif ($action == 'add') {
             $error_1 = $_GET["error"];
             $errorlist = array(
@@ -450,7 +492,7 @@
                             </tr>
                             
                             <tr>
-                                <form action="add-new.php" method="POST" class="add-new-form">
+                                <form action="add-new.php" method="POST" class="add-new-form" onsubmit="return validateForm();">
                                 <td class="label-td" colspan="2">
                                     <label for="name" class="form-label">Name: </label>
                                 </td>
@@ -460,6 +502,15 @@
                                     <input type="text" name="name" class="input-text" placeholder="Doctor Name" required><br>
                                 </td>
                                 
+                            </tr>
+                            <td class="label-td" colspan="2">
+                                    <label for="qualification" class="form-label">Qualification: </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                    <input type="text" name="qualification" class="input-text" placeholder="Qualification" required><br>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
@@ -473,12 +524,12 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">Aadhar: </label>
+                                    <label for="nic" class="form-label">Licence No: </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <input type="text" name="nic" class="input-text" placeholder="Aadhar Number" required><br>
+                                    <input type="text" name="nic" class="input-text" placeholder="Licence Number" required><br>
                                 </td>
                             </tr>
                             <tr>
@@ -494,7 +545,6 @@
                             <tr>
                                 <td class="label-td" colspan="2">
                                     <label for="spec" class="form-label">Choose specialties: </label>
-                                    
                                 </td>
                             </tr>
                             <tr>
@@ -510,16 +560,30 @@
                     $id00 = $row00["id"];
                     echo "<option value=" . $id00 . ">$sn</option><br/>";
                 };
-
-
-
-
                 echo     '       </select><br>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="password" class="form-label">Password: </label>
+                                <br><label for="spec" class="form-label">Choose Languages known: </label>
+                                </td>
+                            </tr>
+                            <td class="label-td" colspan="2">
+                                <div class="dropdown">
+                                    <button class="dropdown-toggle box">Select Languages</button>
+                                    <div class="dropdown-content">
+                                        <label><input type="checkbox" name="language[]" value="English"> English</label><br>
+                                        <label><input type="checkbox" name="language[]" value="Tamil"> Tamil</label><br>
+                                        <label><input type="checkbox" name="language[]" value="Hindi"> Hindi</label><br>
+                                        <label><input type="checkbox" name="language[]" value="Malayalam"> Malayalam</label><br>
+                                        <label><input type="checkbox" name="language[]" value="Kannada"> Kannada</label><br>
+                                        <label><input type="checkbox" name="language[]" value="Telungu"> Telungu</label><br>
+                                    </div>
+                                </div>
+                            </tr>
+                            <tr>
+                                <td class="label-td" colspan="2">
+                                <br><label for="password" class="form-label">Password: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -593,6 +657,8 @@
             $spcil_name = $spcil_array["sname"];
             $nic = $row['docnic'];
             $tele = $row['doctel'];
+            $qualification = $row['qualification'];
+
 
             $error_1 = $_GET["error"];
             $errorlist = array(
@@ -622,7 +688,7 @@
                                     <tr>
                                         <td>
                                             <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Doctor Details</p>
-                                        Doctor ID : ' . $id . ' (Auto Generated)<br><br>
+                                        Doctor ID : D-' . $id . ' (Auto Generated)<br><br>
                                         </td>
                                     </tr>
                                     <tr>
@@ -633,27 +699,38 @@
                                             <input type="hidden" name="oldemail" value="' . $email . '" >
                                         </td>
                                     </tr>
+                                </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
                                         <input type="email" name="email" class="input-text" placeholder="Email Address" value="' . $email . '" required><br>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        
+                                    <tr>  
+                                    <td class="label-td" colspan="2">
+                                        <label for="name" class="form-label">Name: </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-td" colspan="2">
+                                        <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="' . $name . '" required><br>
+                                    </td>
+                                </tr>
+                                    <tr>  
                                         <td class="label-td" colspan="2">
-                                            <label for="name" class="form-label">Name: </label>
+                                            <label for="name" class="form-label">Qualification: </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="' . $name . '" required><br>
+                                            <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="' . $qualification . '" required><br>
                                         </td>
                                         
                                     </tr>
+                                   
                                     
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="nic" class="form-label">NIC: </label>
+                                            <label for="nic" class="form-label">Licence No: </label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -673,7 +750,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="spec" class="form-label">Choose specialties: (Current' . $spcil_name . ')</label>
+                                            <label for="spec" class="form-label">Choose specialties: (Current: ' . $spcil_name . ')</label>
                                             
                                         </td>
                                     </tr>
@@ -765,7 +842,42 @@
 
     ?>
     </div>
+    <script>
+        const toggleButton = document.querySelector('.dropdown-toggle');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
 
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedLanguages);
+        });
+
+        function updateSelectedLanguages() {
+            const selectedLanguages = [];
+            checkboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedLanguages.push(checkbox.value);
+                }
+            });
+            toggleButton.textContent = selectedLanguages.length > 0 ? selectedLanguages.join(', ') : 'Select Languages';
+        }
+
+        function validateForm() {
+            var checkboxes = document.querySelectorAll('input[name="language[]"]');
+            var checked = false;
+
+            checkboxes.forEach(function(checkbox) {
+                if (checkbox.checked) {
+                    checked = true;
+                }
+            });
+
+            if (!checked) {
+                alert("Please select at least one language.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
 </body>
 
 </html>

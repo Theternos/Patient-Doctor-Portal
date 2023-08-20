@@ -114,7 +114,9 @@ body{
 #header-sub-heading{
     font-size: 17px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.5)
+    color: #ffffff80;
+    color: #4c4c4c;
+
     ;
 }
 

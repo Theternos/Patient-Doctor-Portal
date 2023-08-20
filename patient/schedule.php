@@ -30,6 +30,58 @@
             pointer-events: all;
             opacity: 1;
         }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            font-family: Arial, sans-serif;
+        }
+
+        select {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            border: .5px solid #ddd;
+            padding: 5px;
+            width: 150px;
+            background-color: #fff;
+            cursor: pointer;
+            font-size: 13px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #212529e3;
+        }
+
+        .select-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Styling when the dropdown is open */
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+        }
+
+        /* Styling options */
+        option {
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Hover effect on options */
+        option:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .content {
+            margin: 3px;
+        }
     </style>
 </head>
 
@@ -118,7 +170,7 @@
 
     <tr class="menu-row">
         <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
-            <a href="schedule.php" class="non-style-link-menu non-style-link-menu-active">
+            <a href="specialities.php" class="non-style-link-menu non-style-link-menu-active">
                 <div>
                     <p class="menu-text">Book Appointment</p>
                 </div>
@@ -162,7 +214,8 @@
     </div>
     <?php
 
-    $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduledate>='$today'  order by schedule.scheduledate asc";
+    $sid = $_GET["id"];
+    $sqlmain = "SELECT DISTINCT(D.docname), D.* FROM doctor D, `schedule` S, specialties SP WHERE S.title = (SELECT sname from specialties where id = '$sid') and S.docid = D.docid and S.scheduledate >= '$today' ORDER BY D.docname ASC;";
     $sqlpt1 = "";
     $insertkey = "";
     $q = '';
@@ -173,7 +226,7 @@
         if (!empty($_POST["search"])) {
             /*TODO: make and understand */
             $keyword = $_POST["search"];
-            $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where (doctor.docname='$keyword' or doctor.docname like '$keyword%' or doctor.docname like '%$keyword' or doctor.docname like '%$keyword%' or schedule.title='$keyword' or schedule.title like '$keyword%' or schedule.title like '%$keyword' or schedule.title like '%$keyword%')  order by schedule.scheduledate asc";
+            $sqlmain = "SELECT DISTINCT(D.docname), D.* FROM doctor D, `schedule` S, specialties SP WHERE S.title = (SELECT sname from specialties where id = '$sid') and S.docid = D.docid and S.scheduledate >= '$today' and D.docname='$keyword' or D.docname like '$keyword%' or D.docname like '%$keyword' or D.docname like '%$keyword%' or S.title='$keyword' or S.title like '$keyword%' or S.title like '%$keyword' or S.title like '%$keyword%'  order by S.scheduledate asc";
             //echo $sqlmain;
             $insertkey = $keyword;
             $searchtype = "Search Result : ";
@@ -191,7 +244,7 @@
         <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
             <tr>
                 <td width="13%">
-                    <a href="schedule.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                    <a href="specialities.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                             <font class="tn-in-text">Back</font>
                         </button></a>
                 </td>
@@ -252,28 +305,25 @@
 
             <tr>
                 <td colspan="4" style="padding-top:10px;width: 100%;">
-                    <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Sessions" . "(" . $result->num_rows . ")"; ?> </p>
+                    <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Doctors" . "(" . $result->num_rows . ")"; ?> </p>
                     <p class="heading-main12" style="margin-left: 45px;font-size:22px;color:rgb(49, 49, 49)"><?php echo $q . $insertkey . $q; ?> </p>
                 </td>
-
             </tr>
 
 
-
+            <?php
+            $schedule_sql = "SELECT * from specialties where id= '" . $sid . "'";
+            $schedule_result = mysqli_query($database, $schedule_sql);
+            $schedule_row = mysqli_fetch_assoc($schedule_result);
+            ?>
             <tr>
                 <td colspan="4">
                     <center>
                         <div class="abc scroll">
-                            <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none">
-
+                            <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none;">
                                 <tbody>
-
                                     <?php
-
-
-
-
-                                    if ($result->num_rows == 0) {
+                                    if ($result->num_rows == 0 || $schedule_result->num_rows == 0) {
                                         echo '<tr>
                                     <td colspan="4">
                                     <br><br><br><br>
@@ -281,8 +331,8 @@
                                     <img src="../img/notfound.svg" width="25%">
                                     
                                     <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="schedule.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Sessions &nbsp;</font></button>
+                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Oops! We are pleased to say that, there are no doctors available currently.</p>
+                                    <a class="non-style-link" href="specialities.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Specialities &nbsp;</font></button>
                                     </a>
                                     </center>
                                     <br><br><br><br>
@@ -297,16 +347,29 @@
                                                 if (!isset($row)) {
                                                     break;
                                                 };
-                                                $scheduleid = $row["scheduleid"];
-                                                $title = $row["title"];
+                                                $scheduleid = $sid;
                                                 $docname = $row["docname"];
-                                                $scheduledate = $row["scheduledate"];
-                                                $scheduletime = $row["scheduletime"];
+                                                $docid = $row["docid"];
                                                 $totalbooked = $row['nop'];
-
+                                                $qualification = $row['qualification'];
+                                                $licence = $row['docnic'];
+                                                $special_id = $row['specialties'];
                                                 $sqlmain12 = "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.scheduleid='$scheduleid';";
-                                                $result12 = $database->query($sqlmain12);   
+                                                $result12 = $database->query($sqlmain12);
                                                 $seatbooked = $result12->num_rows;
+                                                $selectedVariables[$x] = "₹100";
+                                                $special_sql = "SELECT sname FROM specialties where id = '$special_id'";
+                                                $special_result = $database->query($special_sql);
+                                                $special_row = $special_result->fetch_assoc();
+                                                $speciality = $special_row['sname'];
+                                                $doc_lang = "SELECT `language` from doc_language WHERE docid = '$docid'";
+                                                $doc_lang_result = $database->query($doc_lang);
+                                                $languages = array(); // Initialize an array to hold languages
+
+                                                while ($doc_lang_row = $doc_lang_result->fetch_assoc()) {
+                                                    $languages[] = $doc_lang_row['language'];
+                                                }
+
                                                 if ($seatbooked != 0) {
                                                     $seatleft = $totalbooked - $seatbooked;
                                                 } else {
@@ -314,56 +377,58 @@
                                                 }
                                                 if ($scheduleid == "") {
                                                     break;
-                                                }
+                                                } ?>
 
-                                                echo '
-                                        <td style="width: 25%;">
-                                                <div  class="dashboard-items search-items"  >
-                                                
-                                                    <div style="width:100%">
-                                                            <div class="h1-search">
-                                                                ' . substr($title, 0, 21) . '
-                                                            </div><br>
-                                                            <div class="h3-search">
-                                                                ' . substr($docname, 0, 30) . '
+                                                <td style="width: 25%;">
+                                                    <form action="booking.php" method="post">
+                                                        <div class="dashboard-items search-items" style="background-color: #fdfcfc;">
+                                                            <div style="width:100%" ;>
+                                                                <div class="h1-search">
+                                                                    <div style="display: flex; flex-direction:row; align-items:center">
+                                                                        <div><?php echo  substr($docname, 0, 30) ?></div>&nbsp;
+                                                                        <div style="font-size: 15px; color:#6a6a6a; font-weight:500;">[<?php echo  substr($speciality, 0, 40) ?>]</div>
+                                                                    </div>
+                                                                    <div class="h4-search content">
+                                                                        Qualification: <b> <?php echo substr($qualification, 0, 30) ?></b>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="h4-search content">
+                                                                    Licence No: <b> <?php echo substr($licence, 0, 10) ?></b>
+                                                                </div>
+                                                                <div class="h4-search content">
+                                                                    Languages: <b> <?php echo implode(', ', $languages); ?></b>
+                                                                </div>
+                                                                <div class="custom-select content">
+                                                                    <label style="color:#212529e3; font-size: 13px">Mode: </label>
+                                                                    <select name="modeSelect" class="optionSelect" id="select_<?php echo $q; ?>" onchange="updateConsultationFee('<?php echo $q; ?>')">
+                                                                        <option value="Hospital Visit">Hospital Visit</option>
+                                                                        <option value="Video Consultancy">Video Consultancy</option>
+                                                                    </select>
+                                                                    <div class="select-icon">&#9662;</div>
+                                                                </div>
+                                                                <div class="h4-search content" style="display:flex; flex-direction:row;">
+                                                                    Consultation Fee: <b>
+                                                                        <div class="result" id="result_<?php echo $q; ?>">
+                                                                            &nbsp;<?php echo $selectedVariables[$x]; ?>&nbsp;
+                                                                        </div>
+                                                                    </b>
+                                                                    <black style=" color:#000; font-size:13px">[</black>
+                                                                    <red style="color:red; font-size:13px"> Non-refundable </red>
+                                                                    <black style="color:#000; font-size:13px">]</black>
+                                                                </div>
+                                                                <br>
+                                                                <input type="hidden" name="scheduleid" value='<?php echo $scheduleid ?>'>
+                                                                <input type="hidden" name="docid" value='<?php echo $docid ?>'>
+                                                                <button name='submitButton' id="submitButton" class="login-btn btn-primary-soft btn" style="padding-top:11px;padding-bottom:11px;width:100%">
+                                                                    <font class="tn-in-text">Book Now</font>
+                                                                </button>
                                                             </div>
-                                                            <div class="h4-search">
-                                                            Seats Left: <b>' . substr($seatleft, 0, 5) . '/' . substr($totalbooked, 0, 5) . '</b>
-                                                            </div>
-                                                            <div class="h4-search">
-                                                            Date:    ' . $scheduledate . '<br>Starts: <b>@' . substr($scheduletime, 0, 5) . '</b> (24h)
-                                                            </div>
-                                                            <br>
-                                                            <a id="bookingLink" href="booking.php?id=' . $scheduleid . '" ><button id="submitButton" class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Book Now</font></button></a>                                                            </div>
-                                                            
-                                                </div>
-                                            </td>';
-                                            }
+                                                        </div>
+                                                    </form>
+
+                                                </td>
+                                    <?php    }
                                             echo "</tr>";
-
-
-                                            // echo '<tr>
-                                            //     <td> &nbsp;'.
-                                            //     substr($title,0,30)
-                                            //     .'</td>
-
-                                            //     <td style="text-align:center;">
-                                            //         '.substr($scheduledate,0,10).' '.substr($scheduletime,0,5).'
-                                            //     </td>
-                                            //     <td style="text-align:center;">
-                                            //         '.$nop.'
-                                            //     </td>
-
-                                            //     <td>
-                                            //     <div style="display:flex;justify-content: center;">
-
-                                            //     <a href="?action=view&id='.$scheduleid.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                            //    &nbsp;&nbsp;&nbsp;
-                                            //    <a href="?action=drop&id='.$scheduleid.'&name='.$title.'" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel Session</font></button></a>
-                                            //     </div>
-                                            //     </td>
-                                            // </tr>';
-
                                         }
                                     }
 
@@ -384,7 +449,6 @@
     </div>
 
     </div>
-
 </body>
 <script>
     var seatleft = <?php echo $seatleft ?>;
@@ -392,6 +456,17 @@
 
     if (seatleft === 0) {
         bookingLink.classList.add("disabled-link");
+    }
+</script>
+<script>
+    function updateConsultationFee(scheduleid) {
+        var modeSelect = document.getElementById("select_" + scheduleid);
+        var resultDiv = document.getElementById("result_" + scheduleid);
+
+        var selectedValue = modeSelect.value;
+        var consultationFee = selectedValue === "Hospital Visit" ? "₹100" : "₹250"; // You can adjust the fees based on your actual logic
+
+        resultDiv.innerHTML = "&nbsp;" + consultationFee + "&nbsp;";
     }
 </script>
 
