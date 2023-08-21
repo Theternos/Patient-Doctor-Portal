@@ -58,7 +58,7 @@
 
     $today = date('Y-m-d');
     //TODO
-    $sqlmain = "select appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  patient.pid=$userid and schedule.scheduledate >= '$today'";
+    $sqlmain = "select appointment.roomid,schedule.mode, appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  patient.pid=$userid and schedule.scheduledate >= '$today'";
 
     if ($_POST) {
         //print_r($_POST);
@@ -188,16 +188,6 @@
 
 
             </tr>
-
-            <!-- <tr>
-                    <td colspan="4" >
-                        <div style="display: flex;margin-top: 40px;">
-                        <div class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49);margin-top: 5px;">Schedule a Session</div>
-                        <a href="?action=add-session&id=none&error=0" class="non-style-link"><button  class="login-btn btn-primary btn button-icon"  style="margin-left:25px;background-image: url('../img/icons/add.svg');">Add a Session</font></button>
-                        </a>
-                        </div>
-                    </td>
-                </tr> -->
             <tr>
                 <td colspan="4" style="padding-top:10px;width: 100%;">
 
@@ -247,10 +237,6 @@
                                 <tbody>
 
                                     <?php
-
-
-
-
                                     if ($result->num_rows == 0) {
                                         echo '<tr>
                                     <td colspan="7">
@@ -282,92 +268,92 @@
                                                 $apponum = $row["apponum"];
                                                 $appodate = $row["appodate"];
                                                 $appoid = $row["appoid"];
+                                                $mode = $row["mode"];
+                                                $roomid = $row['roomid'];
 
                                                 if ($scheduleid == "") {
                                                     break;
-                                                }
+                                                } ?>
 
-                                                echo '
-                                            <td style="width: 25%;">
-                                                    <div  class="dashboard-items search-items"  >
+                                                <td style="width: 25%;">
+                                                    <div class="dashboard-items search-items">
 
                                                         <div style="width:100%;">
-                                                        <div class="h3-search">
-                                                                    Booking Date: ' . substr($appodate, 0, 30) . '<br>
-                                                                    Reference Number: OC-000-' . $appoid . '
-                                                                </div>
-                                                                <div class="h1-search">
-                                                                    ' . substr($title, 0, 21) . '<br>
-                                                                </div>
-                                                                <div class="h3-search">
-                                                                    Appointment Number:<div class="h1-search">0' . $apponum . '</div>
-                                                                </div>
-                                                                <div class="h3-search">
-                                                                    ' . substr($docname, 0, 30) . '
-                                                                </div>
+                                                            <div class="h3-search">
+                                                                Booking Date: <?php echo substr($appodate, 0, 30) ?><br>
+                                                                Reference Number: <?php if ($mode == "Hospital Visit") {
+                                                                                        echo 'DC-000-' . $appoid;
+                                                                                    } else {
+                                                                                        echo 'VC-000-' . $appoid;
+                                                                                    } ?>
+                                                            </div>
+                                                            <div class="h1-search" style="display:flex; flex-direction:row; align-items:baseline; color:#006dd3; padding:5px 0 5px 0">
+                                                                <div><?php echo substr($title, 0, 30) ?></div>&nbsp;
+                                                                <div class="h3-search" style="color:#000;"> - <?php echo substr($mode, 0, 30) ?></div>
+                                                            </div>
+                                                            <div class="h3-search" style="display:flex; flex-direction:row; align-items:center;">
+                                                                <div>Appointment Number: &nbsp;</div>
+                                                                <div class="h1-search" style=" padding:0 0 0 0">0<?php echo $apponum ?></div>
+                                                            </div>
+                                                            <div class="h4-search" style="font-size:15px">
+                                                                Doctor Name: <b><?php echo substr($docname, 0, 30) ?></b>
+                                                            </div>
+                                                            <div class="h4-search" style="font-size:15px">
+                                                                Scheduled Date: <b><?php echo $scheduledate ?></b><br>Starts: <b>@<?php echo substr($scheduletime, 0, 5) ?></b> (24h)
+                                                            </div>
+                                                            <br>
+                                                            <div class="h4-search" style="text-align: center; margin-bottom:2vh;font-size:15px">
+                                                                <?php
+                                                                if ($mode == "Video Consultancy") {
+                                                                    if ($roomid == NULL) { ?>
+                                                                        Meeting link will be shared 2 hours before the scheduled time!
+                                                                <?php
+                                                                    } else {
+                                                                        echo '&nbsp;';
+                                                                    }
+                                                                } else {
+                                                                    echo '&nbsp;';
+                                                                }
+                                                                ?>
+                                                            </div>
+                                                            <?php
+                                                            if ($mode == "Video Consultancy") {
+                                                                if ($roomid == NULL) { ?>
+                                                                    <a href="?action=drop&id=<?php echo $appoid ?>&title=<?php echo $title ?>&doc=<?php echo $docname ?>&mode=<?php echo $mode ?>">
+                                                                        <button class="login-btn btn-primary-soft btn " style="padding-top:11px;padding-bottom:11px;width:100%">
+                                                                            <font class="tn-in-text">Cancel Booking</font>
+                                                                        </button>
+                                                                    </a>
+                                                                <?php } else { ?>
+                                                                    <div style="display: flex; flex-direction:row; justify-content:space-around">
+                                                                        <a href="?action=drop&id=<?php echo $appoid ?>&title=<?php echo $title ?>&doc=<?php echo $docname ?>&mode=<?php echo $mode ?>">
+                                                                            <button class="login-btn btn-primary-soft btn " style="padding-top:11px;padding-bottom:11px;width:100%">
+                                                                                <font class="tn-in-text">Cancel Booking</font>
+                                                                            </button>
+                                                                        </a>
+                                                                        <a href='https://peercalls.com/call/<?php echo $roomid ?>' target="_blank">
+                                                                            <button class="login-btn btn-primary-soft btn " style="padding-top:11px;padding-bottom:11px;width:100%">
+                                                                                <font class="tn-in-text">Join Meeting</font>
+                                                                            </button>
+                                                                        </a>
+                                                                    </div>
+                                                                <?php    }
+                                                            } else { ?>
+                                                                <a href="?action=drop&id=<?php echo $appoid ?>&title=<?php echo $title ?>&doc=<?php echo $docname ?>&mode=<?php echo $mode ?>">
+                                                                    <button class="login-btn btn-primary-soft btn " style="padding-top:11px;padding-bottom:11px;width:100%">
+                                                                        <font class="tn-in-text">Cancel Booking</font>
+                                                                    </button>
+                                                                </a>
+                                                            <?php   } ?>
 
-
-                                                                <div class="h4-search">
-                                                                    Scheduled Date: ' . $scheduledate . '<br>Starts: <b>@' . substr($scheduletime, 0, 5) . '</b> (24h)
-                                                                </div>
-                                                                <br>
-                                                                <a href="?action=drop&id=' . $appoid . '&title=' . $title . '&doc=' . $docname . '" ><button  class="login-btn btn-primary-soft btn "  style="padding-top:11px;padding-bottom:11px;width:100%"><font class="tn-in-text">Cancel Booking</font></button></a>
                                                         </div>
 
                                                     </div>
-                                                </td>';
+                                                </td>
+                                    <?php
                                             }
                                             echo "</tr>";
                                         }
-                                        // for ($q = 0; $q < 3; $q++) {
-                                        //     $row = $result->fetch_assoc();
-                                        //     if (!isset($row)) {
-                                        //         break;
-                                        //     };
-                                        //     $scheduleid = $row["scheduleid"];
-                                        //     $title = $row["title"];
-                                        //     $docname = $row["docname"];
-                                        //     $scheduledate = $row["scheduledate"];
-                                        //     $scheduletime = $row["scheduletime"];
-                                        //     $apponum = $row["apponum"];
-                                        //     $appodate = $row["appodate"];
-                                        //     $appoid = $row["appoid"];
-
-                                        //     if ($scheduleid == "") {
-                                        //         break;
-                                        //     }
-
-
-                                        //     echo '<tr >
-                                        //             <td style="font-weight:600;"> &nbsp;' .
-
-                                        //         substr($pname, 0, 25)
-                                        //         . '</td >
-                                        //             <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
-                                        //             ' . $apponum . '
-
-                                        //             </td>
-                                        //             <td>
-                                        //             ' . substr($title, 0, 15) . '
-                                        //             </td>
-                                        //             <td style="text-align:center;;">
-                                        //                 ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletime, 0, 5) . '
-                                        //             </td>
-
-                                        //             <td style="text-align:center;">
-                                        //                 ' . $appodate . '
-                                        //             </td>
-
-                                        //             <td>
-                                        //             <div style="display:flex;justify-content: center;">
-
-                                        //             <!--<a href="?action=view&id=' . $appoid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                        //            &nbsp;&nbsp;&nbsp;-->
-                                        //            <a href="?action=drop&id=' . $appoid . '&name=' . $pname . '&session=' . $title . '&apponum=' . $apponum . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-delete"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Cancel</font></button></a>
-                                        //            &nbsp;&nbsp;&nbsp;</div>
-                                        //             </td>
-                                        //         </tr>';
-                                        // }
                                     }
 
 
@@ -416,6 +402,7 @@
         } elseif ($action == 'drop') {
             $title = $_GET["title"];
             $docname = $_GET["doc"];
+            $modee = $_GET["mode"];
 
             echo '
             <div id="popup1" class="overlay">
@@ -426,7 +413,7 @@
                         <div class="content">
                             You want to Cancel this Appointment?<br>
                             <red style = "color:red; font-size:13px">No Refund will be initiated! </red><br><br>
-                            Session Name: &nbsp;<b>' . substr($title, 0, 40) . '</b><br>
+                            Session Name : &nbsp;<b>' . substr($title, 0, 40) . '</b> - ' . substr($modee, 0, 40) . '<br>
                             Doctor name&nbsp; : <b>' . substr($docname, 0, 40) . '</b><br><br>
                             
                         </div>

@@ -769,10 +769,10 @@ input[type=search]:focus {
   transition: .25s;
 }
 
-
-
-/* table,
-th,
-td {
-  border: 1px solid black;
-} */
+.td-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  color: #006dd3;
+  font-weight: 500;
+  letter-spacing: 1px;
+}

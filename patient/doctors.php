@@ -18,6 +18,16 @@
         .sub-table {
             animation: transitionIn-Y-bottom 0.5s;
         }
+
+        .input-text {
+            height: 35px;
+            margin-bottom: 1vh;
+            border: 0;
+            cursor: pointer;
+            letter-spacing: 1px;
+            font-style: italic;
+            font-weight: 400;
+        }
     </style>
 </head>
 
@@ -335,6 +345,7 @@
             $name = $row["docname"];
             $email = $row["docemail"];
             $spe = $row["specialties"];
+            $qualification = $row["qualification"];
 
             $stmt = $database->prepare("select sname from specialties where id=?");
             $stmt->bind_param("s", $spe);
@@ -355,50 +366,56 @@
                         
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details of ' . $name . '.</p><br><br>
                                 </td>
                             </tr>
                             
                             <tr>
-                                
-                                <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Name: </label>
+                                <td class="td-label" colspan="2">
+                                    <label for="email" class="form-label">Email: </label>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label-td" colspan="2">
-                                    ' . $name . '<br><br>
+                                <td class="label-td input-text" colspan="2">
+                                    ' . $email . '<br><br>
                                 </td>
-                                
                             </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                    <label for="Email" class="form-label">Email: </label>
+                                <td class="td-label" colspan="2">
+                                <label for="licence" class="form-label">Licence No: </label>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label-td" colspan="2">
-                                ' . $email . '<br><br>
+                                <td class="label-td input-text" colspan="2">
+                                    ' . $nic . '<br><br>
                                 </td>
                             </tr>
                             <tr>
-                                <td class="label-td" colspan="2">
-                                    <label for="Tele" class="form-label">Telephone: </label>
+                                <td class="td-label" colspan="2">
+                                <label for="qualification" class="form-label">Qualification: </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label-td input-text" colspan="2">
+                                ' . $qualification . '<br><br>
+                                </td>
+                            </tr>
+                            <!-- <tr>
+                                <td class="td-label" colspan="2">
+                                <label for="Tele" class="form-label">Telephone: </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
                                 ' . $tele . '<br><br>
                                 </td>
-                            </tr>
+                            </tr> -->
                             <tr>
-                                <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label">Specialties: </label>
-                                    
+                                <td class="td-label" colspan="2">
+                                <label for="spec" class="form-label">Specialties: </label>
                                 </td>
                             </tr>
                             <tr>
-                            <td class="label-td" colspan="2">
+                            <td class="label-td input-text" colspan="2">
                             ' . $spcil_name . '<br><br>
                             </td>
                             </tr>

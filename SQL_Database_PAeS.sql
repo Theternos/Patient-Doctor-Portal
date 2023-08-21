@@ -1,30 +1,10 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1:3306
--- Generation Time: Aug 18, 2023 at 09:53 AM
--- Server version: 8.0.31
--- PHP Version: 8.0.26
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `peas`
 --
-CREATE DATABASE IF NOT EXISTS `peas` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
-USE `peas`;
-
+CREATE Database `peas`;
 -- --------------------------------------------------------
-
+use `peas`;
 --
 -- Table structure for table `admin`
 --
@@ -34,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `aemail` varchar(255) NOT NULL,
   `apassword` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`aemail`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+);
 
 --
 -- Dumping data for table `admin`
@@ -57,24 +37,23 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `scheduleid` int DEFAULT NULL,
   `appodate` date DEFAULT NULL,
   `status` int DEFAULT '0',
+  `roomid` varchar(45) DEFAULT NULL,
+  `room_flag` int DEFAULT '0',
   PRIMARY KEY (`appoid`),
   KEY `pid` (`pid`),
   KEY `scheduleid` (`scheduleid`)
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`) VALUES
-(17, 1, 2, 16, '2023-07-13', 1),
-(16, 1, 1, 15, '2023-07-12', 0),
-(18, 1, 1, 17, '2023-07-26', 1),
-(31, 1, 2, 20, '0000-00-00', 0),
-(30, 1, 1, 20, '0000-00-00', 0),
-(45, 1, 1, 22, '0000-00-00', 0),
-(44, 3, 2, 21, '0000-00-00', 0),
-(43, 5, 3, 21, '0000-00-00', 0);
+INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`, `roomid`, `room_flag`) VALUES
+(1, 1, 2, 16, '2023-07-13', 1, NULL, 0),
+(2, 1, 1, 15, '2023-07-12', 0, NULL, 0),
+(3, 1, 1, 17, '2023-07-26', 1, NULL, 0),
+(4, 1, 1, 28, '2023-08-21', 0, NULL, 0),
+(5, 1, 1, 24, '2023-08-21', 0, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -90,18 +69,42 @@ CREATE TABLE IF NOT EXISTS `doctor` (
   `docpassword` varchar(255) DEFAULT NULL,
   `docnic` varchar(15) DEFAULT NULL,
   `doctel` varchar(15) DEFAULT NULL,
+  `qualification` varchar(200) DEFAULT NULL,
   `specialties` int DEFAULT NULL,
   PRIMARY KEY (`docid`),
   KEY `specialties` (`specialties`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `doctor`
 --
 
-INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `specialties`) VALUES
-(1, 'doctor@bitsathy.ac.in', 'Test Doctor', '123', '000000000', '0110000000', 1),
-(2, 'sanjay.ad21@bitsathy.ac.in', 'Sanjay A R', 'vinu', '641879279568', '9826879642', 35);
+INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `qualification`, `specialties`) VALUES
+(1, 'doctor@bitsathy.ac.in', 'Test Doctor', '123', '23456789o', '0110000000', 'MBBS', 1),
+(2, 'sanjay.ad21@bitsathy.ac.in', 'Sanjay A R', 'vinu', '641879279568', '9826879642', 'MBBS, Orthopaedics', 35);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doc_language`
+--
+
+DROP TABLE IF EXISTS `doc_language`;
+CREATE TABLE IF NOT EXISTS `doc_language` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `docid` int DEFAULT NULL,
+  `language` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+);
+
+--
+-- Dumping data for table `doc_language`
+--
+
+INSERT INTO `doc_language` (`id`, `docid`, `language`) VALUES
+(2, 2, 'English'),
+(1, 1, 'English'),
+(3, 2, 'Tamil');
 
 -- --------------------------------------------------------
 
@@ -125,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `metrices` (
   `allergy` varchar(3) DEFAULT 'No',
   PRIMARY KEY (`uid`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
 
 -- --------------------------------------------------------
 
@@ -142,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `others` (
   `designation` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`oid`),
   UNIQUE KEY `oid_UNIQUE` (`oid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
 
 --
 -- Dumping data for table `others`
@@ -169,14 +172,14 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `pdob` date DEFAULT NULL,
   `ptel` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `patient`
 --
 
 INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
-(1, 'patient@bitsathy.ac.in', 'Test Patient', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
+(1, 'patient@bitsathy.ac.in', 'Anusuya J', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
 (3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947'),
 (4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470'),
 (5, 'allwin.cs21@bitsathy.ac.in', 'Allwin G B', '123', 'Gopi', '62033456820', '2004-06-25', '9360639389');
@@ -195,18 +198,22 @@ CREATE TABLE IF NOT EXISTS `schedule` (
   `scheduledate` date DEFAULT NULL,
   `scheduletime` time DEFAULT NULL,
   `nop` int DEFAULT NULL,
+  `mode` varchar(45) DEFAULT NULL,
   `mail_flag` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`scheduleid`),
   KEY `docid` (`docid`)
-) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+);
 
 --
 -- Dumping data for table `schedule`
 --
 
-INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`, `mail_flag`) VALUES
-(21, '2', 'General', '2023-08-17', '21:00:00', 10, 1),
-(22, '1', 'Ortho', '2023-08-18', '08:45:00', 20, 0);
+INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`, `mode`, `mail_flag`) VALUES
+(26, '1', 'Paediatrics', '2023-08-24', '09:00:00', 5, 'Hospital Visit', 0),
+(25, '1', 'Anaesthetics', '2023-08-23', '18:00:00', 10, 'Hospital Visit', 0),
+(24, '2', 'Paediatrics', '2023-08-22', '17:30:00', 2, 'Video Consultancy', 0),
+(27, '2', 'Paediatrics', '2023-08-24', '19:15:00', 3, 'Video Consultancy', 0),
+(28, '2', 'Paediatrics', '2023-08-24', '15:45:00', 4, 'Hospital Visit', 0);
 
 -- --------------------------------------------------------
 
@@ -220,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `specialties` (
   `sname` varchar(50) DEFAULT NULL,
   `imgname` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `specialties`
@@ -295,7 +302,7 @@ CREATE TABLE IF NOT EXISTS `webuser` (
   `email` varchar(255) NOT NULL,
   `usertype` char(1) DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `webuser`
@@ -311,8 +318,3 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('pharmacy@bitsathy.ac.in', 'm'),
 ('anusuya1342004@gmail.com', 'p'),
 ('allwin.cs21@bitsathy.ac.in', 'p');
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
