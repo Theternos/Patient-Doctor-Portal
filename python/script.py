@@ -20,7 +20,7 @@ account_sid = 'AC20a90cf6594e6b7d2318c6bdd79865cc'
 auth_token = '2a6d17d1eebcb02d47d2bef5bd323fab'
 client = Client(account_sid, auth_token)
 
-#Remainder for doctors before 2 hours with slots booked so far
+#Remainder for doctors before 2 hours with slots booked so far  
 if connection.is_connected():
     cursor = connection.cursor()
 
@@ -114,7 +114,7 @@ for row in rows:
         cursor.execute(update_sql)
         message = client.messages.create(
             from_='+18146377570',
-            body="Dont't miss the video consultancy with %s at %s. The meeting link for you is %s . kindly join 5 minutes before the alloted time!" % (doc_name,fetched_time, link),
+            body = "Don't miss the video consultancy with Dr. %s scheduled at %s. The meeting link for your session is %s. NOTE : Kindly join the session before 5minutes of scheduled time." % (doc_name,fetched_time, link),
             to='+91' + patient_tel
         )
         update_sql = "UPDATE appointment SET room_flag = 1 where appoid = %s" % (appoid)

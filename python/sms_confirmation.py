@@ -7,9 +7,19 @@ import sys
     
 doc_name = sys.argv[1]
 app_date = sys.argv[2]
-app_time = sys.argv[3]
+twenty_four_hour_time = sys.argv[3]
 number = sys.argv[4]
 app_num = sys.argv[5]
+
+# doc_name = 'Sanjay A R'
+# app_date = '2023-08-24'
+# twenty_four_hour_time = '17:30:00'
+# number = 8072677947
+# app_num = 2
+
+time_obj = datetime.strptime(twenty_four_hour_time, "%H:%M:%S")
+app_time = time_obj.strftime("%I:%M %p")
+print(app_time)
 
 try:
     connection = mysql.connector.connect(
@@ -28,14 +38,14 @@ client = Client(account_sid, auth_token)
 
 message = client.messages.create(
     from_='+18146377570',
-    body='Your Booking have been confirmed with %s on %s @ %s and your appointment number is %s.' % (doc_name, app_date, app_time, app_num),
+    body='Your Booking have been confirmed with Dr. %s on %s @ %s and your appointment number is %s.' % (doc_name, app_date, app_time, app_num),
     to='+91%s' % (number)
 )
 
 def doc_not_available():
     # import sys  
     # scheduleid = sys.argv[1] 
-    scheduleid = 21
+    scheduleid = 21  #need to be changed
     if connection.is_connected():
         cursor = connection.cursor()
         patient = "select pemail, ptel from `patient` inner join `appointment` on `appointment`.`pid`=`patient`.`pid` where `appointment`.`scheduleid` = %s;" % (scheduleid)

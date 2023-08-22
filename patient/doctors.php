@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
 
     <title>Doctors</title>
     <style>
@@ -366,7 +367,7 @@
                         
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details of ' . $name . '.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details of Dr. ' . $name . '.</p><br><br>
                                 </td>
                             </tr>
                             

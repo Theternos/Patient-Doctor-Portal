@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+
     <title>Sessions</title>
     <style>
         .popup {
@@ -59,7 +61,7 @@
     //learn from w3schools.com
 
     session_start();
-    // error_reporting(0);
+    error_reporting(0);
     date_default_timezone_set('UTC');
 
     if (isset($_SESSION["user"])) {
@@ -374,7 +376,9 @@
                                                                         // Create an associative array to store schedule times by date
                                                                         $scheduleByDate = array();
                                                                         while ($row = $result->fetch_assoc()) {
-                                                                            $scheduleByDate[$row['scheduledate']][] = $row['scheduletime'];
+                                                                            $twentyfourHourtime = $row["scheduletime"];
+                                                                            $scheduletime = date("h:i A", strtotime($twentyfourHourtime));
+                                                                            $scheduleByDate[$row['scheduledate']][] = $row["scheduletime"];
                                                                         }
 
                                                                         for ($rowIndex = 0; $rowIndex < 2; $rowIndex++) { ?>
@@ -411,7 +415,10 @@
                                                                                             ?>
                                                                                                 <div class="select_time_slot" data-scid="<?php echo $scid; ?>">
                                                                                                     <p class="time_slot" data-seats="<?php echo $a . $seatsLeft; ?>" data-apponum="<?php echo $apponum; ?>">
-                                                                                                        <?php echo $time_slot; ?>
+                                                                                                        <?php $time_slot;
+                                                                                                        $scheduletime = date("h:i A", strtotime($time_slot));
+                                                                                                        echo $scheduletime;
+                                                                                                        ?>
                                                                                                     </p>
                                                                                                 </div><?php
                                                                                                     }

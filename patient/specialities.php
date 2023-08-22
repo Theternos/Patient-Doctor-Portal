@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <title>Sessions</title>
@@ -45,12 +46,13 @@
             border: 1px solid #ccc;
             border-radius: 5px;
             margin: 15px;
-            width: 370px;
+            width: 23.3VW;
             text-align: left;
             display: flex;
             flex-direction: row;
             align-items: center;
             color: #000;
+            font-size: 15px;
         }
 
         .special-box img {
@@ -60,6 +62,10 @@
         .special-box:hover {
             border: 1px solid #4c4c4c;
             cursor: pointer;
+        }
+
+        .abc {
+            height: 77vh;
         }
     </style>
 </head>

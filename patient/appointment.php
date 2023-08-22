@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
 
     <title>Appointments</title>
     <style>
@@ -152,7 +153,8 @@
             <a href="settings.php" class="non-style-link-menu">
                 <div>
                     <p class="menu-text">Settings</p>
-            </a></div>
+                </div>
+            </a>
         </td>
     </tr>
     </table>
@@ -161,7 +163,7 @@
         <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
             <tr>
                 <td width="13%">
-                    <a href="appointment.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                    <a href="index.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                             <font class="tn-in-text">Back</font>
                         </button></a>
                 </td>
@@ -264,7 +266,8 @@
                                                 $title = $row["title"];
                                                 $docname = $row["docname"];
                                                 $scheduledate = $row["scheduledate"];
-                                                $scheduletime = $row["scheduletime"];
+                                                $twentyfourHourtime = $row["scheduletime"];
+                                                $scheduletime = date("h:i A", strtotime($twentyfourHourtime));
                                                 $apponum = $row["apponum"];
                                                 $appodate = $row["appodate"];
                                                 $appoid = $row["appoid"];
@@ -299,7 +302,7 @@
                                                                 Doctor Name: <b><?php echo substr($docname, 0, 30) ?></b>
                                                             </div>
                                                             <div class="h4-search" style="font-size:15px">
-                                                                Scheduled Date: <b><?php echo $scheduledate ?></b><br>Starts: <b>@<?php echo substr($scheduletime, 0, 5) ?></b> (24h)
+                                                                Scheduled Date: <b><?php echo $scheduledate ?></b><br>Starts: <b>@<?php echo substr($scheduletime, 0, 8) ?></b>
                                                             </div>
                                                             <br>
                                                             <div class="h4-search" style="text-align: center; margin-bottom:2vh;font-size:15px">
