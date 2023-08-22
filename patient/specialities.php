@@ -13,12 +13,8 @@
 
     <title>Sessions</title>
     <style>
-        .popup {
-            animation: transitionIn-Y-bottom 0.5s;
-        }
-
-        .sub-table {
-            animation: transitionIn-Y-bottom 0.5s;
+        .image-display {
+            animation: transitionIn-Y-over 0.5s;
         }
 
         .disabled-link {

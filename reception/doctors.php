@@ -40,7 +40,7 @@
     session_start();
     error_reporting(0);
     if (isset($_SESSION["user"])) {
-        if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
+        if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'r') {
             header("location: ../login.php");
         } else {
             $useremail = $_SESSION["user"];
@@ -80,56 +80,40 @@
                             </tr>
                         </table>
                     </td>
-
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-home ">
-                        <a href="index.php" class="non-style-link-menu ">
+                    <td class="menu-btn menu-icon-home">
+                        <a href="index.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Home</p>
+                            </div>
                         </a>
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-doctor menu-active menu-icon-doctor-active">
-                        <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active">
+                    <td class="menu-btn menu-icon-add">
+                        <a href="reception-test.php" class="non-style-link-menu ">
+                            <div>
+                                <p class="menu-text">Add Info</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-doctor-active menu-active">
+                        <a href="doctors.php" class="non-style-link-menu-active">
                             <div>
                                 <p class="menu-text">All Doctors</p>
-                        </a>
-                    </td>
-                </tr>
-
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-session">
-                        <a href="specialities.php" class="non-style-link-menu">
-                            <div>
-                                <p class="menu-text">Book Appointment</p>
                             </div>
                         </a>
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-appoinment">
-                        <a href="appointment.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-patient">
+                        <a href="patient.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-recent">
-                        <a href="recent.php" class="non-style-link-menu">
-                            <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text">All Patients</p>
                             </div>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
-                            <div>
-                                <p class="menu-text">Assistant</p>
                         </a>
                     </td>
                 </tr>
@@ -138,6 +122,7 @@
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Settings</p>
+                            </div>
                         </a>
                     </td>
                 </tr>

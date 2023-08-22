@@ -109,15 +109,6 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-recent">
-                        <a href="recent.php" class="non-style-link-menu">
-                            <div>
-                                <p class="menu-text">All Consultancy</p>
-                            </div>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="menu-row">
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
@@ -132,7 +123,7 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr>
                     <td width="13%">
-                        <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                        <a href="reception-test.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                                 <font class="tn-in-text">Back</font>
                             </button></a>
                     </td>
@@ -144,7 +135,8 @@
                             date_default_timezone_set('Asia/Kolkata');
 
                             $date = date('Y-m-d');
-                            $sql11 = "SELECT patient.pname, patient.pemail from patient inner join appointment on patient.pid = appointment.pid where appodate = '$date';";
+                            $sql11 = "SELECT patient.pname, patient.pemail from patient inner join appointment on patient.pid = appointment.pid ORDER BY patient.pname ASC";
+                            echo $sql11;
                             $list11 = $database->query($sql11);
                             for ($y = 0; $y < $list11->num_rows; $y++) {
                                 $row00 = $list11->fetch_assoc();
@@ -159,7 +151,19 @@
                             <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
 
                         </form>
+                        <?php
+                        $a = 1;
+                        if ($_POST) {
+                            $keyword = $_POST["search"];
+                            $a = 0;
+                            $sqlmain = "SELECT patient.pid, doctor.docid, patient.pname, doctor.docname, appointment.apponum, appointment.appoid, schedule.scheduledate, schedule.scheduleid, schedule.scheduletime from appointment inner join patient on patient.pid = appointment.pid inner join schedule on schedule.scheduleid = appointment.scheduleid inner join doctor on doctor.docid = schedule.docid where schedule.scheduledate = '$date' and doctor.docemail='$keyword' or doctor.docname='$keyword' or doctor.docname like '$keyword%' or doctor.docname like '%$keyword' or doctor.docname like '%$keyword%' or patient.pemail='$keyword' or patient.pname='$keyword' or patient.pname like '$keyword%' or patient.pname like '%$keyword' or patient.pname like '%$keyword%' ORDER BY schedule.scheduledate , schedule.scheduletime, appointment.appoid ASC;";
+                        } else {
+                            $a = 1;
+                            $sqlmain = "SELECT patient.pid, doctor.docid, patient.pname, doctor.docname, appointment.apponum, appointment.appoid, schedule.scheduledate, schedule.scheduleid,  schedule.scheduletime from appointment inner join patient on patient.pid = appointment.pid inner join schedule on schedule.scheduleid = appointment.scheduleid inner join doctor on doctor.docid = schedule.docid where schedule.scheduledate = '$date' ORDER BY schedule.scheduledate , schedule.scheduletime, appointment.appoid ASC;";
+                        }
+                        $result = $database->query($sqlmain);
 
+                        ?>
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
@@ -177,20 +181,9 @@
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top:10px;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Appointments (<?php echo $list11->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Appointments (<?php echo $result->num_rows; ?>)</p>
                     </td>
                 </tr>
-                <?php
-                if ($_POST) {
-                    $keyword = $_POST["search"];
-
-                    $sqlmain = "SELECT patient.pid, doctor.docid, patient.pname, doctor.docname, appointment.apponum, appointment.appoid, schedule.scheduledate, schedule.scheduleid, schedule.scheduletime from appointment inner join patient on patient.pid = appointment.pid inner join schedule on schedule.scheduleid = appointment.scheduleid inner join doctor on doctor.docid = schedule.docid where appointment.appodate = '$date' and doctor.docemail='$keyword' or doctor.docname='$keyword' or doctor.docname like '$keyword%' or doctor.docname like '%$keyword' or doctor.docname like '%$keyword%' or patient.pemail='$keyword' or patient.pname='$keyword' or patient.pname like '$keyword%' or patient.pname like '%$keyword' or patient.pname like '%$keyword%'";
-                } else {
-                    $sqlmain = "SELECT patient.pid, doctor.docid, patient.pname, doctor.docname, appointment.apponum, appointment.appoid, schedule.scheduledate, schedule.scheduleid,  schedule.scheduletime from appointment inner join patient on patient.pid = appointment.pid inner join schedule on schedule.scheduleid = appointment.scheduleid inner join doctor on doctor.docid = schedule.docid where appointment.appodate = '$date';";
-                }
-                $sql123 = "SELECT metrices.pid from metrices inner join appointment on appointment.appoid = metrices.appoid";
-                $result123 = $database->query($sql123);
-                ?>
 
                 <tr>
                     <td colspan="4">
@@ -213,21 +206,15 @@
 
                                                 Sheduled Date & Time
                                             </th>
-                                            <?php
-                                            if ($result123->num_rows == null) { ?>
-                                                <th class="table-headin">
-
-                                                    Events
-                                                </th>
-                                            <?php } ?>
+                                            <th class="table-headin">
+                                                Events
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
                                         <?php
 
-
-                                        $result = $database->query($sqlmain);
 
                                         if ($result->num_rows == 0) {
                                             echo '<tr>
@@ -254,23 +241,18 @@
                                                 $docname = $row["docname"];
                                                 $apponum = $row["apponum"];
                                                 $appodate = $row["scheduledate"];
-                                                $appotime = $row["scheduletime"];
+                                                $twentyfourHourtime = $row["scheduletime"];
+                                                $appotime = date("h:i A", strtotime($twentyfourHourtime));
                                                 $scheduleid = $row["scheduleid"];
-                                                echo '<tr>
-                                        <td>
-                                        <center>' . substr($pname, 0, 30) . '</center>
-                                        </td>
-                                        <td>
-                                        <center>' . substr($apponum, 0, 20) . '</center>
-                                        </td>
-                                        <td>
-                                        <center>' . substr($docname, 0, 20) . '</center>
-                                        </td>
-                                        <td>
-                                        <center>' . substr($appodate, 0, 20) . ' <b>@</b> ' . substr($appotime, 0, 20) . '</center>
-                                        </td>
-                                        <td>
-                                        <div style="display:flex;justify-content: center;">';
+                                                $sql123 = "SELECT `uid` from metrices where appoid = '$appoid' and pid = '$pid' and scheduleid = '$scheduleid'";
+                                                $result123 = $database->query($sql123);
+                                                echo '<tr style="height:70px;">
+                                                    <td><center>' . substr($pname, 0, 30) . '</center></td>
+                                                    <td><center>' . substr($apponum, 0, 20) . '</center></td>
+                                                    <td><center>' . substr($docname, 0, 20) . '</center></td>
+                                                    <td><center>' . substr($appodate, 0, 20) . ' <b>@</b> ' . substr($appotime, 0, 20) . '</center></td>
+                                                    <td>
+                                                    <div style="display:flex;justify-content: center;">';
                                                 if ($result123->num_rows == null) {
                                         ?>
                                                     <a href="?action=add&id=<?php echo $pid ?>&appoid=<?php echo $appoid ?>&scheduleid=<?php echo $scheduleid ?>&docid=<?php echo $docid ?>" class="non-style-link">
@@ -278,8 +260,14 @@
                                                             <font class="tn-in-text">Add info</font>
                                                         </button>
                                                     </a>
-                                        <?php }
-                                                echo '&nbsp;&nbsp;&nbsp;
+                                                <?php } else { ?>
+                                                    <a href="?action=edit&id=<?php echo $pid ?>&appoid=<?php echo $appoid ?>&scheduleid=<?php echo $scheduleid ?>&docid=<?php echo $docid ?>" class="non-style-link">
+                                                        <button class="btn-primary-soft btn button-icon btn-edit" style="padding-left: 40px; padding-top: 12px; padding-bottom: 12px; margin-top: 10px;">
+                                                            <font class="tn-in-text">Change&nbsp;</font>
+                                                        </button>
+                                                    </a>
+                                        <?php    }
+                                                echo '
                                         </div>
                                         </td>
                                     </tr>';
@@ -311,7 +299,6 @@
                         <a class="close" href="reception-test.php?action= ">&times;</a>
                         <div style="display: flex;justify-content: center;">
                             <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
-
                                 <tr>
                                     <td>
                                         <p style="padding: 0;margin: 0;text-align: center;font-size: 25px;font-weight: 500;">Add Details.</p><br><br>
@@ -396,6 +383,114 @@
             </div>
         <?php
         }
+        if ($action == 'edit') {
+            $sql123 = "SELECT * FROM peas.metrices WHERE pid = '$pid' AND docid = '$docid' AND scheduleid = '$scheduleid'";
+            echo "$sql123";
+            $result123 = $database->query($sql123);
+            $userfetch = $result123->fetch_assoc();
+            $pid = $userfetch['pid'];
+            $docid = $userfetch['docid'];
+            $appoid = $userfetch['appoid'];
+            $scheduleid = $userfetch['scheduleid'];
+            $height = $userfetch['height'];
+            $weight = $userfetch['weight'];
+            $sugar = $userfetch['sugar'];
+            $blood_pressure = $userfetch['bp'];
+            $temperature = $userfetch['temp'];
+            $reason = $userfetch['reason'];
+            $allergy = $userfetch['allergy'];
+        ?>
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <center>
+                        <h2></h2>
+                        <a class="close" href="reception-test.php?action= ">&times;</a>
+                        <div style="display: flex;justify-content: center;">
+                            <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
+                                <tr>
+                                    <td>
+                                        <p style="padding: 0;margin: 0;text-align: center;font-size: 25px;font-weight: 500;">Edit Details.</p><br><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-td" colspan="2">
+                                        <label for="pid" class="form-label">Patient ID: <?php echo $pid ?></label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-td" colspan="2">
+                                        <label for="name" class="form-label">Patient Name: <?php echo $pname ?></label>
+                                        <br><br>
+                                    </td>
+                                </tr>
+                                <form action="" method="POST">
+                                    <input type="hidden" name="pid" value=<?php echo $pid; ?>>
+                                    <input type="hidden" name="docid" value="<?php echo $docid; ?>">
+                                    <input type="hidden" name="appoid" value="<?php echo $appoid; ?>">
+                                    <input type="hidden" name="scheduleid" value="<?php echo $scheduleid; ?>">
+
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="height" class="form-label">Height:&nbsp; </label>
+                                            <input class="input-text" type="number" name="height" value="<?php echo $height ?>" placeholder="Height in cm" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="weight" class="form-label">Weight:&nbsp;</label>
+                                            <input class="input-text" type="number" name="weight" value="<?php echo $weight ?>" placeholder="Weight in kg" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="sugar" class="form-label">Sugar:&nbsp;&nbsp; </label>
+                                            <input class="input-text" type="number" name="sugar" value="<?php echo $sugar ?>" placeholder="Sugar" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="blood_pressure" class="form-label">BP:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </label>
+                                            <input class="input-text" type="number" name="blood_pressure" value="<?php echo $blood_pressure ?>" placeholder="Blood Pressure" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="temperature" class="form-label">Temp:&nbsp;&nbsp;&nbsp; </label>
+                                            <input class="input-text" type="text" name="temperature" value="<?php echo $temperature ?>" placeholder="Temperature in Farenheit" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="reason" class="form-label">Reason: </label>
+                                            <input class="input-text" type="text" name="reason" value="<?php echo $reason ?>" placeholder="Reason" required>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="spec" class="form-label">Allergy:&nbsp; </label>
+                                            <select name="allergy" class="input-text">
+                                                <option><?php echo $allergy ?></option>
+                                                <option>No</option>
+                                                <option>Yes</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <br>
+                                            <center>
+                                                <button name="edit_info" class="login-btn btn-primary-soft btn">Update</button>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </div>
+                    </center>
+                    <br><br>
+                </div>
+            </div>
+        <?php    }
         if (isset($_POST['add_info'])) {
             $pid = $_POST['pid'];
             $docid = $_POST['docid'];
@@ -415,7 +510,25 @@
             <script>
                 window.location.href = "./reception-test.php";
             </script>
-    <?php }
+        <?php }
+        if (isset($_POST['edit_info'])) {
+            $pid = $_POST['pid'];
+            $docid = $_POST['docid'];
+            $appoid = $_POST['appoid'];
+            $scheduleid = $_POST['scheduleid'];
+            $height = $_POST['height'];
+            $weight = $_POST['weight'];
+            $sugar = $_POST['sugar'];
+            $blood_pressure = $_POST['blood_pressure'];
+            $temperature = $_POST['temperature'];
+            $reason = $_POST['reason'];
+            $allergy = $_POST['allergy'];
+            $sql = "UPDATE `peas`.`metrices` SET height = '$height', `weight` = '$weight', sugar = '$sugar', bp = '$blood_pressure', temp = '$temperature', reason = '$reason', allergy = '$allergy' WHERE appoid = '$appoid' and pid = '$pid'";
+            $result = $database->query($sql); ?>
+            <script>
+                window.location.href = "./reception-test.php";
+            </script>
+    <?php    }
     }; ?>
 
     </div>

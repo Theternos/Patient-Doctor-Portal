@@ -435,7 +435,7 @@ input[type=search]:focus {
 }
 
 .menu-icon-add {
-  background-image: url('../img/icons/add.svg');
+  background-image: url('../img/icons/add1.svg');
   background-size: 23px 23px;
 }
 
@@ -776,3 +776,4 @@ input[type=search]:focus {
   font-weight: 500;
   letter-spacing: 1px;
 }
+

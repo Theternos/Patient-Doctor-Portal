@@ -19,6 +19,20 @@
         .sub-table {
             animation: transitionIn-Y-bottom 0.5s;
         }
+
+        .h3-search {
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 5px;
+        }
+
+        .h3-search b {
+            font-style: italic;
+            letter-spacing: 1px;
+        }
+
+        w {
+            text-align: right;
+        }
     </style>
 </head>
 
@@ -257,7 +271,7 @@
                                     } else {
                                         for ($x = 0; $x < ($result->num_rows); $x++) {
                                             echo "<tr>";
-                                            for ($q = 0; $q < 3; $q++) {
+                                            for ($q = 0; $q < 2; $q++) {
                                                 $row = $result->fetch_assoc();
                                                 if (!isset($row)) {
                                                     break;
@@ -276,36 +290,42 @@
 
                                                 if ($scheduleid == "") {
                                                     break;
-                                                } ?>
-
+                                                }
+                                    ?>
                                                 <td style="width: 25%;">
                                                     <div class="dashboard-items search-items">
-
                                                         <div style="width:100%;">
-                                                            <div class="h3-search">
-                                                                Booking Date: <?php echo substr($appodate, 0, 30) ?><br>
-                                                                Reference Number: <?php if ($mode == "Hospital Visit") {
-                                                                                        echo 'DC-000-' . $appoid;
-                                                                                    } else {
-                                                                                        echo 'VC-000-' . $appoid;
-                                                                                    } ?>
-                                                            </div>
-                                                            <div class="h1-search" style="display:flex; flex-direction:row; align-items:baseline; color:#006dd3; padding:5px 0 5px 0">
-                                                                <div><?php echo substr($title, 0, 30) ?></div>&nbsp;
-                                                                <div class="h3-search" style="color:#000;"> - <?php echo substr($mode, 0, 30) ?></div>
-                                                            </div>
+                                                            <div style="display: flex; flex-direction:row; justify-content:space-between;">
+                                                                <div class="h1-search" style="display:flex; flex-direction:row; align-items:center; justify-content:center; font-size:17px; color:#006dd3; padding:5px 0 10px 0; letter-spacing:.5px;">
+                                                                    <div><?php echo substr($title, 0, 30) ?></div>&nbsp;
+                                                                    <div class="h3-search" style="color:#000; font-size:14px; margin-top:0;"> - <?php echo substr($mode, 0, 30) ?></div>
+                                                                </div>
+                                                                <div>
+                                                                    <div class="h3-search" style="font-size: 12px; display:flex; flex-direction:row; align-items:center; justify-content:flex-end;">
+                                                                        Booking Date: &nbsp;<b><?php echo substr($appodate, 0, 30) ?></b></div>
+                                                                    <div class="h3-search" style="font-size: 12px; display:flex; flex-direction:row; align-items:center; justify-content:flex-end;">
+                                                                        Ref. Number: <b><?php if ($mode == "Hospital Visit") {
+                                                                                            echo '&nbsp;DC-000-' . $appoid;
+                                                                                        } else {
+                                                                                            echo '&nbsp;VC-000-' . $appoid;
+                                                                                        } ?></b>
+                                                                    </div>
+                                                                </div>
+                                                            </div><br>
                                                             <div class="h3-search" style="display:flex; flex-direction:row; align-items:center;">
-                                                                <div>Appointment Number: &nbsp;</div>
-                                                                <div class="h1-search" style=" padding:0 0 0 0">0<?php echo $apponum ?></div>
+                                                                <w>Appointment Number: &nbsp;</w>
+                                                                <w><b style=" padding:0 0 0 0">0<?php echo $apponum ?></b></w>
                                                             </div>
-                                                            <div class="h4-search" style="font-size:15px">
+                                                            <div class="h3-search" style="font-size:15px">
                                                                 Doctor Name: <b><?php echo substr($docname, 0, 30) ?></b>
                                                             </div>
-                                                            <div class="h4-search" style="font-size:15px">
-                                                                Scheduled Date: <b><?php echo $scheduledate ?></b><br>Starts: <b>@<?php echo substr($scheduletime, 0, 8) ?></b>
+                                                            <div class="h3-search" style="font-size:15px">
+                                                                Scheduled Date: <b><?php echo $scheduledate ?></b>
+                                                            </div>
+                                                            <div class="h3-search" style="font-size:15px">Starts: <b>@<?php echo substr($scheduletime, 0, 8) ?></b>
                                                             </div>
                                                             <br>
-                                                            <div class="h4-search" style="text-align: center; margin-bottom:2vh;font-size:15px">
+                                                            <div class="h3-search" style="text-align: center; margin-bottom:2vh;font-size:14px">
                                                                 <?php
                                                                 if ($mode == "Video Consultancy") {
                                                                     if ($roomid == NULL) { ?>
