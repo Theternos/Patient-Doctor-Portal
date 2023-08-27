@@ -1,265 +1,153 @@
--- phpMyAdmin SQL Dump
--- version 5.2.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1:3306
--- Generation Time: Aug 22, 2023 at 07:51 PM
--- Server version: 8.0.31
--- PHP Version: 8.0.26
+CREATE DATABASE `peas`;
 
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Database: `peas`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-DROP TABLE IF EXISTS `admin`;
+DROP TABLE IF EXISTS admin;
 CREATE TABLE IF NOT EXISTS `admin` (
-  `aemail` varchar(255) NOT NULL,
-  `apassword` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`aemail`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  aemail varchar(255) NOT NULL,
+  apassword varchar(255) DEFAULT NULL,
+  PRIMARY KEY (aemail)
+);
 
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`aemail`, `apassword`) VALUES
+INSERT INTO admin (aemail, apassword) VALUES
 ('admin@bitsathy.ac.in', '123');
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS appointment;
+CREATE TABLE IF NOT EXISTS appointment (
+  appoid int NOT NULL AUTO_INCREMENT,
+  pid int DEFAULT NULL,
+  apponum int DEFAULT NULL,
+  scheduleid int DEFAULT NULL,
+  appodate date DEFAULT NULL,
+  status int DEFAULT '0',
+  roomid varchar(45) DEFAULT NULL,
+  room_flag int DEFAULT '0',
+  PRIMARY KEY (appoid),
+  KEY pid (pid),
+  KEY scheduleid (scheduleid)
+) ;
 
---
--- Table structure for table `appointment`
---
 
-DROP TABLE IF EXISTS `appointment`;
-CREATE TABLE IF NOT EXISTS `appointment` (
-  `appoid` int NOT NULL AUTO_INCREMENT,
-  `pid` int DEFAULT NULL,
-  `apponum` int DEFAULT NULL,
-  `scheduleid` int DEFAULT NULL,
-  `appodate` date DEFAULT NULL,
-  `status` int DEFAULT '0',
-  `roomid` varchar(45) DEFAULT NULL,
-  `room_flag` int DEFAULT '0',
-  PRIMARY KEY (`appoid`),
-  KEY `pid` (`pid`),
-  KEY `scheduleid` (`scheduleid`)
-) ENGINE=MyISAM AUTO_INCREMENT=57 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS doctor;
+CREATE TABLE IF NOT EXISTS doctor (
+  docid int NOT NULL AUTO_INCREMENT,
+  docemail varchar(255) DEFAULT NULL,
+  docname varchar(255) DEFAULT NULL,
+  docpassword varchar(255) DEFAULT NULL,
+  docnic varchar(15) DEFAULT NULL,
+  doctel varchar(15) DEFAULT NULL,
+  qualification varchar(200) DEFAULT NULL,
+  specialties int DEFAULT NULL,
+  PRIMARY KEY (docid),
+  KEY specialties (specialties)
+);
 
---
--- Dumping data for table `appointment`
---
-
-INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`, `roomid`, `room_flag`) VALUES
-(1, 1, 2, 16, '2023-07-13', 1, NULL, 0),
-(2, 1, 1, 15, '2023-07-12', 0, NULL, 0),
-(3, 1, 1, 17, '2023-07-26', 1, NULL, 0),
-(4, 1, 1, 28, '2023-08-21', 0, NULL, 0),
-(56, 1, 1, 27, '2023-08-22', 0, NULL, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `doctor`
---
-
-DROP TABLE IF EXISTS `doctor`;
-CREATE TABLE IF NOT EXISTS `doctor` (
-  `docid` int NOT NULL AUTO_INCREMENT,
-  `docemail` varchar(255) DEFAULT NULL,
-  `docname` varchar(255) DEFAULT NULL,
-  `docpassword` varchar(255) DEFAULT NULL,
-  `docnic` varchar(15) DEFAULT NULL,
-  `doctel` varchar(15) DEFAULT NULL,
-  `qualification` varchar(200) DEFAULT NULL,
-  `specialties` int DEFAULT NULL,
-  PRIMARY KEY (`docid`),
-  KEY `specialties` (`specialties`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `doctor`
---
-
-INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `qualification`, `specialties`) VALUES
+INSERT INTO doctor (docid, docemail, docname, docpassword, docnic, doctel, qualification, specialties) VALUES
 (1, 'doctor@bitsathy.ac.in', 'Test Doctor', '123', '23456789o', '0110000000', 'MBBS', 1),
 (2, 'sanjay.ad21@bitsathy.ac.in', 'Sanjay A R', 'vinu', '641879279568', '9826879642', 'MBBS, Orthopaedics', 35);
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS doc_language;
+CREATE TABLE IF NOT EXISTS doc_language (
+  id int NOT NULL AUTO_INCREMENT,
+  docid int DEFAULT NULL,
+  language varchar(100) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ;
 
---
--- Table structure for table `doc_language`
---
-
-DROP TABLE IF EXISTS `doc_language`;
-CREATE TABLE IF NOT EXISTS `doc_language` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `docid` int DEFAULT NULL,
-  `language` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `doc_language`
---
-
-INSERT INTO `doc_language` (`id`, `docid`, `language`) VALUES
+INSERT INTO doc_language (id, docid, language) VALUES
 (2, 2, 'English'),
 (1, 1, 'English'),
 (3, 2, 'Tamil');
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS metrices;
+CREATE TABLE IF NOT EXISTS metrices (
+  uid int NOT NULL AUTO_INCREMENT,
+  pid int DEFAULT NULL,
+  docid int DEFAULT NULL,
+  appoid int DEFAULT NULL,
+  scheduleid int DEFAULT NULL,
+  weight int DEFAULT NULL,
+  height int DEFAULT NULL,
+  sugar varchar(7) DEFAULT NULL,
+  bp varchar(7) DEFAULT NULL,
+  temp varchar(6) DEFAULT NULL,
+  reason varchar(200) DEFAULT NULL,
+  allergy varchar(3) DEFAULT 'No',
+  timestamp datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (uid),
+  UNIQUE KEY uid_UNIQUE (uid)
+) ;
 
---
--- Table structure for table `metrices`
---
-
-DROP TABLE IF EXISTS `metrices`;
-CREATE TABLE IF NOT EXISTS `metrices` (
-  `uid` int NOT NULL AUTO_INCREMENT,
-  `pid` int DEFAULT NULL,
-  `docid` int DEFAULT NULL,
-  `appoid` int DEFAULT NULL,
-  `scheduleid` int DEFAULT NULL,
-  `weight` int DEFAULT NULL,
-  `height` int DEFAULT NULL,
-  `sugar` varchar(7) DEFAULT NULL,
-  `bp` varchar(7) DEFAULT NULL,
-  `temp` varchar(6) DEFAULT NULL,
-  `reason` varchar(200) DEFAULT NULL,
-  `allergy` varchar(3) DEFAULT 'No',
-  `timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`uid`),
-  UNIQUE KEY `uid_UNIQUE` (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Dumping data for table `metrices`
---
-
-INSERT INTO `metrices` (`uid`, `pid`, `docid`, `appoid`, `scheduleid`, `weight`, `height`, `sugar`, `bp`, `temp`, `reason`, `allergy`, `timestamp`) VALUES
-(1, 1, 1, 1, 16, 61, 171, '95', '74', '97.5', 'Cold', 'No', '2023-08-22 23:36:03');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `others`
---
-
-DROP TABLE IF EXISTS `others`;
+DROP TABLE IF EXISTS others;
 CREATE TABLE IF NOT EXISTS `others` (
-  `oid` int NOT NULL AUTO_INCREMENT,
-  `oemail` varchar(100) DEFAULT NULL,
-  `oname` varchar(100) DEFAULT NULL,
-  `opassword` varchar(100) DEFAULT NULL,
-  `designation` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`oid`),
-  UNIQUE KEY `oid_UNIQUE` (`oid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  oid int NOT NULL AUTO_INCREMENT,
+  oemail varchar(100) DEFAULT NULL,
+  oname varchar(100) DEFAULT NULL,
+  opassword varchar(100) DEFAULT NULL,
+  designation varchar(45) DEFAULT NULL,
+  PRIMARY KEY (oid),
+  UNIQUE KEY oid_UNIQUE (oid)
+);
 
---
--- Dumping data for table `others`
---
-
-INSERT INTO `others` (`oid`, `oemail`, `oname`, `opassword`, `designation`) VALUES
+INSERT INTO others (oid, oemail, oname, opassword, designation) VALUES
 (1, 'reception@bitsathy.ac.in', 'Test Reception', '123', 'Receptionist'),
 (2, 'pharmacy@bitsathy.ac.in', 'Test Pharmacy', '123', 'Pharmist');
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS patient;
+CREATE TABLE IF NOT EXISTS patient (
+  pid int NOT NULL AUTO_INCREMENT,
+  pemail varchar(255) DEFAULT NULL,
+  pname varchar(255) DEFAULT NULL,
+  ppassword varchar(255) DEFAULT NULL,
+  paddress varchar(255) DEFAULT NULL,
+  pnic varchar(15) DEFAULT NULL,
+  pdob date DEFAULT NULL,
+  ptel varchar(15) DEFAULT NULL,
+  PRIMARY KEY (pid)
+) ;
 
---
--- Table structure for table `patient`
---
-
-DROP TABLE IF EXISTS `patient`;
-CREATE TABLE IF NOT EXISTS `patient` (
-  `pid` int NOT NULL AUTO_INCREMENT,
-  `pemail` varchar(255) DEFAULT NULL,
-  `pname` varchar(255) DEFAULT NULL,
-  `ppassword` varchar(255) DEFAULT NULL,
-  `paddress` varchar(255) DEFAULT NULL,
-  `pnic` varchar(15) DEFAULT NULL,
-  `pdob` date DEFAULT NULL,
-  `ptel` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`pid`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `patient`
---
-
-INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
-(1, 'patient@bitsathy.ac.in', 'Anusuya J', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
+INSERT INTO patient (pid, pemail, pname, ppassword, paddress, pnic, pdob, ptel) VALUES
+(1, 'patient@bitsathy.ac.in', 'Kavinkumar B', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
 (3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947'),
 (4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470'),
 (5, 'allwin.cs21@bitsathy.ac.in', 'Allwin G B', '123', 'Gopi', '62033456820', '2004-06-25', '9360639389');
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS report;
+CREATE TABLE IF NOT EXISTS report (
+  repid int NOT NULL AUTO_INCREMENT,
+  pid int DEFAULT NULL,
+  docid int DEFAULT NULL,
+  scheduleid int DEFAULT NULL,
+  appoid int DEFAULT NULL,
+  uid int DEFAULT NULL,
+  prescription varbinary(255) DEFAULT '0',
+  report varbinary(255) DEFAULT '0',
+  next_appointment int DEFAULT NULL,
+  PRIMARY KEY (repid)
+) ;
 
---
--- Table structure for table `schedule`
---
 
-DROP TABLE IF EXISTS `schedule`;
+DROP TABLE IF EXISTS schedule;
 CREATE TABLE IF NOT EXISTS `schedule` (
-  `scheduleid` int NOT NULL AUTO_INCREMENT,
-  `docid` varchar(255) DEFAULT NULL,
-  `title` varchar(255) DEFAULT NULL,
-  `scheduledate` date DEFAULT NULL,
-  `scheduletime` time DEFAULT NULL,
-  `nop` int DEFAULT NULL,
-  `mode` varchar(45) DEFAULT NULL,
-  `mail_flag` int NOT NULL DEFAULT '0',
-  PRIMARY KEY (`scheduleid`),
-  KEY `docid` (`docid`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+  scheduleid int NOT NULL AUTO_INCREMENT,
+  docid varchar(255) DEFAULT NULL,
+  title varchar(255) DEFAULT NULL,
+  scheduledate date DEFAULT NULL,
+  scheduletime time DEFAULT NULL,
+  nop int DEFAULT NULL,
+  mode varchar(45) DEFAULT NULL,
+  mail_flag int NOT NULL DEFAULT '0',
+  PRIMARY KEY (scheduleid),
+  KEY docid (docid)
+) ;
 
---
--- Dumping data for table `schedule`
---
+DROP TABLE IF EXISTS specialties;
+CREATE TABLE IF NOT EXISTS specialties (
+  id int NOT NULL,
+  sname varchar(50) DEFAULT NULL,
+  imgname varchar(100) DEFAULT NULL,
+  PRIMARY KEY (id)
+) ;
 
-INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`, `mode`, `mail_flag`) VALUES
-(15, '1', 'Paediatrics', '2023-08-25', '09:00:00', 5, 'Hospital Visit', 0),
-(16, '1', 'Anaesthetics', '2023-08-23', '18:00:00', 10, 'Hospital Visit', 0),
-(17, '2', 'Paediatrics', '2023-08-23', '17:30:00', 2, 'Video Consultancy', 0),
-(27, '2', 'Paediatrics', '2023-08-25', '19:15:00', 3, 'Video Consultancy', 0),
-(28, '2', 'Paediatrics', '2023-08-25', '15:45:00', 4, 'Hospital Visit', 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `specialties`
---
-
-DROP TABLE IF EXISTS `specialties`;
-CREATE TABLE IF NOT EXISTS `specialties` (
-  `id` int NOT NULL,
-  `sname` varchar(50) DEFAULT NULL,
-  `imgname` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `specialties`
---
-
-INSERT INTO `specialties` (`id`, `sname`, `imgname`) VALUES
+INSERT INTO specialties (id, sname, imgname) VALUES
 (1, 'Accident and emergency medicine', '../img/sicon/1.png'),
 (2, 'Allergology', '../img/sicon/2.png'),
 (3, 'Anaesthetics', '../img/sicon/3.png'),
@@ -318,24 +206,14 @@ INSERT INTO `specialties` (`id`, `sname`, `imgname`) VALUES
 (56, 'Venereology', '../img/sicon/56.png'),
 (57, 'General OP', '../img/sicon/57.png');
 
--- --------------------------------------------------------
+DROP TABLE IF EXISTS webuser;
+CREATE TABLE IF NOT EXISTS webuser (
+  email varchar(255) NOT NULL,
+  usertype char(1) DEFAULT NULL,
+  PRIMARY KEY (email)
+) ;
 
---
--- Table structure for table `webuser`
---
-
-DROP TABLE IF EXISTS `webuser`;
-CREATE TABLE IF NOT EXISTS `webuser` (
-  `email` varchar(255) NOT NULL,
-  `usertype` char(1) DEFAULT NULL,
-  PRIMARY KEY (`email`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `webuser`
---
-
-INSERT INTO `webuser` (`email`, `usertype`) VALUES
+INSERT INTO webuser (email, usertype) VALUES
 ('admin@bitsathy.ac.in', 'a'),
 ('doctor@bitsathy.ac.in', 'd'),
 ('patient@bitsathy.ac.in', 'p'),
@@ -345,8 +223,3 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('pharmacy@bitsathy.ac.in', 'm'),
 ('anusuya1342004@gmail.com', 'p'),
 ('allwin.cs21@bitsathy.ac.in', 'p');
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
