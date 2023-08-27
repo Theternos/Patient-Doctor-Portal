@@ -777,3 +777,8 @@ input[type=search]:focus {
   letter-spacing: 1px;
 }
 
+.flex-row {
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-around;
+}

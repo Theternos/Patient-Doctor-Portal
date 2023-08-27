@@ -23,6 +23,26 @@
         .anime {
             animation: transitionIn-Y-bottom 0.5s;
         }
+
+        w {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #006dd3;
+            font-weight: 500;
+        }
+
+        .form-label {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .add-doc-form-container {
+            width: 35vw !important;
+        }
+
+        .login-btn {
+            margin-top: 2vh;
+        }
     </style>
 
 
@@ -221,14 +241,16 @@
                             <tbody>
 
                                 <?php
-
                                 $appoid = $_GET["id"];
                                 $appodate = $_GET["appodate"];
                                 $title = $_GET["session"];
                                 $apponum = $_GET["apponum"];
                                 $docname = $_GET["docname"];
                                 $scheduletime = $_GET["scheduletime"];
+                                $twentyfourHourtime = $_GET["scheduletime"];
+                                $scheduletime = date("h:i A", strtotime($twentyfourHourtime));
                                 $scheduledate = $_GET["scheduledate"];
+                                $scheduleid = $_GET["scheduleid"];
 
                                 echo '<tr >
                                         <td style="font-weight:600;"> &nbsp;' .
@@ -243,7 +265,7 @@
                                         ' . substr($title, 0, 15) . '
                                         </td>
                                         <td style="text-align:center;;">
-                                            ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletime, 0, 5) . '
+                                            ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletime, 0, 8) . '
                                         </td>
                                         
                                         <td style="text-align:center;">
@@ -253,6 +275,97 @@
                                 ?>
                             </tbody>
                         </table>
+                        <?php
+                        $sqlmain = "SELECT * from appointment inner join schedule on schedule.scheduleid = appointment.scheduleid inner join patient on patient.pid = appointment.pid inner join metrices on metrices.appoid=appointment.appoid WHERE appointment.pid = '$userid' and appointment.scheduleid='$scheduleid'";
+                        $result = $database->query($sqlmain);
+                        $row = $result->fetch_assoc();
+                        $pname = $row['pname'];
+                        $pid = $row['pid'];
+                        $weight = $row['weight'];
+                        $height = $row['height'];
+                        $sugar = $row['sugar'];
+                        $bp = $row['bp'];
+                        $temp = $row['temp'];
+                        $allergy = $row['allergy'];
+                        $reason = $row['reason'];
+                        $appoid = $row['appoid'];
+                        $uid = $row['uid']; ?>
+                        <div class="flex-row">
+                            <div class="sub-table scrolldown add-doc-form-container" border="0">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;text-align:center;">Patient Details.</p><br><br>
+                                        </td>
+                                    </tr>
+                                    <div>
+                                        <tr>
+                                            <td class="label-td" colspan="2">
+                                                <label for="pid" class="form-label">
+                                                    <w>Patient Id: </w><?php echo $pid ?>
+                                                </label>
+                                                <label for="name" class="form-label" style="margin-left: 8.5vw;">
+                                                    <w>Name: </w><?php echo $pname ?>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-td" colspan="2">
+                                                <label for="pid" class="form-label">
+                                                    <w>Height: </w><?php echo $height  . ' cm' ?>
+                                                </label>
+                                                <label for="name" class="form-label" style="margin-left: 7.4vw;">
+                                                    <w>Weight: </w><?php echo $weight . ' kg' ?>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-td" colspan="2">
+                                                <label for="pid" class="form-label">
+                                                    <w>Sugar: </w><?php echo $sugar  . ' mM' ?>
+                                                </label>
+                                                <label for="name" class="form-label" style="margin-left: 8vw;">
+                                                    <w>Blood Pressure: </w><?php echo $bp  . ' mmHg' ?>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-td" colspan="2">
+                                                <label for="pid" class="form-label">
+                                                    <w>Temperature: </w><?php echo $temp  . ' °F' ?>
+                                                </label>
+                                                <label for="name" class="form-label" style="margin-left: 4.3vw;">
+                                                    <w>Allergy: </w><?php echo $allergy ?>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label-td" colspan="2">
+                                                <label for="name" class="form-label">
+                                                    <w>Reason: </w><?php echo $reason ?>
+                                                </label>
+                                            </td>
+                                        </tr>
+                                    </div>
+                                </table>
+                            </div>
+                            <div width="30%" class="sub-table scrolldown add-doc-form-container" border="0">
+                                <?php
+                                $sql = "SELECT * from report WHERE pid = '$userid' and appoid = '$appoid' and scheduleid = '$scheduleid'";
+                                $result = $database->query($sql);
+                                $row = $result->fetch_assoc();
+                                $prescription = $row['prescription'];
+                                $report = $row['report'];
+                                ?>
+                                <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;text-align:center;">Prescription & Report.</p><br><br>
+                                <?php if ($prescription != null) { ?>
+                                    <a href="./view-file.php?prescription-view=<?php echo $prescription; ?>"><button class=" login-btn btn-primary-soft btn">View Prescription</button></a><br />
+                                <?php }
+                                if ($report != null) { ?>
+                                    <a href="./view-file.php?report-view=<?php echo $report; ?>"><button class="login-btn btn-primary-soft btn">View Report</button></a>
+                                <?php } ?>
+                            </div>
+                        </div>
                     </div>
                 </center>
             </td>

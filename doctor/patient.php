@@ -62,7 +62,7 @@
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
                                 </td>
                                 <td style="padding:0px;margin:0px;">
-                                    <p class="profile-title"><?php echo substr($username, 0, 13)  ?>..</p>
+                                    <p class="profile-title"><?php echo substr($username, 0, 13)  ?></p>
                                     <p class="profile-subtitle"><?php echo substr($useremail, 0, 22)  ?></p>
                                 </td>
                             </tr>
@@ -79,36 +79,37 @@
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
                                 <p class="menu-text">Dashboard</p>
+                            </div>
                         </a>
-        </div></a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-appoinment">
+                        <a href="appointment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">My Appointments</p>
+                        </a>
+        </div>
         </td>
         </tr>
+
         <tr class="menu-row">
-            <td class="menu-btn menu-icon-appoinment">
-                <a href="appointment.php" class="non-style-link-menu">
+            <td class="menu-btn menu-icon-session">
+                <a href="schedule.php" class="non-style-link-menu">
                     <div>
-                        <p class="menu-text">My Appointments</p>
+                        <p class="menu-text">My Sessions</p>
+                    </div>
+                </a>
+            </td>
+        </tr>
+        <tr class="menu-row">
+            <td class="menu-btn menu-icon-patient menu-active menu-icon-patient-active">
+                <a href="patient.php" class="non-style-link-menu  non-style-link-menu-active">
+                    <div>
+                        <p class="menu-text">My Patients</p>
                 </a>
     </div>
     </td>
-    </tr>
-
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-session">
-            <a href="schedule.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">My Sessions</p>
-                </div>
-            </a>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-patient menu-active menu-icon-patient-active">
-            <a href="patient.php" class="non-style-link-menu  non-style-link-menu-active">
-                <div>
-                    <p class="menu-text">My Patients</p>
-            </a></div>
-        </td>
     </tr>
     <tr class="menu-row">
         <td class="menu-btn menu-icon-settings   ">
@@ -332,7 +333,7 @@
                                             ' . substr($tel, 0, 10) . '
                                         </td>
                                         <td>
-                                        ' . substr($email, 0, 20) . '
+                                        ' . substr($email, 0, 45) . '
                                          </td>
                                         <td>
                                         ' . substr($dob, 0, 10) . '

@@ -254,6 +254,7 @@
                                         $docname = $row["docname"];
                                         $scheduledate = $row["scheduledate"];
                                         $scheduletime = $row["scheduletime"];
+                                        $scheduletimes = date("h:i A", strtotime($scheduletime));
                                         $pname = $row["pname"];
                                         $apponum = $row["apponum"];
                                         $appodate = $row["appodate"];
@@ -270,7 +271,7 @@
                                         ' . substr($title, 0, 15) . '
                                         </td>
                                         <td style="text-align:center;;">
-                                            ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletime, 0, 5) . '
+                                            ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletimes, 0, 8) . '
                                         </td>
                                         
                                         <td style="text-align:center;">
@@ -279,7 +280,7 @@
 
                                         <td>
                                         <div style="display:flex;justify-content: center;">
-                                       <a href="detailed-recent.php?view&id=' . $appoid . '&appodate=' . $appodate . '&session=' . $title . '&apponum=' . $apponum . '&docname=' . $docname . '&scheduledate=' . $scheduledate . '&scheduletime=' . $scheduletime . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                       <a href="detailed-recent.php?view&id=' . $appoid . '&appodate=' . $appodate . '&session=' . $title . '&apponum=' . $apponum . '&docname=' . $docname . '&scheduledate=' . $scheduledate . '&scheduletime=' . $scheduletime . '&scheduleid=' . $scheduleid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
                                        &nbsp;&nbsp;&nbsp;</div>
                                         </td>
                                     </tr>';

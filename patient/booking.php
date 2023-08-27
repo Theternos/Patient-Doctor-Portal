@@ -414,7 +414,7 @@
 
                                                                                             ?>
                                                                                                 <div class="select_time_slot" data-scid="<?php echo $scid; ?>">
-                                                                                                    <p class="time_slot" data-seats="<?php echo $a . $seatsLeft; ?>" data-apponum="<?php echo $apponum; ?>">
+                                                                                                    <p id="slot_booking_time" class="time_slot" data-seats="<?php echo $a . $seatsLeft; ?>" data-apponum="<?php echo $apponum; ?>">
                                                                                                         <?php $time_slot;
                                                                                                         $scheduletime = date("h:i A", strtotime($time_slot));
                                                                                                         echo $scheduletime;
@@ -493,6 +493,7 @@
             </table>
         </div>
         <script>
+            const slot_booking_time = document.getElementById('slot_booking_time');
             // JavaScript to show seats left on hover
             const timeSlots = document.querySelectorAll('.time_slot');
             const popup = document.createElement('div');

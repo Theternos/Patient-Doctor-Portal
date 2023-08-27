@@ -340,27 +340,14 @@
                                                         <td style="text-align:center;">
                                                             ' . substr($scheduletime, 0, 5) . '
                                                         </td>
-
-                
-                                                       
                                                     </tr>';
                                         }
                                     }
-
                                     ?>
-
                                 </tbody>
-
                             </table>
                         </div>
                     </center>
-
-
-
-
-
-
-
                 </td>
             </tr>
         </table>
@@ -369,8 +356,6 @@
             </table>
     </div>
     </div>
-
-
 </body>
 
 </html>

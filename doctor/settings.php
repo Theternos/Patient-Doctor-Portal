@@ -69,7 +69,7 @@
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
                                 </td>
                                 <td style="padding:0px;margin:0px;">
-                                    <p class="profile-title"><?php echo substr($username, 0, 13)  ?>..</p>
+                                    <p class="profile-title"><?php echo substr($username, 0, 13)  ?></p>
                                     <p class="profile-subtitle"><?php echo substr($useremail, 0, 22)  ?></p>
                                 </td>
                             </tr>
@@ -400,6 +400,8 @@
             $spcil_name = $spcil_array["sname"];
             $nic = $row['docnic'];
             $tele = $row['doctel'];
+            $password = $row['docpassword'];
+
 
             $error_1 = $_GET["error"];
             $errorlist = array(
@@ -480,7 +482,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="spec" class="form-label">Choose specialties: (Current' . $spcil_name . ')</label>
+                                            <label for="spec" class="form-label">Choose specialties: (Current ' . $spcil_name . ')</label>
                                             
                                         </td>
                                     </tr>
@@ -511,7 +513,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="password" class="input-text" placeholder="Defind a Password" required><br>
+                                            <input type="password" name="password" value="' . $password . '"class="input-text" placeholder="Defind a Password" required><br>
                                         </td>
                                     </tr><tr>
                                         <td class="label-td" colspan="2">
@@ -520,16 +522,14 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required><br>
+                                            <input type="password" name="cpassword" class="input-text" value="' . $password . '" placeholder="Conform Password" required><br>
                                         </td>
                                     </tr>
                                     
                         
                                     <tr>
-                                        <td colspan="2">
-                                            <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        
-                                            <input type="submit" value="Save" class="login-btn btn-primary btn">
+                                        <td colspan="2" style="display:flex; flex-direction:row; align-items:center; justify-content:center;">                                        
+                                            <input type="submit" value="Update" class="login-btn btn-primary btn">
                                         </td>
                         
                                     </tr>

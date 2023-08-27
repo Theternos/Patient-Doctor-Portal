@@ -386,7 +386,6 @@
                                     <tr>
                                         <td class="label-td" colspan="2"></td>
                                     </tr>
-
                                     <tr>
                                         <td>
                                             <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Add New Session.</p><br>
@@ -418,7 +417,6 @@
                                         <td class="label-td" colspan="2">
                                             <select name="docid" id="" class="box">
                                                 <option value="" disabled selected hidden>Choose Doctor Name from the list</option><br />
-
                                                 <?php
                                                 $list11 = $database->query("select  * from  doctor order by docname asc;");
 
@@ -648,11 +646,7 @@
                                  </thead>
                                  <tbody>';
 
-
-
-
             $result = $database->query($sqlmain12);
-
             if ($result->num_rows == 0) {
                 echo '<tr>
                                              <td colspan="7">
@@ -686,15 +680,10 @@
                         . '</td >
                                                  <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
                                                  ' . $apponum . '
-                                                 
                                                  </td>
                                                  <td>
                                                  ' . substr($ptel, 0, 25) . '
                                                  </td>
-                                                 
-                                                 
-                
-                                                 
                                              </tr>';
                 }
             }
