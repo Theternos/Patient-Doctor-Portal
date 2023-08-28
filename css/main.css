@@ -782,3 +782,13 @@ input[type=search]:focus {
   flex-direction: row !important;
   justify-content: space-around;
 }
+
+.flex-column {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: space-around;
+}
+
+.book-text-button {
+  font-family: 'Montserrat', sans-serif;
+}

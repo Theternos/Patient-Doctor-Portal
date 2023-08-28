@@ -83,7 +83,7 @@
         };
     }
 
-    $sqlmain .= " order by appointment.appodate asc";
+    $sqlmain .= " order by schedule.scheduledate asc";
     $result = $database->query($sqlmain);
     ?>
     <div class="container">
@@ -281,11 +281,16 @@
                                                 $docname = $row["docname"];
                                                 $scheduledate = $row["scheduledate"];
                                                 $twentyfourHourtime = $row["scheduletime"];
-                                                $scheduletime = date("h:i A", strtotime($twentyfourHourtime));
+                                                $mode = $row["mode"];
                                                 $apponum = $row["apponum"];
+                                                if ($mode == 'Video Consultancy') {
+                                                    $timestamp = strtotime($twentyfourHourtime);
+                                                    $updatedTimestamp = $timestamp + (10 * 60 * ($apponum - 1));
+                                                    $scheduletime = date("h:i A", $updatedTimestamp);
+                                                } else
+                                                    $scheduletime = date("h:i A", strtotime($twentyfourHourtime));
                                                 $appodate = $row["appodate"];
                                                 $appoid = $row["appoid"];
-                                                $mode = $row["mode"];
                                                 $roomid = $row['roomid'];
 
                                                 if ($scheduleid == "") {

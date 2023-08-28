@@ -414,12 +414,20 @@
 
                                                                                             ?>
                                                                                                 <div class="select_time_slot" data-scid="<?php echo $scid; ?>">
-                                                                                                    <p id="slot_booking_time" class="time_slot" data-seats="<?php echo $a . $seatsLeft; ?>" data-apponum="<?php echo $apponum; ?>">
-                                                                                                        <?php $time_slot;
-                                                                                                        $scheduletime = date("h:i A", strtotime($time_slot));
-                                                                                                        echo $scheduletime;
-                                                                                                        ?>
-                                                                                                    </p>
+                                                                                                    <?php if ($seatsLeft > 0) { ?>
+                                                                                                        <p id="slot_booking_time" class="time_slot" data-seats="<?php echo $a . $seatsLeft; ?>" data-apponum="<?php echo $apponum; ?>">
+                                                                                                            <?php $time_slot;
+                                                                                                            if ($mode == 'Video Consultancy') {
+                                                                                                                $timestamp = strtotime($time_slot);
+                                                                                                                $updatedTimestamp = $timestamp + (10 * 60 * ($apponum - 1));
+                                                                                                                $scheduletime = date("h:i A", $updatedTimestamp);
+                                                                                                                echo $scheduletime;
+                                                                                                            } else {
+                                                                                                                $scheduletime = date("h:i A", strtotime($time_slot));
+                                                                                                                echo $scheduletime;
+                                                                                                            } ?>
+                                                                                                        </p>
+                                                                                                    <?php } ?>
                                                                                                 </div><?php
                                                                                                     }
                                                                                                         ?>
