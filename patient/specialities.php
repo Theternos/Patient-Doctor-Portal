@@ -10,8 +10,11 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
+    <script src="../js/checkout.js"></script>
+    <?php
+    session_start();
+    error_reporting(0);
+    ?>
 
     <title>Sessions</title>
     <style>
@@ -61,6 +64,11 @@
             border: 1px solid #aaa !important;
         }
 
+        .special-box:hover {
+            transform: scale(1.03);
+            transition: .25s;
+        }
+
         .special-box img {
             margin: 0 20px 0 5px;
         }
@@ -78,6 +86,11 @@
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
             font-size: 25px;
+        }
+
+        .booooking-test:hover {
+            transform: scale(1) !important;
+            transition: 0s !important;
         }
 
         .special-box {
@@ -117,17 +130,15 @@
 
         .billing-cart {
             padding: 5px 8px 5px 8px;
-            border: 1px solid #ccc;
-            box-shadow: 0px 0px 5px #eaeaea;
             border-radius: 5px;
             margin: 15px;
-            width: fit-content;
             text-align: center;
             align-items: center;
             color: #000;
             font-size: 15px;
-            width: 35vw;
-            height: 74vh;
+            width: 95%;
+            max-height: 48vh;
+            min-height: 48vh;
             overflow-y: scroll;
         }
 
@@ -135,26 +146,77 @@
             padding-left: 10px;
         }
 
+        .bill-cart {
+            padding: 5px 8px 5px 8px;
+            border: 1px solid #ccc;
+            box-shadow: 0px 0px 5px #eaeaea;
+            border-radius: 20px;
+            margin: 15px;
+            width: fit-content;
+            text-align: center;
+            align-items: center;
+            color: #000;
+            font-size: 15px;
+            width: 35vw;
+            max-height: 74vh;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .bill-cart h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            margin-left: 10px;
+            letter-spacing: 1px;
+        }
+
         .test-container {
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-bottom: 10px;
-            padding: 5px;
-            border: 1px solid #ccc;
+            margin-bottom: 0px;
+            padding: 0px;
             border-radius: 5px;
-            width: 30VW;
+            border-bottom: 1px solid #ccc;
+            width: 30vw;
             text-align: left;
             color: #000;
             font-size: 15px;
             justify-content: center;
             margin: auto;
-            margin-top: 15px;
+            margin-top: 5px;
+            font-family: 'Montserrat', sans-serif;
+            transition: .1s;
+        }
+
+        .test-container:hover {
+            box-shadow: 0 0px 0px 0 #00000033, 0 0px 3px 0 #00000030;
+            transition: .1s;
         }
 
         #payButton {
             pointer-events: none;
             opacity: .7;
+            cursor: pointer;
+            width: fit-content;
+            padding: 8px 40px 8px 40px;
+            border-radius: 5px;
+            margin: auto;
+            letter-spacing: 1px;
+        }
+
+        .bill-amount {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+
+        .bill-amount span,
+        .bill-amount b {
+            font-weight: 500;
+        }
+
+        .speciality-name-list {
+            min-width: 35vw;
         }
     </style>
 </head>
@@ -164,8 +226,7 @@
 
     //learn from w3schools.com
 
-    session_start();
-    error_reporting(0);
+
 
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
@@ -348,11 +409,19 @@
                 <td>
                     <form action="" method="post" class="header-search">
 
-                        <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
 
-                        <?php
+                        <?php if ($_GET['action'] == null) { ?>
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
+                        <?php } else if ($_GET['action'] == 'book_test') { ?>
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Tests" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
+                        <?php }
+
                         echo '<datalist id="doctors">';
-                        $list11 = $database->query("select DISTINCT * from  doctor;");
+                        if ($_GET['action'] == null) {
+                            $list11 = $database->query("select DISTINCT * from  specialties;");
+                        } else if ($_GET['action'] == 'book_test') {
+                            $list11 = $database->query("select DISTINCT * from  medical_test;");
+                        }
                         $list12 = $database->query("select DISTINCT * from  schedule GROUP BY title;");
 
                         for ($y = 0; $y < $list11->num_rows; $y++) {
@@ -404,7 +473,6 @@
                     <?php } else if ($_GET['action'] == 'book_test') { ?>
                         <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Tests" . "(" . $result->num_rows . ")"; ?> </p>
                     <?php } ?>
-                    <p class="heading-main12" style="margin-left: 45px;font-size:22px;color:rgb(49, 49, 49)"><?php echo $q . $insertkey . $q; ?> </p>
                 </td>
             </tr>
 
@@ -420,7 +488,7 @@
                                         <tr>
                                             <div class="image-display">
                                                 <a href="?action=book_test">
-                                                    <div class="special-box" style="width:73.9vw; padding:0 0 0 0; display:flex; flex-direction: row; justify-content: center;">
+                                                    <div class="special-box booooking-test" style="width:73.9vw; padding:0 0 0 0; display:flex; flex-direction: row; justify-content: center;">
                                                         <img src="../img/sicon/medical-test.png" alt="image" width="55px" height="55px">
                                                         <p class="book-text-button">Book for a Test</p>
                                                     </div>
@@ -461,7 +529,7 @@
                                         </tr>
                                     <?php } else if ($_GET['action'] == 'book_test') { ?>
                                         <div class="flex-row">
-                                            <div>
+                                            <div class="speciality-name-list" style="height: 76vh; overflow-y:scroll; margin-top: 1vh">
                                                 <?php
                                                 $a = 0;
                                                 while ($userrow = $result->fetch_assoc()) {
@@ -485,10 +553,23 @@
                                                 }
                                                 ?>
                                             </div>
-                                            <div class="billing-cart">
-                                                <p class="nothing">No Tests Selected</p>
-                                                <p>Total = ₹<span id="total">0.00</span></p>
-                                                <p id="payButton" style="cursor:pointer;"><img src="../img/payment-btn.png" width="40%"></p>
+                                            <div class="bill-cart">
+                                                <div class="flex-row" style="justify-content: center; border-bottom: 1px solid #ccc; border-radius: 10px;background-color: #202020;color: #eaeaea;">
+                                                    <img src="../img/shoping-cart.svg" alt="" width="25px">
+                                                    <h3>Cart</h3>
+                                                </div>
+                                                <div class="billing-cart">
+                                                    <div id="nothing" style="padding-top: 11vh;">
+                                                        <img src="../img/notfound.svg" width="45%"><br>
+                                                        <p style="color: #4c4c4c;">No Tests Selected</p>
+                                                    </div>
+                                                </div>
+                                                <div class="flex-column" style="border-top: 2px solid #202020;">
+                                                    <p class="bill-amount">Total &nbsp;&nbsp; - &nbsp;&nbsp; <b>₹</b><span id="total">0.00</span></p>
+                                                    <p id="payButton" class="login-btn btn-primary-soft">Checkout</p>
+                                                    <br><br>
+                                                    <p id="payButton1" class="login-btn btn-primary-soft">Pay</p>
+                                                </div>
                                             </div>
                                         </div>
                                     <?php } ?>
@@ -507,7 +588,7 @@
     const addButtons = document.querySelectorAll('.add-btn');
     const removeButtons = document.querySelectorAll('.remove-btn');
     const billingCart = document.querySelector('.billing-cart');
-    const nothing = document.querySelector('.nothing');
+    const nothing1 = document.getElementById('nothing');
     const totalElement = document.getElementById('total');
 
     let totalSum = 0;
@@ -547,6 +628,7 @@
                     if (totalSum <= 0) {
                         payButton.style.pointerEvents = "none";
                         payButton.style.opacity = ".7";
+                        nothing1.style.display = 'block';
                     }
                 })
                 .catch(error => {
@@ -573,6 +655,7 @@
 
             payButton.style.pointerEvents = "auto";
             payButton.style.opacity = "1";
+            nothing1.style.display = 'none';
 
             const removeButton = document.createElement('p');
             removeButton.textContent = 'REMOVE';
@@ -589,18 +672,17 @@
 
             addButton.style.display = 'none';
             removeButtons[index].style.display = 'block';
-            nothing.style.display = 'none';
         });
     });
     console.log('totalSum:', totalSum);
     console.log('totalElement:', totalElement);
 
 
-    const payButton = document.getElementById('payButton');
+    const payButton1 = document.getElementById('payButton1');
 
     const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
 
-    document.getElementById('payButton').addEventListener('click', () => {
+    document.getElementById('payButton1').addEventListener('click', () => {
         const options = {
             key: apiKey,
             amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
