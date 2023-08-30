@@ -95,8 +95,7 @@
     if ($_GET) {
         $payment_id = $_GET['payment_id'];
         $urlid = $_COOKIE['id'];
-        $a = 1;
-        if ($payment_id !== NULL and $a == 1) {
+        if ($payment_id !== NULL) {
             $sqlmain = "select * from schedule inner join doctor on schedule.docid=doctor.docid where schedule.scheduleid=? order by schedule.scheduledate desc";
             $stmt = $database->prepare($sqlmain);
             $stmt->bind_param("i", $urlid);
@@ -114,12 +113,14 @@
             //echo $sql2;
             $result12 = $database->query($sql2);
             $apponum = ($result12->num_rows) + 1;
-            $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
-            $output = shell_exec($command);
-            // echo $command;
-            $sql2 = "insert into appointment(pid,apponum,scheduleid,appodate) values ($userid,$apponum,$scheduleid,'$today')";
-            $result = $database->query($sql2);
-            $a = 0;
+            if (!isset($_COOKIE['insert_flag'])) {
+                $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
+                $output = shell_exec($command);
+                // echo $command;
+                $sql2 = "insert into appointment(pid,apponum,scheduleid,appodate, payment_id) values ($userid,$apponum,$scheduleid,'$today', '$payment_id')";
+                $result = $database->query($sql2);
+                setcookie('insert_flag', '1', time() + (10), "/");
+            }
             header("location: appointment.php?action=booking-added&id=" . $apponum . "&titleget=none");
         }
     }

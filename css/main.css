@@ -1,5 +1,6 @@
 @import url('font-inter.css');
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap');
 
 :root {
   --primarycolor: #0A76D8;
@@ -610,7 +611,7 @@ input[type=search]:focus {
   border: .5px solid #d9d9d99f !important;
   border-radius: 7px;
   background-color: #d8ebfa25;
-  box-shadow: 0 3px 5px 0 rgba(95, 95, 97, 0.3);
+  transition: .1s;
 }
 
 
@@ -686,9 +687,7 @@ input[type=search]:focus {
   padding-left: 30px;
   box-sizing: border-box;
   line-height: 1.5;
-  box-shadow: 0 3px 5px 0 rgba(95, 95, 97, 0.068);
 }
-
 
 .h1-search {
   margin: 0;

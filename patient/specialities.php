@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../js/checkout.js"></script>
     <?php
     session_start();
     error_reporting(0);
@@ -567,8 +566,6 @@
                                                 <div class="flex-column" style="border-top: 2px solid #202020;">
                                                     <p class="bill-amount">Total &nbsp;&nbsp; - &nbsp;&nbsp; <b>₹</b><span id="total">0.00</span></p>
                                                     <p id="payButton" class="login-btn btn-primary-soft">Checkout</p>
-                                                    <br><br>
-                                                    <p id="payButton1" class="login-btn btn-primary-soft">Pay</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -677,41 +674,32 @@
     console.log('totalSum:', totalSum);
     console.log('totalElement:', totalElement);
 
+    const payButton = document.getElementById('payButton');
 
-    const payButton1 = document.getElementById('payButton1');
+    payButton.addEventListener('click', () => {
+        const selectedTests = [];
+        const selectedTestElements = billingCart.querySelectorAll('.test-container');
 
-    const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
+        selectedTestElements.forEach(testContainer => {
+            const testIndex = testContainer.querySelector('p').getAttribute('data-sid');
+            selectedTests.push(testIndex);
+        });
 
-    document.getElementById('payButton1').addEventListener('click', () => {
-        const options = {
-            key: apiKey,
-            amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
-            currency: 'INR',
-            name: 'TEAM SLEEK - PEaS',
-            description: 'Payment for Services',
-            handler: response => {
-                handlePaymentResponse(response);
-            },
-        };
+        if (selectedTests.length > 0) {
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = 'booking_test.php';
 
-        const rzp = new Razorpay(options);
-        rzp.open();
-    });
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'selectedTests';
+            input.value = selectedTests.join(',');
 
-    function calculateDynamicAmount() {
-        return (totalSum * 100);
-    }
-
-    function handlePaymentResponse(response) {
-        // Handle the payment response here
-        console.log('Payment Response:', response);
-
-        if (response.razorpay_payment_id) {
-            alert('Payment successful! Payment ID: ' + response.razorpay_payment_id);
-        } else {
-            alert('Payment failed! Reason: ' + response.error.description);
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
         }
-    }
+    });
 </script>
 <script>
     var seatleft = <?php echo $seatleft ?>;
