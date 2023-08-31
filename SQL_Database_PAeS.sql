@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 30, 2023 at 08:13 PM
+-- Generation Time: Aug 31, 2023 at 07:04 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -72,7 +72,8 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 
 INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`, `roomid`, `room_flag`, `payment_id`, `booking_date`) VALUES
 (1, 1, 1, 28, '2023-08-27', 0, NULL, 0, 'pay_MWO0a9fa7zMPpA', '2023-08-31 00:47:58'),
-(12, 1, 1, 17, '2023-08-31', 0, NULL, 0, 'pay_MWO0a9fa7zMPpU', '2023-08-31 00:47:58');
+(12, 1, 1, 17, '2023-08-31', 0, NULL, 0, 'pay_MWO0a9fa7zMPpU', '2023-08-31 00:47:58'),
+(13, 1, 1, 16, '2023-08-31', 1, NULL, 0, 'pay_MWjFZZNpQksWvp', '2023-08-31 21:12:40');
 
 -- --------------------------------------------------------
 
@@ -114,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `doc_language` (
   `docid` int DEFAULT NULL,
   `language` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-);
+) ;
 
 --
 -- Dumping data for table `doc_language`
@@ -124,6 +125,33 @@ INSERT INTO `doc_language` (`id`, `docid`, `language`) VALUES
 (2, 2, 'English'),
 (1, 1, 'English'),
 (3, 2, 'Tamil');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `laboratory`
+--
+
+DROP TABLE IF EXISTS `laboratory`;
+CREATE TABLE IF NOT EXISTS `laboratory` (
+  `lid` int NOT NULL AUTO_INCREMENT,
+  `lemail` varchar(100) DEFAULT NULL,
+  `lname` varchar(60) DEFAULT NULL,
+  `lpassword` varchar(45) DEFAULT NULL,
+  `llicence` varchar(45) DEFAULT NULL,
+  `ltel` varchar(12) DEFAULT NULL,
+  `lqualification` varchar(220) DEFAULT NULL,
+  `mtid` int DEFAULT NULL,
+  PRIMARY KEY (`lid`),
+  UNIQUE KEY `lid_UNIQUE` (`lid`)
+) ;
+
+--
+-- Dumping data for table `laboratory`
+--
+
+INSERT INTO `laboratory` (`lid`, `lemail`, `lname`, `lpassword`, `llicence`, `ltel`, `lqualification`, `mtid`) VALUES
+(1, 'allwin.cs21@bitsathy.ac.in', 'ALLWIN G B', '123', 'LT684SF648513', '9360639389', 'MLT Associate', 47);
 
 -- --------------------------------------------------------
 
@@ -222,6 +250,13 @@ CREATE TABLE IF NOT EXISTS `metrices` (
   UNIQUE KEY `uid_UNIQUE` (`uid`)
 ) ;
 
+--
+-- Dumping data for table `metrices`
+--
+
+INSERT INTO `metrices` (`uid`, `pid`, `docid`, `appoid`, `scheduleid`, `weight`, `height`, `sugar`, `bp`, `temp`, `reason`, `allergy`, `timestamp`) VALUES
+(1, 1, 1, 13, 16, 72, 197, '104', '94', '100.2', 'Fever', 'No', '2023-08-31 21:14:15');
+
 -- --------------------------------------------------------
 
 --
@@ -273,8 +308,7 @@ CREATE TABLE IF NOT EXISTS `patient` (
 INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
 (1, 'patient@bitsathy.ac.in', 'Kavinkumar B', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
 (3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947'),
-(4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470'),
-(5, 'allwin.cs21@bitsathy.ac.in', 'Allwin G B', '123', 'Gopi', '62033456820', '2004-06-25', '9360639389');
+(4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470');
 
 -- --------------------------------------------------------
 
@@ -323,6 +357,13 @@ CREATE TABLE IF NOT EXISTS `report` (
   PRIMARY KEY (`repid`)
 ) ;
 
+--
+-- Dumping data for table `report`
+--
+
+INSERT INTO `report` (`repid`, `pid`, `docid`, `scheduleid`, `appoid`, `uid`, `prescription`, `report`, `next_appointment`) VALUES
+(1, 1, 1, 16, 13, 1, 0x2e2e2f75706c6f6164732f707265736372697074696f6e2f363466306461616266316531322e706e67, 0x2e2e2f75706c6f6164732f7265706f72742f3131333136363466306461616635643530632e504446, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -351,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 
 INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`, `mode`, `mail_flag`, `leave_status`, `leave_reason`) VALUES
 (15, '1', 'Paediatrics', '2023-09-01', '09:00:00', 2, 'Hospital Visit', 0, 0, NULL),
-(16, '1', 'Anaesthetics', '2023-09-01', '18:00:00', 10, 'Hospital Visit', 0, 0, NULL),
+(16, '1', 'Anaesthetics', '2023-08-31', '18:00:00', 10, 'Hospital Visit', 0, 0, NULL),
 (17, '2', 'Paediatrics', '2023-09-02', '17:30:00', 3, 'Video Consultancy', 0, 0, NULL),
 (27, '2', 'Paediatrics', '2023-08-31', '19:15:00', 2, 'Video Consultancy', 0, 0, NULL),
 (28, '2', 'Paediatrics', '2023-09-03', '15:45:00', 2, 'Hospital Visit', 0, 0, NULL),
@@ -450,15 +491,41 @@ CREATE TABLE IF NOT EXISTS `test_booking` (
   `booked_time` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`),
   UNIQUE KEY `tid_UNIQUE` (`tid`)
-);
+) ;
 
 --
 -- Dumping data for table `test_booking`
 --
 
 INSERT INTO `test_booking` (`tid`, `pid`, `mtid`, `status`, `payment_id`, `booked_time`) VALUES
-(2, 1, 42, 0, 'pay_MWNjiYWIJVmGME', '2023-08-30 16:39:13'),
+(2, 1, 47, 1, 'pay_MWNjiYWIJVmGME', '2023-08-30 16:39:13'),
 (5, 1, 30, 0, 'pay_MWNjiYWIJVmGME', '2023-08-30 20:51:06');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `test_report`
+--
+
+DROP TABLE IF EXISTS `test_report`;
+CREATE TABLE IF NOT EXISTS `test_report` (
+  `trid` int NOT NULL AUTO_INCREMENT,
+  `pid` int DEFAULT NULL,
+  `lid` int DEFAULT NULL,
+  `tid` int DEFAULT NULL,
+  `mtid` int DEFAULT NULL,
+  `file_name` varbinary(255) DEFAULT NULL,
+  `seen_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`trid`),
+  UNIQUE KEY `trid_UNIQUE` (`trid`)
+) ;
+
+--
+-- Dumping data for table `test_report`
+--
+
+INSERT INTO `test_report` (`trid`, `pid`, `lid`, `tid`, `mtid`, `file_name`, `seen_at`) VALUES
+(1, 1, 1, 2, 47, 0x2e2e2f75706c6f6164732f746573742d7265706f72742f31343731363466303562303637353861362e504446, '2023-08-31 14:49:02');
 
 -- --------------------------------------------------------
 
@@ -486,7 +553,7 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('reception@bitsathy.ac.in', 'r'),
 ('pharmacy@bitsathy.ac.in', 'm'),
 ('anusuya1342004@gmail.com', 'p'),
-('allwin.cs21@bitsathy.ac.in', 'p');
+('allwin.cs21@bitsathy.ac.in', 'l');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
