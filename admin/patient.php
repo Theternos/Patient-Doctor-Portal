@@ -72,46 +72,57 @@
                         <a href="index.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Dashboard</p>
+                            </div>
                         </a>
-        </div></a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-doctor ">
+                        <a href="doctors.php" class="non-style-link-menu ">
+                            <div>
+                                <p class="menu-text">Doctors</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-schedule">
+                        <a href="schedule.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Schedule</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-appoinment">
+                        <a href="appointment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Appointment</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-lab">
+                        <a href="laboratory.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Lab Technicians</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-patient  menu-active menu-icon-patient-active">
+                        <a href="patient.php" class="non-style-link-menu  non-style-link-menu-active">
+                            <div>
+                                <p class="menu-text">Patients</p>
+                        </a>
+        </div>
         </td>
         </tr>
-        <tr class="menu-row">
-            <td class="menu-btn menu-icon-doctor ">
-                <a href="doctors.php" class="non-style-link-menu ">
-                    <div>
-                        <p class="menu-text">Doctors</p>
-                </a>
-    </div>
-    </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-schedule">
-            <a href="schedule.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Schedule</p>
-                </div>
-            </a>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-appoinment">
-            <a href="appointment.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Appointment</p>
-            </a></div>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-patient  menu-active menu-icon-patient-active">
-            <a href="patient.php" class="non-style-link-menu  non-style-link-menu-active">
-                <div>
-                    <p class="menu-text">Patients</p>
-            </a></div>
-        </td>
-    </tr>
 
-    </table>
+        </table>
     </div>
     <div class="dash-body">
         <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
@@ -272,7 +283,7 @@
                                             ' . substr($tel, 0, 10) . '
                                         </td>
                                         <td>
-                                        ' . substr($email, 0, 20) . '
+                                        ' . substr($email, 0, 50) . '
                                          </td>
                                         <td>
                                         ' . substr($dob, 0, 10) . '
@@ -370,7 +381,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">NIC: </label>
+                                    <label for="nic" class="form-label">Aadhar No: </label>
                                 </td>
                             </tr>
                             <tr>

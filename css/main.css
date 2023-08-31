@@ -448,7 +448,17 @@ input[type=search]:focus {
   background-image: url('../img/icons/home.svg');
 }
 
+.menu-icon-lab {
+  background-image: url('../img/icons/laboratory.svg');
+  background-size: 23px 23px;
+}
 
+.menu-icon-lab:hover,
+.menu-icon-lab-active {
+  color: var(--primarycolor);
+  background-image: url('../img/icons/laboratory-iceblue.svg');
+  background-size: 23px 23px;
+}
 
 .menu-icon-dashbord:hover,
 .menu-icon-dashbord-active {

@@ -11,7 +11,7 @@
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
 
 
-    <title>Doctors</title>
+    <title>Lab Technician</title>
     <style>
         .popup {
             animation: transitionIn-Y-bottom 0.5s;
@@ -100,180 +100,168 @@
                         <a href="index.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Dashboard</p>
+                            </div>
                         </a>
-        </div></a>
-        </td>
-        </tr>
-        <tr class="menu-row">
-            <td class="menu-btn menu-icon-doctor menu-active menu-icon-doctor-active">
-                <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active">
-                    <div>
-                        <p class="menu-text">Doctors</p>
-                </a>
-    </div>
-    </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-schedule">
-            <a href="schedule.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Schedule</p>
-                </div>
-            </a>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-appoinment">
-            <a href="appointment.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Appointment</p>
-            </a></div>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-lab">
-            <a href="laboratory.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Lab Technicians</p>
-                </div>
-            </a>
-        </td>
-    </tr>
-    <tr class="menu-row">
-        <td class="menu-btn menu-icon-patient">
-            <a href="patient.php" class="non-style-link-menu">
-                <div>
-                    <p class="menu-text">Patients</p>
-            </a></div>
-        </td>
-    </tr>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-doctor">
+                        <a href="doctors.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Doctors</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-schedule">
+                        <a href="schedule.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Schedule</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-appoinment">
+                        <a href="appointment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Appointment</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-lab-active menu-active">
+                        <a href="laboratory.php" class="non-style-link-menu-active">
+                            <div>
+                                <p class="menu-text">Lab Technicians</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-patient">
+                        <a href="patient.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Patients</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
 
-    </table>
-    </div>
-    <div class="dash-body">
-        <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
-            <tr>
-                <td width="13%">
-                    <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                            <font class="tn-in-text">Back</font>
-                        </button></a>
-                </td>
-                <td>
+            </table>
+        </div>
+        <div class="dash-body">
+            <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
+                <tr>
+                    <td width="13%">
+                        <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                                <font class="tn-in-text">Back</font>
+                            </button></a>
+                    </td>
+                    <td>
 
-                    <form action="" method="post" class="header-search">
+                        <form action="" method="post" class="header-search">
 
-                        <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Lab Technician name or Email" list="doctors">&nbsp;&nbsp;
 
-                        <?php
-                        echo '<datalist id="doctors">';
-                        $list11 = $database->query("select  docname,docemail from  doctor;");
+                            <?php
+                            echo '<datalist id="doctors">';
+                            $list11 = $database->query("select lname,lemail from laboratory;");
 
-                        for ($y = 0; $y < $list11->num_rows; $y++) {
-                            $row00 = $list11->fetch_assoc();
-                            $d = $row00["docname"];
-                            $c = $row00["docemail"];
-                            echo "<option value='$d'><br/>";
-                            echo "<option value='$c'><br/>";
-                        };
+                            for ($y = 0; $y < $list11->num_rows; $y++) {
+                                $row00 = $list11->fetch_assoc();
+                                $d = $row00["lname"];
+                                $c = $row00["lemail"];
+                                echo "<option value='$d'><br/>";
+                                echo "<option value='$c'><br/>";
+                            };
 
-                        echo ' </datalist>';
-                        ?>
-
-
-                        <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
-
-                    </form>
-
-                </td>
-                <td width="15%">
-                    <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                        Today's Date
-                    </p>
-                    <p class="heading-sub12" style="padding: 0;margin: 0;">
-                        <?php
-                        date_default_timezone_set('Asia/Kolkata');
-
-                        $date = date('Y-m-d');
-                        echo $date;
-                        ?>
-                    </p>
-                </td>
-                <td width="10%">
-                    <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
-                </td>
+                            echo ' </datalist>';
+                            ?>
 
 
-            </tr>
+                            <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
 
-            <tr>
-                <td colspan="2" style="padding-top:30px;">
-                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Add New Doctor</p>
-                </td>
-                <td colspan="2">
-                    <a href="?action=add&id=none&error=0" class="non-style-link"><button class="login-btn btn-primary btn button-icon btn-add-session" style="display: flex;justify-content: center;align-items: center;margin-left:75px;">Add New</font></button>
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4" style="padding-top:10px;">
-                    <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Doctors (<?php echo $list11->num_rows; ?>)</p>
-                </td>
+                        </form>
 
-            </tr>
-            <?php
-            if ($_POST) {
-                $keyword = $_POST["search"];
+                    </td>
+                    <td width="15%">
+                        <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
+                            Today's Date
+                        </p>
+                        <p class="heading-sub12" style="padding: 0;margin: 0;">
+                            <?php
+                            date_default_timezone_set('Asia/Kolkata');
 
-                $sqlmain = "select * from doctor where docemail='$keyword' or docname='$keyword' or docname like '$keyword%' or docname like '%$keyword' or docname like '%$keyword%'";
-            } else {
-                $sqlmain = "select * from doctor order by docid desc";
-            }
+                            $date = date('Y-m-d');
+                            echo $date;
+                            ?>
+                        </p>
+                    </td>
+                    <td width="10%">
+                        <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                    </td>
 
 
+                </tr>
 
-            ?>
+                <tr>
+                    <td colspan="2" style="padding-top:30px;">
+                        <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Add New Lab Technicians</p>
+                    </td>
+                    <td colspan="2">
+                        <a href="?action=add&id=none&error=0" class="non-style-link"><button class="login-btn btn-primary btn button-icon btn-add-session" style="display: flex;justify-content: center;align-items: center;margin-left:75px ">Add New</font></button>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4" style="padding-top:10px;">
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Lab Technicians (<?php echo $list11->num_rows; ?>)</p>
+                    </td>
 
-            <tr>
-                <td colspan="4">
-                    <center>
-                        <div class="abc scroll">
-                            <table width="93%" class="sub-table scrolldown" border="0">
-                                <thead>
-                                    <tr>
-                                        <th class="table-headin">
+                </tr>
+                <?php
+                if ($_POST) {
+                    $keyword = $_POST["search"];
 
+                    $sqlmain = "select * from laboratory where lname='$keyword' or lname like '$keyword%' or lname like '%$keyword' or lname like '%$keyword%' or lemail='$keyword' or lemail like '$keyword%' or lemail like '%$keyword' or lemail like '%$keyword%'";
+                } else {
+                    $sqlmain = "select * from laboratory order by lid desc";
+                }
+                ?>
 
-                                            Doctor Name
-
-                                        </th>
-                                        <th class="table-headin">
-                                            Email
-                                        </th>
-                                        <th class="table-headin">
-
-                                            Specialties
-
-                                        </th>
-                                        <th class="table-headin">
-
-                                            Events
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <?php
-
-
-                                    $result = $database->query($sqlmain);
-
-                                    if ($result->num_rows == 0) {
-                                        echo '<tr>
+                <tr>
+                    <td colspan="4">
+                        <center>
+                            <div class="abc scroll">
+                                <table width="93%" class="sub-table scrolldown" border="0">
+                                    <thead>
+                                        <tr>
+                                            <th class="table-headin">
+                                                Technician Name
+                                            </th>
+                                            <th class="table-headin">
+                                                Email
+                                            </th>
+                                            <th class="table-headin">
+                                                Specialties
+                                            </th>
+                                            <th class="table-headin">
+                                                Events
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $result = $database->query($sqlmain);
+                                        if ($result->num_rows == 0) {
+                                            echo '<tr>
                                     <td colspan="4">
                                     <br><br><br><br>
                                     <center>
                                     <img src="../img/notfound.svg" width="25%">
-                                    
                                     <br>
                                     <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
                                     <a class="non-style-link" href="doctors.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Doctors &nbsp;</font></button>
@@ -282,20 +270,20 @@
                                     <br><br><br><br>
                                     </td>
                                     </tr>';
-                                    } else {
-                                        for ($x = 0; $x < $result->num_rows; $x++) {
-                                            $row = $result->fetch_assoc();
-                                            $docid = $row["docid"];
-                                            $name = $row["docname"];
-                                            $email = $row["docemail"];
-                                            $spe = $row["specialties"];
-                                            $spcil_res = $database->query("select sname from specialties where id='$spe'");
-                                            $spcil_array = $spcil_res->fetch_assoc();
-                                            $spcil_name = $spcil_array["sname"];
-                                            echo '<tr>
+                                        } else {
+                                            for ($x = 0; $x < $result->num_rows; $x++) {
+                                                $row = $result->fetch_assoc();
+                                                $docid = $row["lid"];
+                                                $name = $row["lname"];
+                                                $email = $row["lemail"];
+                                                $spe = $row["mtid"];
+                                                $spcil_res = $database->query("select tname from medical_test where mtid='$spe'");
+                                                $spcil_array = $spcil_res->fetch_assoc();
+                                                $spcil_name = $spcil_array["tname"];
+                                                echo '<tr>
                                         <td> &nbsp;' .
-                                                substr($name, 0, 30)
-                                                . '</td>
+                                                    substr($name, 0, 30)
+                                                    . '</td>
                                         <td>
                                         ' . substr($email, 0, 30) . '
                                         </td>
@@ -313,23 +301,23 @@
                                         </div>
                                         </td>
                                     </tr>';
+                                            }
                                         }
-                                    }
 
-                                    ?>
+                                        ?>
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
-                        </div>
-                    </center>
-                </td>
-            </tr>
-
+                                </table>
+                            </div>
+                        </center>
+                    </td>
+                </tr>
 
 
-        </table>
-    </div>
+
+            </table>
+        </div>
     </div>
     <?php
     if ($_GET) {
@@ -343,14 +331,14 @@
                     <div class="popup">
                     <center>
                         <h2>Are you sure?</h2>
-                        <a class="close" href="doctors.php">&times;</a>
+                        <a class="close" href="laboratory.php">&times;</a>
                         <div class="content">
-                            You want to delete this record<br>(' . substr($nameget, 0, 40) . ').
+                            You want to remove this Lab Technician<br>(' . substr($nameget, 0, 40) . ').
                             
                         </div>
                         <div style="display: flex;justify-content: center;">
-                        <a href="delete-doctor.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
-                        <a href="doctors.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
+                        <a href="delete-technician.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="laboratory.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
 
                         </div>
                     </center>
@@ -358,24 +346,24 @@
             </div>
             ';
         } elseif ($action == 'view') {
-            $sqlmain = "select * from doctor where docid='$id'";
+            $sqlmain = "select * from laboratory where lid='$id'";
             $result = $database->query($sqlmain);
             $row = $result->fetch_assoc();
-            $name = $row["docname"];
-            $email = $row["docemail"];
-            $spe = $row["specialties"];
+            $name = $row["lname"];
+            $email = $row["lemail"];
+            $spe = $row["mtid"];
 
-            $spcil_res = $database->query("select sname from specialties where id='$spe'");
+            $spcil_res = $database->query("select tname from medical_test where mtid='$spe'");
             $spcil_array = $spcil_res->fetch_assoc();
-            $spcil_name = $spcil_array["sname"];
-            $nic = $row['docnic'];
-            $tele = $row['doctel'];
+            $spcil_name = $spcil_array["tname"];
+            $nic = $row['llicence'];
+            $tele = $row['ltel'];
             echo '
             <div id="popup1" class="overlay">
                     <div class="popup">
                     <center>
                         <h2></h2>
-                        <a class="close" href="doctors.php">&times;</a>
+                        <a class="close" href="laboratory.php">&times;</a>
                         <div style="display: flex;justify-content: center;">
                         <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                         
@@ -437,39 +425,18 @@
                             ' . $spcil_name . '<br><br>
                             </td>
                             </tr>
-                            <tr> '; ?>
-            <tr>
-                <td class="label-td" colspan="2">
-                    <label for="spec" class="form-label">Languages known: </label>
-                </td>
-            </tr>
-            <td class="label-td" colspan="2">
-                <?php
-                $doc_lang = "SELECT `language` from doc_language WHERE docid = '$id'";
-                $doc_lang_result = $database->query($doc_lang);
-                $languages = array(); // Initialize an array to hold languages
-
-                while ($doc_lang_row = $doc_lang_result->fetch_assoc()) {
-                    $languages[] = $doc_lang_row['language'];
-                }
-                echo implode(', ', $languages);
-                ?><br><br>
-            </td>
-            </tr>
+                            <tr> 
             <tr>
                 <td colspan="2">
-                    <a href="doctors.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn"></a>
+                    <a href="laboratory.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn"></a>
                 </td>
-
             </tr>
-
-
             </table>
             </div>
             </center>
             <br><br>
             </div>
-            </div>
+            </div>'; ?>
     <?php
         } elseif ($action == 'add') {
             $error_1 = $_GET["error"];
@@ -487,7 +454,7 @@
                     <div class="popup">
                     <center>
                     
-                        <a class="close" href="doctors.php">&times;</a> 
+                        <a class="close" href="laboratory.php">&times;</a> 
                         <div style="display: flex;justify-content: center;">
                         <div class="abc">
                         <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
@@ -498,19 +465,19 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Add New Doctor.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Add New Lab Technician.</p><br><br>
                                 </td>
                             </tr>
                             
                             <tr>
-                                <form action="add-new.php" method="POST" class="add-new-form" onsubmit="return validateForm();">
+                                <form action="add-new-technician.php" method="POST" class="add-new-form">
                                 <td class="label-td" colspan="2">
                                     <label for="name" class="form-label">Name: </label>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <input type="text" name="name" class="input-text" placeholder="Doctor Name" required><br>
+                                    <input type="text" name="name" class="input-text" placeholder="Technician Name" required><br>
                                 </td>
                                 
                             </tr>
@@ -563,34 +530,16 @@
                                     <select name="spec" id="" class="box" >';
 
 
-                $list11 = $database->query("select  * from  specialties order by sname asc;");
+                $list11 = $database->query("select * from  medical_test order by tname asc;");
 
                 for ($y = 0; $y < $list11->num_rows; $y++) {
                     $row00 = $list11->fetch_assoc();
-                    $sn = $row00["sname"];
-                    $id00 = $row00["id"];
+                    $sn = $row00["tname"];
+                    $id00 = $row00["mtid"];
                     echo "<option value=" . $id00 . ">$sn</option><br/>";
                 };
                 echo     '       </select><br>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                <br><label for="spec" class="form-label">Choose Languages known: </label>
-                                </td>
-                            </tr>
-                            <td class="label-td" colspan="2">
-                                <div class="dropdown">
-                                    <button class="dropdown-toggle box">Select Languages</button>
-                                    <div class="dropdown-content">
-                                        <label><input type="checkbox" name="language[]" value="English"> English</label><br>
-                                        <label><input type="checkbox" name="language[]" value="Tamil"> Tamil</label><br>
-                                        <label><input type="checkbox" name="language[]" value="Hindi"> Hindi</label><br>
-                                        <label><input type="checkbox" name="language[]" value="Malayalam"> Malayalam</label><br>
-                                        <label><input type="checkbox" name="language[]" value="Kannada"> Kannada</label><br>
-                                        <label><input type="checkbox" name="language[]" value="Telungu"> Telungu</label><br>
-                                    </div>
-                                </div>
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
@@ -638,15 +587,15 @@
                             <div class="popup">
                             <center>
                             <br><br><br><br>
-                                <h2>New Record Added Successfully!</h2>
-                                <a class="close" href="doctors.php">&times;</a>
+                                <h2>New Lab Technician Added Successfully!</h2>
+                                <a class="close" href="laboratory.php">&times;</a>
                                 <div class="content">
                                     
                                     
                                 </div>
                                 <div style="display: flex;justify-content: center;">
                                 
-                                <a href="doctors.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
+                                <a href="laboratory.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
 
                                 </div>
                                 <br><br>
@@ -656,19 +605,19 @@
         ';
             }
         } elseif ($action == 'edit') {
-            $sqlmain = "select * from doctor where docid='$id'";
+            $sqlmain = "select * from laboratory where lid='$id'";
             $result = $database->query($sqlmain);
             $row = $result->fetch_assoc();
-            $name = $row["docname"];
-            $email = $row["docemail"];
-            $spe = $row["specialties"];
+            $name = $row["lname"];
+            $email = $row["lemail"];
+            $spe = $row["mtid"];
 
-            $spcil_res = $database->query("select sname from specialties where id='$spe'");
+            $spcil_res = $database->query("select tname from medical_test where mtid='$spe'");
             $spcil_array = $spcil_res->fetch_assoc();
-            $spcil_name = $spcil_array["sname"];
-            $nic = $row['docnic'];
-            $tele = $row['doctel'];
-            $qualification = $row['qualification'];
+            $spcil_name = $spcil_array["tname"];
+            $nic = $row['llicence'];
+            $tele = $row['ltel'];
+            $qualification = $row['lqualification'];
 
 
             $error_1 = $_GET["error"];
@@ -687,7 +636,7 @@
                             <div class="popup">
                             <center>
                             
-                                <a class="close" href="doctors.php">&times;</a> 
+                                <a class="close" href="laboratory.php">&times;</a> 
                                 <div style="display: flex;justify-content: center;">
                                 <div class="abc">
                                 <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
@@ -698,13 +647,13 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Doctor Details</p>
-                                        Doctor ID : D-' . $id . ' (Auto Generated)<br><br>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Lab Technician Details</p>
+                                        Lab Technician ID : LT-' . $id . ' (Auto Generated)<br><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <form action="edit-doc.php" method="POST" class="add-new-form">
+                                            <form action="edit-technician.php" method="POST" class="add-new-form">
                                             <label for="Email" class="form-label">Email: </label>
                                             <input type="hidden" value="' . $id . '" name="id00">
                                             <input type="hidden" name="oldemail" value="' . $email . '" >
@@ -723,17 +672,17 @@
                                 </tr>
                                 <tr>
                                     <td class="label-td" colspan="2">
-                                        <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="' . $name . '" required><br>
+                                        <input type="text" name="name" class="input-text" placeholder="Technician Name" value="' . $name . '" required><br>
                                     </td>
                                 </tr>
                                     <tr>  
                                         <td class="label-td" colspan="2">
-                                            <label for="name" class="form-label">Qualification: </label>
+                                            <label for="qualification" class="form-label">Qualification: </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="' . $qualification . '" required><br>
+                                            <input type="text" name="qualification" class="input-text" placeholder="Qualification" value="' . $qualification . '" required><br>
                                         </td>
                                         
                                     </tr>
@@ -770,17 +719,15 @@
                                             <select name="spec" id="" class="box">';
 
 
-                $list11 = $database->query("select  * from  specialties;");
-
+                $list11 = $database->query("select * from  medical_test ORDER BY tname ASC;");
                 for ($y = 0; $y < $list11->num_rows; $y++) {
                     $row00 = $list11->fetch_assoc();
-                    $sn = $row00["sname"];
-                    $id00 = $row00["id"];
+                    $sn = $row00["tname"];
+                    $id00 = $row00["mtid"];
                     echo "<option value=" . $id00 . ">$sn</option><br/>";
                 };
-
-
-
+                $pass_result = $database->query("select lpassword from laboratory WHERE lid = '$id'");
+                $pass_row = $pass_result->fetch_assoc();
 
                 echo     '       </select><br><br>
                                         </td>
@@ -792,16 +739,16 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="password" class="input-text" placeholder="Defind a Password" required><br>
+                                            <input type="password" name="password" value=' . $pass_row['lpassword'] . ' class="input-text" placeholder="Defind a Password" required><br>
                                         </td>
                                     </tr><tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="cpassword" class="form-label">Conform Password: </label>
+                                            <label for="cpassword" class="form-label">Confirm Password: </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required><br>
+                                            <input type="password" name="cpassword" value=' . $pass_row['lpassword'] . ' class="input-text" placeholder="Confirm Password" required><br>
                                         </td>
                                     </tr>
                                     
@@ -831,15 +778,15 @@
                         <div class="popup">
                         <center>
                         <br><br><br><br>
-                            <h2>Edit Successfully!</h2>
-                            <a class="close" href="doctors.php">&times;</a>
+                            <h2>Edited Successfully!</h2>
+                            <a class="close" href="laboratory.php">&times;</a>
                             <div class="content">
                                 
                                 
                             </div>
                             <div style="display: flex;justify-content: center;">
                             
-                            <a href="doctors.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
+                            <a href="laboratory.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
 
                             </div>
                             <br><br>
@@ -853,42 +800,6 @@
 
     ?>
     </div>
-    <script>
-        const toggleButton = document.querySelector('.dropdown-toggle');
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateSelectedLanguages);
-        });
-
-        function updateSelectedLanguages() {
-            const selectedLanguages = [];
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    selectedLanguages.push(checkbox.value);
-                }
-            });
-            toggleButton.textContent = selectedLanguages.length > 0 ? selectedLanguages.join(', ') : 'Select Languages';
-        }
-
-        function validateForm() {
-            var checkboxes = document.querySelectorAll('input[name="language[]"]');
-            var checked = false;
-
-            checkboxes.forEach(function(checkbox) {
-                if (checkbox.checked) {
-                    checked = true;
-                }
-            });
-
-            if (!checked) {
-                alert("Please select at least one language.");
-                return false;
-            }
-
-            return true;
-        }
-    </script>
 </body>
 
 </html>

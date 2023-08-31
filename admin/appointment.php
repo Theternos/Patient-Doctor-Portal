@@ -104,6 +104,15 @@
         </td>
     </tr>
     <tr class="menu-row">
+        <td class="menu-btn menu-icon-lab">
+            <a href="laboratory.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Lab Technicians</p>
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr class="menu-row">
         <td class="menu-btn menu-icon-patient">
             <a href="patient.php" class="non-style-link-menu">
                 <div>
