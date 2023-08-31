@@ -36,22 +36,23 @@ echo $prescription_name . '<br>';
 $uploadDirectory = '../uploads/report/' . $pid . $appoid . $scheduleid; // Specify the directory where you want to store uploaded files
 echo $uploadDirectory . '<br>';
 $uploadedFile = $_FILES['uploadedFile']['name'];
-$fileExtension = pathinfo($uploadedFile, PATHINFO_EXTENSION);
+if ($uploadedFile) {
+    $fileExtension = pathinfo($uploadedFile, PATHINFO_EXTENSION);
 
-// Generate a unique random name for the uploaded file
-$randomFileName = uniqid() . '.' . $fileExtension;
+    // Generate a unique random name for the uploaded file
+    $randomFileName = uniqid() . '.' . strtoupper($fileExtension);
 
-$uploadPath = $uploadDirectory . $randomFileName;
-print_r($_FILES);
-if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $uploadPath)) {
-    echo "File uploaded successfully!";
-} else {
-    echo "Error uploading file.";
+    $uploadPath = $uploadDirectory . $randomFileName;
+    print_r($_FILES);
+    if (move_uploaded_file($_FILES['uploadedFile']['tmp_name'], $uploadPath)) {
+        echo "File uploaded successfully!";
+    } else {
+        echo "Error uploading file.";
+    }
 }
-$sql = "INSERT INTO report (pid, docid, scheduleid, appoid, `uid`, prescription, report, next_appointment) VALUES ('$pid', '$userid', '$scheduleid', '$appoid', '$uid', '$prescription_name', '$uploadPath', '$next_appointment')";
+$sqll = "INSERT INTO report (pid, docid, scheduleid, appoid, `uid`, prescription, report, next_appointment) VALUES ('$pid', '$userid', '$scheduleid', '$appoid', '$uid', '$prescription_name', '$uploadPath', '$next_appointment')";
 echo $sql;
+$sql = "UPDATE appointment SET `status` = 1 WHERE appoid = $appoid";
+$result = $database->query($sqll);
 $result = $database->query($sql);
 header("location: appointment.php");
-$sql = "UPDATE appointment SET `status` = 1 WHERE appoid = $appoid";
-$result = $database->query($sql);
-?>

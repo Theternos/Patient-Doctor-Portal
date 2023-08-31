@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
-    <script src="../js/jquery-min.js"></script>
     <script src="../js/pdfobject-min.js"></script>
 
     <title>Consultancy</title>
@@ -26,9 +25,25 @@
             animation: transitionIn-Y-bottom 0.5s;
         }
 
-        .pdfobject-container {
-            height: 75vh;
-            width: 80vw;
+        w {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #006dd3;
+            font-weight: 500;
+        }
+
+        .form-label {
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .add-doc-form-container {
+            width: 73vw !important;
+            height: 70vh;
+        }
+
+        .login-btn {
+            margin-top: 2vh;
         }
     </style>
 
@@ -65,9 +80,11 @@
 
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
-    $report = $_GET['report-view'];
-    $file = $_GET['prescription-view'];
 
+
+
+    //echo $userid;
+    //echo $username;
 
     ?>
     <div class="container">
@@ -111,9 +128,10 @@
                         </a>
                     </td>
                 </tr>
+
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu">
+                        <a href="specialities.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Book Appointment</p>
                             </div>
@@ -130,8 +148,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-recent menu-active menu-icon-recent-active">
-                        <a href="recent.php" class="non-style-link-menu non-style-link-menu-active">
+                    <td class="menu-btn menu-icon-recent">
+                        <a href="recent.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Recent Consultancy</p>
                             </div>
@@ -139,8 +157,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-test">
-                        <a href="recent_tests.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test-active menu-active">
+                        <a href="recent_tests.php" class="non-style-link-menu-active">
                             <div>
                                 <p class="menu-text">Analysis History</p>
                             </div>
@@ -159,16 +177,15 @@
             </table>
         </div>
         <div class="dash-body">
-            <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
+            <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0; ">
                 <tr>
                     <td width="13%">
-                        <a href="recent.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                        <a href="recent_tests.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                                 <font class="tn-in-text">Back</font>
                             </button></a>
                     </td>
                     <td>
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Recent Consultancy</p>
-
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">View Report</p>
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
@@ -190,24 +207,73 @@
                 </tr>
             </table>
             <tr>
-                <?php
-                if ($report != null) { ?>
-                    <div class="container" style="padding:10px 10px; margin-top:0;">
-                        <div id="header"></div>
-                        <div id="pdf_view" class=" pdfobject-container"><embed class="pdfobject" src='<?php echo $report ?>' type="application/pdf" style="overflow: auto; width: 100%; height:70vh;"></div>
-                        <div id="footer"></div>
-                    </div>
-                <?php } else if ($file != null) { ?>
-                    <div style='margin:4vh 0 0 7vw'>
-                        <img src=<?php echo $file ?> alt="Prescription File">
-                    </div>
-                <?php    } ?>
+                <td colspan="4">
+                    <center>
+                        <div style="height: 72vh;">
+                            <table width="93%" class="sub-table scrolldown" border="0">
+                                <thead>
+                                    <tr>
+                                        <th class="table-headin">
+                                            Lab Technician Name
+                                        </th>
+                                        <th class="table-headin">
+                                            Session Title
+                                        </th>
+                                        <th class="table-headin">
+                                            Booked Date
+                                        </th>
+                                        <th class="table-headin">
+                                            Analysis Date
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php
+                                    $lname = $_GET['lname'];
+                                    $tname = $_GET['tname'];
+                                    $booked_time = $_GET['booked_time'];
+                                    $seen_at = $_GET['seen_at'];
+                                    $file_name = $_GET['file_name'];
+                                    echo '<tr >
+                                <td style="text-align:center;"> &nbsp;' .
+
+                                        substr($lname, 0, 25)
+                                        . '</td >
+
+                                <td style="font-weight:600;text-align:center;">
+                                ' . substr($tname, 0, 15) . '
+                                </td>
+                                <td style="text-align:center;">
+                                    ' . substr($booked_time, 0, 10) . '
+                                </td>
+                                
+                                <td style="text-align:center;">
+                                    ' . substr($seen_at, 0, 10) . '
+                                </td>
+
+                                <td>
+
+                                    </tr>';
+                                    ?>
+                                </tbody>
+                            </table>
+                            <div class="add-doc-form-container" style="padding-left: 0;">
+                                <div class="container">
+                                    <div id="pdf_view" class=" pdfobject-container"><embed class="pdfobject" src='<?php echo $file_name ?>' type="application/pdf" style="overflow: auto; width: 73vw; height:70vh"></div>
+                                    <div id="footer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </center>
+                </td>
             </tr>
         </div>
+
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-        PDFObject.embed("<?php echo $report; ?>", "#pdf_view");
+        PDFObject.embed("<?php echo $file_name; ?>", "#pdf_view");
     });
 </script>
 

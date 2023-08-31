@@ -453,6 +453,18 @@ input[type=search]:focus {
   background-size: 23px 23px;
 }
 
+.menu-icon-test {
+  background-image: url('../img/icons/test-history.svg');
+  background-size: 23px 23px;
+}
+
+.menu-icon-test:hover,
+.menu-icon-test-active {
+  color: var(--primarycolor);
+  background-image: url('../img/icons/test-history-iceblue.svg');
+  background-size: 23px 23px;
+}
+
 .menu-icon-lab:hover,
 .menu-icon-lab-active {
   color: var(--primarycolor);
@@ -685,6 +697,10 @@ input[type=search]:focus {
 }
 
 .pharmacy-header {
+  background-image: url(../img/b4.jpg);
+}
+
+.laboratory-header {
   background-image: url(../img/b4.jpg);
 }
 

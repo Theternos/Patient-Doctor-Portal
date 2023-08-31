@@ -30,7 +30,7 @@
     session_start();
 
     if (isset($_SESSION["user"])) {
-        if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'd') {
+        if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'l') {
             header("location: ../login.php");
         } else {
             $useremail = $_SESSION["user"];
@@ -42,10 +42,10 @@
 
     //import database
     include("../connection.php");
-    $userrow = $database->query("select * from doctor where docemail='$useremail'");
+    $userrow = $database->query("select * from laboratory where lemail='$useremail'");
     $userfetch = $userrow->fetch_assoc();
-    $userid = $userfetch["docid"];
-    $username = $userfetch["docname"];
+    $userid = $userfetch["lid"];
+    $username = $userfetch["lname"];
 
 
     //echo $userid;
@@ -75,10 +75,10 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-dashbord">
-                        <a href="index.php" class="non-style-link-menu ">
+                    <td class="menu-btn menu-icon-home">
+                        <a href="index.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Dashboard</p>
+                                <p class="menu-text">Home</p>
                             </div>
                         </a>
                     </td>
@@ -87,32 +87,22 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Appointments</p>
+                                <p class="menu-text">My Appointment</p>
                             </div>
                         </a>
                     </td>
                 </tr>
-
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-patient-active menu-active">
+                        <a href="patients.php" class="non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">My Sessions</p>
+                                <p class="menu-text">Patients</p>
                             </div>
                         </a>
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-patient menu-active menu-icon-patient-active">
-                        <a href="patient.php" class="non-style-link-menu  non-style-link-menu-active">
-                            <div>
-                                <p class="menu-text">My Patients</p>
-                            </div>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-settings   ">
+                    <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Settings</p>
@@ -120,7 +110,6 @@
                         </a>
                     </td>
                 </tr>
-
             </table>
         </div>
         <?php
@@ -132,8 +121,8 @@
             if (isset($_POST["search"])) {
                 $keyword = $_POST["search12"];
 
-                $sqlmain = "select * from patient where pemail='$keyword' or pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' ";
-                $selecttype = "my";
+                $sqlmain = "select distinct(patient.pid), patient.* from patient INNER JOIN test_booking on test_booking.pid = patient.pid INNER JOIN test_report on test_report.pid = test_booking.pid where pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' or pemail='$keyword' or pemail like '$keyword%' or pemail like '%$keyword' or pemail like '%$keyword%' ";
+                $selecttype = "My";
             }
 
             if (isset($_POST["filter"])) {
@@ -142,35 +131,28 @@
                     $selecttype = "All";
                     $current = "All patients";
                 } else {
-                    $sqlmain = "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.docid=$userid;";
+                    $sqlmain = "select  distinct(patient.pid), patient.* from patient inner join test_booking on test_booking.pid = patient.pid INNER JOIN test_report on test_report.pid = test_booking.pid where test_report.lid=$userid;";
                     $selecttype = "My";
                     $current = "My patients Only";
                 }
             }
         } else {
-            $sqlmain = "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.docid=$userid;";
+            $sqlmain = "select  distinct(patient.pid), patient.* from patient inner join test_booking on test_booking.pid = patient.pid INNER JOIN test_report on test_report.pid = test_booking.pid where test_report.lid=$userid;";
             $selecttype = "My";
         }
-
-
-
         ?>
         <div class="dash-body">
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr>
                     <td width="13%">
-
-                        <a href="patient.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                        <a href="patients.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                                 <font class="tn-in-text">Back</font>
-                            </button></a>
-
+                            </button>
+                        </a>
                     </td>
                     <td>
-
                         <form action="" method="post" class="header-search">
-
                             <input type="search" name="search12" class="input-text header-searchbar" placeholder="Search Patient name or Email" list="patient">&nbsp;&nbsp;
-
                             <?php
                             echo '<datalist id="patient">';
                             $list11 = $database->query($sqlmain);
@@ -307,7 +289,7 @@
                                     
                                     <br>
                                     <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="patient.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Patients &nbsp;</font></button>
+                                    <a class="non-style-link" href="patients.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Patients &nbsp;</font></button>
                                     </a>
                                     </center>
                                     <br><br><br><br>
@@ -383,7 +365,7 @@
             <div id="popup1" class="overlay">
                     <div class="popup">
                     <center>
-                        <a class="close" href="patient.php">&times;</a>
+                        <a class="close" href="patients.php">&times;</a>
                         <div class="content">
 
                         </div>
@@ -475,7 +457,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="patient.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn" ></a>
+                                    <a href="patients.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn" ></a>
                                 
                                     
                                 </td>

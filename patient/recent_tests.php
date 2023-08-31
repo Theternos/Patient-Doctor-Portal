@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
-    <script src="../js/jquery-min.js"></script>
-    <script src="../js/pdfobject-min.js"></script>
+    <link rel="icon" href="../img/logo.png" type="image/x-icon">
+
 
     <title>Consultancy</title>
     <style>
@@ -24,11 +24,6 @@
         .sub-table,
         .anime {
             animation: transitionIn-Y-bottom 0.5s;
-        }
-
-        .pdfobject-container {
-            height: 75vh;
-            width: 80vw;
         }
     </style>
 
@@ -65,9 +60,10 @@
 
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
-    $report = $_GET['report-view'];
-    $file = $_GET['prescription-view'];
 
+
+    //echo $userid;
+    //echo $username;
 
     ?>
     <div class="container">
@@ -111,9 +107,10 @@
                         </a>
                     </td>
                 </tr>
+
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-session">
-                        <a href="schedule.php" class="non-style-link-menu">
+                        <a href="specialities.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Book Appointment</p>
                             </div>
@@ -130,8 +127,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-recent menu-active menu-icon-recent-active">
-                        <a href="recent.php" class="non-style-link-menu non-style-link-menu-active">
+                    <td class="menu-btn menu-icon-recent">
+                        <a href="recent.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Recent Consultancy</p>
                             </div>
@@ -139,8 +136,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-test">
-                        <a href="recent_tests.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test-active menu-active">
+                        <a href="recent_tests.php" class="non-style-link-menu-active">
                             <div>
                                 <p class="menu-text">Analysis History</p>
                             </div>
@@ -162,13 +159,12 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr>
                     <td width="13%">
-                        <a href="recent.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                        <a href="index.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                                 <font class="tn-in-text">Back</font>
                             </button></a>
                     </td>
                     <td>
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Recent Consultancy</p>
-
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Recent Tests</p>
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
@@ -176,9 +172,7 @@
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
-
                             date_default_timezone_set('Asia/Kolkata');
-
                             $today = date('Y-m-d');
                             echo $today;
                             ?>
@@ -190,25 +184,89 @@
                 </tr>
             </table>
             <tr>
-                <?php
-                if ($report != null) { ?>
-                    <div class="container" style="padding:10px 10px; margin-top:0;">
-                        <div id="header"></div>
-                        <div id="pdf_view" class=" pdfobject-container"><embed class="pdfobject" src='<?php echo $report ?>' type="application/pdf" style="overflow: auto; width: 100%; height:70vh;"></div>
-                        <div id="footer"></div>
-                    </div>
-                <?php } else if ($file != null) { ?>
-                    <div style='margin:4vh 0 0 7vw'>
-                        <img src=<?php echo $file ?> alt="Prescription File">
-                    </div>
-                <?php    } ?>
+                <td colspan="4">
+                    <center>
+                        <div class="abc scroll">
+                            <table width="93%" class="sub-table scrolldown" border="0">
+                                <thead>
+                                    <tr>
+                                        <th class="table-headin">
+                                            Lab Technician Name
+                                        </th>
+                                        <th class="table-headin">
+                                            Session Title
+                                        </th>
+                                        <th class="table-headin">
+                                            Booked Date
+                                        </th>
+                                        <th class="table-headin">
+                                            Analysis Date
+                                        </th>
+                                        <th class="table-headin">
+                                            Events
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <?php
+
+                                    $sqlmain = "SELECT laboratory.lname, medical_test.tname, test_booking.booked_time, test_report.seen_at,test_report.file_name, medical_test.mtid, test_report.trid from patient INNER JOIN test_booking ON test_booking.pid = patient.pid INNER JOIN test_report ON test_report.pid = patient.pid INNER JOIN medical_test ON medical_test.mtid = test_booking.mtid INNER JOIN laboratory ON test_report.lid = laboratory.lid WHERE patient.pid = '$userid' AND `status`=1";
+                                    $result = $database->query($sqlmain);
+
+                                    if ($result->num_rows == 0) { ?>
+                                        <tr>
+                                            <td colspan="7">
+                                                <br><br><br><br>
+                                                <center>
+                                                    <img src="../img/notfound.svg" width="25%">
+                                                    <br>
+                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">You have not consulted any doctor yet !</p>
+                                                    <a class="non-style-link" href="appointment.php"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Consult Now &nbsp;</font></button>
+                                                    </a>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    <?php  } else {
+                                        for ($x = 0; $x < $result->num_rows; $x++) {
+                                            $row = $result->fetch_assoc();
+                                            $lname = $row["lname"];
+                                            $tname = $row["tname"];
+                                            $booked_time = $row["booked_time"];
+                                            $seen_at = $row["seen_at"];
+                                            $file_name = $row["file_name"];
+                                            echo '<tr >
+                                        <td style="text-align:center;"> &nbsp;' .
+
+                                                substr($lname, 0, 25)
+                                                . '</td >
+
+                                        <td style="font-weight:600;text-align:center;">
+                                        ' . substr($tname, 0, 15) . '
+                                        </td>
+                                        <td style="text-align:center;">
+                                            ' . substr($booked_time, 0, 10) . '
+                                        </td>
+                                        
+                                        <td style="text-align:center;">
+                                            ' . substr($seen_at, 0, 10) . '
+                                        </td>
+
+                                        <td>
+                                        <div style="display:flex;justify-content: center;">
+                                       <a href="test_detailed.php?lname=' . $lname . '&tname=' . $tname . '&booked_time=' . $booked_time . '&seen_at=' . $seen_at . '&file_name=' . $file_name . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                       &nbsp;&nbsp;&nbsp;</div>
+                                        </td>
+                                    </tr>';
+                                        }
+                                    } ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </center>
+                </td>
             </tr>
         </div>
 </body>
-<script type="text/javascript">
-    $(document).ready(function() {
-        PDFObject.embed("<?php echo $report; ?>", "#pdf_view");
-    });
-</script>
 
 </html>
