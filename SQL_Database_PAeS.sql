@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Aug 31, 2023 at 07:04 PM
+-- Generation Time: Sep 01, 2023 at 08:09 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -71,9 +71,8 @@ CREATE TABLE IF NOT EXISTS `appointment` (
 --
 
 INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`, `roomid`, `room_flag`, `payment_id`, `booking_date`) VALUES
-(1, 1, 1, 28, '2023-08-27', 0, NULL, 0, 'pay_MWO0a9fa7zMPpA', '2023-08-31 00:47:58'),
-(12, 1, 1, 17, '2023-08-31', 0, NULL, 0, 'pay_MWO0a9fa7zMPpU', '2023-08-31 00:47:58'),
-(13, 1, 1, 16, '2023-08-31', 1, NULL, 0, 'pay_MWjFZZNpQksWvp', '2023-08-31 21:12:40');
+(21, 1, 1, 28, '2023-09-01', 0, NULL, 0, 'pay_MWw4pbnjqMh6jt', '2023-09-01 09:45:27'),
+(29, 1, 1, 17, '2023-09-02', 0, NULL, 0, 'pay_MXAuv651VnV8uN', '2023-09-02 00:16:26');
 
 -- --------------------------------------------------------
 
@@ -300,7 +299,6 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `ptel` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ;
-
 --
 -- Dumping data for table `patient`
 --
@@ -309,6 +307,43 @@ INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`
 (1, 'patient@bitsathy.ac.in', 'Kavinkumar B', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
 (3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947'),
 (4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payment_history`
+--
+
+DROP TABLE IF EXISTS `payment_history`;
+CREATE TABLE IF NOT EXISTS `payment_history` (
+  `phid` int NOT NULL AUTO_INCREMENT,
+  `pid` int DEFAULT NULL,
+  `appoid` int DEFAULT NULL,
+  `tid` int DEFAULT NULL,
+  `amount` int DEFAULT NULL,
+  `discount` int DEFAULT '0',
+  `title` varchar(150) DEFAULT NULL,
+  `payment_id` varchar(100) DEFAULT NULL,
+  `paid_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `phstatus` int DEFAULT '1',
+  PRIMARY KEY (`phid`),
+  UNIQUE KEY `phid_UNIQUE` (`phid`)
+);
+
+--
+-- Dumping data for table `payment_history`
+--
+
+INSERT INTO `payment_history` (`phid`, `pid`, `appoid`, `tid`, `amount`, `discount`, `title`, `payment_id`, `paid_at`, `phstatus`) VALUES
+(3, 1, 1, NULL, 250, 0, 'Paediatrics', 'pay_MWuFGAt3rtMC91', '2023-09-01 09:46:52', 1),
+(2, 1, 1, NULL, 100, 0, 'Paediatrics', 'pay_MWuDyQpZVdmQ89', '2023-09-01 09:46:52', 1),
+(4, 1, 21, NULL, 100, 0, 'Paediatrics', 'pay_MWw4pbnjqMh6jt', '2023-09-01 09:46:52', 3),
+(5, 1, NULL, 9, 550, 0, 'D-dimer Test', 'pay_MX2FOA31U2J2lX', '2023-09-01 15:48:44', 1),
+(6, 1, NULL, 2, 660, 0, 'ALT Test', 'pay_MX2JzyIzelrVCB', '2023-09-01 15:51:55', 1),
+(22, 1, NULL, 52, 660, 0, 'Aldolase Test', 'pay_MXBHEQGBqxawyw', '2023-09-02 00:37:33', 1),
+(23, 1, NULL, 53, 487, 23, 'Radiology', 'pay_MXBLLmvzKCmlPw', '2023-09-02 00:41:27', 1),
+(21, 1, 29, NULL, 244, 6, 'Paediatrics', 'pay_MXAuv651VnV8uN', '2023-09-02 00:16:26', 1),
+(12, 1, NULL, 15, 630, 30, 'Lithium Test', 'pay_MX62nIU1iEkIAY', '2023-09-01 19:30:25', 1);
 
 -- --------------------------------------------------------
 
@@ -335,7 +370,9 @@ CREATE TABLE IF NOT EXISTS `refund` (
 
 INSERT INTO `refund` (`refid`, `pid`, `appoid`, `tid`, `rps`, `payment_id`, `status`) VALUES
 (1, 1, NULL, 3, 1000, 'pay_MWNjiYWIJVmGME', '0'),
-(2, 1, NULL, 7, 7500, 'pay_MWNjiYWIJVmGME', '0');
+(2, 1, NULL, 7, 7500, 'pay_MWNjiYWIJVmGME', '0'),
+(3, 1, NULL, 8, 7500, 'pay_MWykVbgGHv17ox', '0'),
+
 
 -- --------------------------------------------------------
 
@@ -391,11 +428,11 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`, `mode`, `mail_flag`, `leave_status`, `leave_reason`) VALUES
-(15, '1', 'Paediatrics', '2023-09-01', '09:00:00', 2, 'Hospital Visit', 0, 0, NULL),
+(15, '1', 'Paediatrics', '2023-09-03', '09:00:00', 2, 'Hospital Visit', 0, 0, NULL),
 (16, '1', 'Anaesthetics', '2023-08-31', '18:00:00', 10, 'Hospital Visit', 0, 0, NULL),
-(17, '2', 'Paediatrics', '2023-09-02', '17:30:00', 3, 'Video Consultancy', 0, 0, NULL),
+(17, '2', 'Paediatrics', '2023-09-03', '17:30:00', 3, 'Video Consultancy', 0, 0, NULL),
 (27, '2', 'Paediatrics', '2023-08-31', '19:15:00', 2, 'Video Consultancy', 0, 0, NULL),
-(28, '2', 'Paediatrics', '2023-09-03', '15:45:00', 2, 'Hospital Visit', 0, 0, NULL),
+(28, '2', 'Paediatrics', '2023-09-03', '15:45:00', 3, 'Hospital Visit', 0, 0, NULL),
 (30, '1', 'Allergology', '2023-08-31', '18:00:00', 7, 'Hospital Visit', 0, 0, NULL);
 
 -- --------------------------------------------------------
@@ -499,7 +536,10 @@ CREATE TABLE IF NOT EXISTS `test_booking` (
 
 INSERT INTO `test_booking` (`tid`, `pid`, `mtid`, `status`, `payment_id`, `booked_time`) VALUES
 (2, 1, 47, 1, 'pay_MWNjiYWIJVmGME', '2023-08-30 16:39:13'),
-(5, 1, 30, 0, 'pay_MWNjiYWIJVmGME', '2023-08-30 20:51:06');
+(12, 1, 38, 0, 'pay_MX2X1iRn3eb1SJ', '2023-09-01 16:04:15'),
+(53, 1, 22, 0, 'pay_MXBLLmvzKCmlPw', '2023-09-02 00:41:27'),
+(14, 1, 3, 0, 'pay_MX2jBtAYuqjkqS', '2023-09-01 16:15:46'),
+(52, 1, 42, 0, 'pay_MXBHEQGBqxawyw', '2023-09-02 00:37:33');
 
 -- --------------------------------------------------------
 
@@ -526,6 +566,30 @@ CREATE TABLE IF NOT EXISTS `test_report` (
 
 INSERT INTO `test_report` (`trid`, `pid`, `lid`, `tid`, `mtid`, `file_name`, `seen_at`) VALUES
 (1, 1, 1, 2, 47, 0x2e2e2f75706c6f6164732f746573742d7265706f72742f31343731363466303562303637353861362e504446, '2023-08-31 14:49:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet`
+--
+
+DROP TABLE IF EXISTS `wallet`;
+CREATE TABLE IF NOT EXISTS `wallet` (
+  `pid` int NOT NULL,
+  `balance` int DEFAULT '0',
+  `bonus` int DEFAULT '0',
+  PRIMARY KEY (`pid`),
+  UNIQUE KEY `pid_UNIQUE` (`pid`)
+) ;
+
+--
+-- Dumping data for table `wallet`
+--
+
+INSERT INTO `wallet` (`pid`, `balance`, `bonus`) VALUES
+(1, 12, 140),
+(3, 0, 0),
+(4, 0, 0);
 
 -- --------------------------------------------------------
 
