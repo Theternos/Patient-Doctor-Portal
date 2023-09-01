@@ -117,6 +117,19 @@
                 } else {
                     $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
                 }
+            } elseif ($utype == 'l') {
+                //TODO
+                $checker = $database->query("select * from laboratory where lemail='$email' and lpassword='$password'");
+                if ($checker->num_rows == 1) {
+
+
+                    //   pharmacy dashbord
+                    $_SESSION['user'] = $email;
+                    $_SESSION['usertype'] = 'l';
+                    header('location: laboratory/index.php');
+                } else {
+                    $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Wrong credentials: Invalid email or password</label>';
+                }
             }
         } else {
             $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">We cant found any acount for this email.</label>';

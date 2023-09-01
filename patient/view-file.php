@@ -75,7 +75,7 @@
             <table class="menu-container" border="0">
                 <tr>
                     <td style="padding:10px" colspan="2">
-                        <table border="0" class="profile-container">
+                        <table border="0" class="profile-container" style="padding-top: 4vh">
                             <tr>
                                 <td width="30%" style="padding-left:20px">
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
@@ -139,10 +139,19 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test">
+                        <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Assistant</p>
+                                <p class="menu-text">Analysis History</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-payment">
+                        <a href="payment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Payments</p>
                             </div>
                         </a>
                     </td>
@@ -190,7 +199,8 @@
                 </tr>
             </table>
             <tr>
-                <?php if ($report != null) { ?>
+                <?php
+                if ($report != null) { ?>
                     <div class="container" style="padding:10px 10px; margin-top:0;">
                         <div id="header"></div>
                         <div id="pdf_view" class=" pdfobject-container"><embed class="pdfobject" src='<?php echo $report ?>' type="application/pdf" style="overflow: auto; width: 100%; height:70vh;"></div>
@@ -206,7 +216,7 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-        PDFObject.embed(<?php echo $report ?>, "#pdf_view");
+        PDFObject.embed("<?php echo $report; ?>", "#pdf_view");
     });
 </script>
 

@@ -10,7 +10,10 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="../js/checkout.js"></script>
-
+    <?php
+    session_start();
+    error_reporting(0);
+    ?>
     <title>Booking Tests</title>
     <style>
         .popup {
@@ -49,11 +52,11 @@
             background-color: #4ecdc440;
             color: #292D32;
             padding: 1px 15px 0 20px;
-            margin: 7vh 0 4vh 0;
+            margin: 1vh 0 2vh 0;
             font-size: 14px;
             letter-spacing: 1px;
             border-radius: 5px;
-            height: 20vh;
+            height: 17vh;
             text-align: left;
         }
 
@@ -102,6 +105,60 @@
             margin-left: auto;
             margin-right: 4.5vw;
         }
+
+        /* Style for checkboxes */
+        .checkbox-container {
+            display: inline-block;
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 2.5vh;
+        }
+
+        /* Hide the default checkbox */
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Custom checkbox design */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 3px;
+        }
+
+        /* Style the checked state */
+        .checkbox-container input:checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Style the checkmark/indicator */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
     </style>
 </head>
 
@@ -110,8 +167,6 @@
 
     //learn from w3schools.com
 
-    session_start();
-    error_reporting(0);
     date_default_timezone_set('UTC');
 
     if (isset($_SESSION["user"])) {
@@ -136,6 +191,7 @@
     $username = $userfetch["pname"];
     $phone_number = $userfetch["ptel"];
 
+    setcookie('checkboxState', 0, time() + (3600), "/"); // 3600 = 1 hr
 
     date_default_timezone_set('Asia/Kolkata');
 
@@ -146,7 +202,7 @@
             <table class="menu-container" border="0">
                 <tr>
                     <td style="padding:10px" colspan="2">
-                        <table border="0" class="profile-container">
+                        <table border="0" class="profile-container" style="padding-top: 4vh">
                             <tr>
                                 <td width="30%" style="padding-left:20px">
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
@@ -211,10 +267,19 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test">
+                        <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Assistant</p>
+                                <p class="menu-text">Analysis History</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-payment">
+                        <a href="payment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Payments</p>
                             </div>
                         </a>
                     </td>
@@ -331,8 +396,27 @@
                                                 </div>
                                                 <p>General lab visiting timings: 10am to 4pm</p>
                                             </div>
-                                            <div style="border-top: 1px solid #292D32; margin-top: 7vh;">
-                                                <h5>Bill Details</h5>
+                                            <div class="flex-row" style="justify-content:start;">
+                                                <img src="../img/icons/discount.svg" alt="discount image" width="25px">
+                                                <p style="margin-left: 5px; color: green;">You will recieve the 2.5% as cashback that you pay</p>
+                                            </div>
+                                            <div style="border-top: 1px solid #292D32; margin-top: 1vh; font-weight:500; padding: 0 0 0 0;">
+                                                <?php
+                                                $result12 = $database->query("SELECT * FROM wallet WHERE pid = '$userid'");
+                                                $row12 = $result12->fetch_assoc();
+                                                $balance = $row12['balance'];
+                                                ?>
+                                                <h5 style="margin:4vh 0 2vh 0 ">Bill Details</h5>
+                                                <div class="flex-row" style="justify-content: flex-start; margin: 0 0 0 0;">
+                                                    <label class="checkbox-container">
+                                                        <input type="checkbox" id="subtractBalanceCheckbox" onchange="toggleCheckbox()">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <p style="text-align: left; margin-left: 5px">PEaS Credit<br>
+                                                        <w style="font-size: 11px; font-weight: 400;">Available Balance: ₹<?php echo $balance; ?></w>
+                                                    </p>
+                                                </div>
+
                                                 <div class="flex-row">
                                                     <p style="text-align: left;">Registration Fee</p>
                                                     <p style="margin-left: auto; margin-right:15px;">₹110</p>
@@ -343,7 +427,7 @@
                                                 </div>
                                                 <div class="flex-row">
                                                     <p style="text-align: left;">Payable Amount</p>
-                                                    <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $total_amount + 110 ?></p>
+                                                    <p id="payableAmount" style="margin-left: auto; margin-right:15px;"><?php echo '₹' . ($total_amount + 110) ?></p>
                                                 </div>
                                                 <p id="payButton" class="login-btn btn-primary btn">Pay now</p>
                                             </div>
@@ -358,15 +442,47 @@
                                             $selectedTestIndexesFromCookie = $_COOKIE['selectedTestIndexes'];
                                             $selectedTestIndexesArray = explode(',', $selectedTestIndexesFromCookie);
                                             foreach ($selectedTestIndexesArray as $testIndex) {
-                                                $sql = "INSERT INTO test_booking (pid, mtid, payment_id) VALUES ('$userid', '$testIndex', '$payment_id')";
-                                                $result = $database->query($sql);
+                                                $database->query("INSERT INTO test_booking (pid, mtid, payment_id) VALUES ('$userid', '$testIndex', '$payment_id')");
+                                                $result23 = $database->query("SELECT * from medical_test INNER JOIN test_booking ON test_booking.mtid = medical_test.mtid WHERE medical_test.mtid = '$testIndex'");
+                                                $row23 = $result23->fetch_assoc();
+                                                $tid = $row23['tid'];
+                                                $title = $row23['tname'];
+                                                $price = $row23['price'];
+                                                $price += 110;
+                                                $org_price = $price;
+                                    ?>
+                                                <span id="balance">
+                                                    <?php
+                                                    echo $_COOKIE['checkboxState'] . '<br>';
+                                                    $toggle = $_COOKIE['checkboxState'];
+                                                    $balance = 0;
+                                                    if ($toggle == 1) {
+                                                        $result34 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
+                                                        $row34 = $result34->fetch_assoc();
+                                                        $balance = $row34['balance'];
+                                                        $price  -= $balance;
+                                                        $discount = ($price / 100) * 2.5;
+                                                    } else
+                                                        $discount = ($price / 100) * 2.5;
+                                                    $result45 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
+                                                    $row45 = $result45->fetch_assoc();
+                                                    $fetch_balance = $row45['balance'];
+                                                    $org_balance = $fetch_balance - ($org_price - $price);
+                                                    $insert_balance = $org_balance + $discount;
+                                                    ?>
+                                                </span>
+                                            <?php
+                                                $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + '$discount' WHERE pid = '$userid'");
+                                                $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id) VALUES ('$userid', '$tid', '$balance', '$price', '$title','$payment_id')");
                                             } ?>
                                             <script>
                                                 window.location.href = './appointment.php';
-                                            </script> <?php        }
-                                                }
-                                            }
-                                                        ?>
+                                            </script>
+                                <?php        }
+                                    }
+                                }
+                                $temp = 1;
+                                ?>
                             </div>
                         </center>
                     </td>
@@ -376,6 +492,88 @@
     </div>
 </body>
 <script>
+    // Initialize temp with PHP value
+    var temp = <?php echo $temp; ?>;
+
+    // Function to toggle the checkbox and set the cookie
+    function toggleCheckbox() {
+        var checkbox = document.getElementById("subtractBalanceCheckbox");
+        var balanceSpan = document.getElementById("balance");
+
+        // Update the cookie value based on the checkbox state
+        var cookieValue = checkbox.checked ? "1" : "0";
+
+        var expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + (3600 * 1000));
+        document.cookie = "checkboxState=" + cookieValue + "; expires=" + expirationDate.toUTCString() + "; path=/";
+
+    }
+</script>
+
+
+<script>
+    // Get references to elements
+    const subtractBalanceCheckbox = document.getElementById('subtractBalanceCheckbox');
+    const payableAmount = document.getElementById('payableAmount');
+    var newPayableAmount = <?php echo $total_amount + 110 ?>;
+    // Function to update payable amount based on checkbox state
+    function updatePayableAmount() {
+        const isChecked = subtractBalanceCheckbox.checked;
+        const totalAmount = <?php echo $total_amount ?>;
+        const registrationFee = 110;
+        let newPayableAmount = isChecked ? totalAmount + registrationFee - <?php echo $balance ?> : totalAmount + registrationFee;
+
+        payableAmount.textContent = '₹' + newPayableAmount;
+
+        var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
+
+        if (selectedTestsValue !== '') {
+            document.cookie = 'selectedTestIndexes=' + encodeURIComponent(selectedTestsValue) + '; expires=' + new Date(new Date().getTime() + 3600 * 1000).toUTCString() + '; path=/';
+        }
+        const payButton = document.getElementById('payButton');
+
+        const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
+
+        document.getElementById('payButton').addEventListener('click', () => {
+            const options = {
+                key: apiKey,
+                amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
+                currency: 'INR',
+                name: 'TEAM SLEEK - PEaS',
+                description: 'Payment for Services',
+                handler: response => {
+                    handlePaymentResponse(response);
+                },
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+        });
+
+        function calculateDynamicAmount() {
+            return (newPayableAmount * 100);
+        }
+
+        function handlePaymentResponse(response) {
+            // Handle the payment response here
+            console.log('Payment Response:', response);
+
+            if (response.razorpay_payment_id) {
+                const paymentId = response.razorpay_payment_id;
+                const currentUrl = window.location.href;
+                const updatedUrl = currentUrl + '?payment_id=' + paymentId;
+                window.location.href = updatedUrl; // Redirect to the updated URL
+            } else {
+                console.log('Payment failed! Reason: ' + response.error.description);
+            }
+        }
+    }
+
+    // Add an event listener to the checkbox
+    subtractBalanceCheckbox.addEventListener('change', updatePayableAmount);
+
+    // Initial update based on checkbox state
+    updatePayableAmount();
     var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
 
     if (selectedTestsValue !== '') {
@@ -384,7 +582,6 @@
     const payButton = document.getElementById('payButton');
 
     const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
-    let totalSum = <?php echo $total_amount + 110;  ?>;
 
     document.getElementById('payButton').addEventListener('click', () => {
         const options = {
@@ -403,7 +600,7 @@
     });
 
     function calculateDynamicAmount() {
-        return (totalSum * 100);
+        return (newPayableAmount * 100);
     }
 
     function handlePaymentResponse(response) {
@@ -420,6 +617,5 @@
         }
     }
 </script>
-
 
 </html>

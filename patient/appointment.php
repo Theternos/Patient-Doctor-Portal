@@ -171,7 +171,7 @@
             <table class="menu-container" border="0">
                 <tr>
                     <td style="padding:10px" colspan="2">
-                        <table border="0" class="profile-container">
+                        <table border="0" class="profile-container" style="padding-top: 4vh">
                             <tr>
                                 <td width="30%" style="padding-left:20px">
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
@@ -236,10 +236,19 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test">
+                        <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Assistant</p>
+                                <p class="menu-text">Analysis History</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-payment">
+                        <a href="payment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Payments</p>
                             </div>
                         </a>
                     </td>
@@ -557,7 +566,7 @@
                         <h2>Successfully cancelled your selected tests</h2>
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
-                        You will be Refund in 3 to 4 business days!<br>
+                        You will be refunded in 3 to 4 business days!<br>
                         </div>
                         <div style="display: flex;justify-content: center;">
                         <a href="appointment.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Ok&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;

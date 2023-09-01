@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/jquery-min.js"></script>
     <?php
     session_start();
     error_reporting(0);
@@ -265,7 +265,7 @@
             <table class="menu-container" border="0">
                 <tr>
                     <td style="padding:10px" colspan="2">
-                        <table border="0" class="profile-container">
+                        <table border="0" class="profile-container" style="padding-top: 4vh">
                             <tr>
                                 <td width="30%" style="padding-left:20px">
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
@@ -331,24 +331,33 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test">
+                        <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Assistant</p>
+                                <p class="menu-text">Analysis History</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-payment">
+                        <a href="payment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Payments</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-settings">
+                        <a href="settings.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Settings</p>
                         </a>
         </div>
         </td>
         </tr>
-        <tr class="menu-row">
-            <td class="menu-btn menu-icon-settings">
-                <a href="settings.php" class="non-style-link-menu">
-                    <div>
-                        <p class="menu-text">Settings</p>
-                </a>
-    </div>
-    </td>
-    </tr>
-    </table>
+        </table>
     </div>
     <?php
     if ($_GET['action'] == null) {

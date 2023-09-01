@@ -385,7 +385,6 @@
         }
         if ($action == 'edit') {
             $sql123 = "SELECT * FROM peas.metrices WHERE pid = '$pid' AND docid = '$docid' AND scheduleid = '$scheduleid'";
-            echo "$sql123";
             $result123 = $database->query($sql123);
             $userfetch = $result123->fetch_assoc();
             $pid = $userfetch['pid'];

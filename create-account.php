@@ -69,6 +69,9 @@
                 //TODO
                 $database->query("insert into patient(pemail,pname,ppassword, paddress, pnic,pdob,ptel) values('$email','$name','$newpassword','$address','$nic','$dob','$tele');");
                 $database->query("insert into webuser values('$email','p')");
+                $result = $database->query("SELECT pid from patient where pemail = '$email'");
+                $row = mysqli_fetch_assoc($result);
+                $database->query("insert into wallet (pid) values('" . $row['pid'] . "')");
 
                 //print_r("insert into patient values($pid,'$email','$fname','$lname','$newpassword','$address','$nic','$dob','$tele');");
                 $_SESSION["user"] = $email;

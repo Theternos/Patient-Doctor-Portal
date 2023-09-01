@@ -1,0 +1,105 @@
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Document</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://fonts.googleapis.com/css?family=Lato:400,300,700,900,100"
+    />
+    <style type="text/css">
+      .stage > .stage-header h1 {
+        color: #0a76d8;
+      }
+
+      .stage > .stage-header h2 {
+        color: #ffffff;
+      }
+
+      a.nice-link {
+        color: #ffffff;
+      }
+
+      a.nice-link > .hover > span {
+        background: #0a76d8;
+      }
+
+      a.nice-link:hover,
+      a.nice-link.hover {
+        color: #ffffff;
+      }
+
+      .content {
+        background: #111111;
+        color: #ffffff;
+      }
+
+      .content
+        .content-content.content-content--contact
+        .contact-grid
+        > li
+        .fa {
+        color: #333333;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!--For Bot-->
+    <style>
+      .rw-conversation-container .rw-header {
+        background-color: #0a76d8;
+      }
+
+      .rw-conversation-container .rw-messages-container .rw-message .rw-client {
+        background-color: #0a76d8;
+      }
+
+      .rw-launcher {
+        background-color: #0a76d8;
+      }
+    </style>
+
+    <script>
+      !(function () {
+        let e = document.createElement("script"),
+          t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+          // Replace 1.x.x with the version that you want
+          (e.async = !0),
+          (e.onload = () => {
+            window.WebChat.default(
+              {
+                title: "Virtual Assistant",
+                subtitle: "powered by PEaS",
+
+                //initPayload: '/greet',
+                customData: {
+                  language: "en",
+                },
+                socketUrl: "http://localhost:5005",
+                profileAvatar: "assets/bot.png",
+                params: {
+                  images: {
+                    dims: {
+                      width: 200,
+                      height: 100,
+                    },
+                  },
+                  storage: "session",
+                },
+                // add other props here
+              },
+              null
+            );
+          }),
+          t.insertBefore(e, t.firstChild);
+      })();
+    </script>
+
+    <!--End-->
+  </body>
+</html>

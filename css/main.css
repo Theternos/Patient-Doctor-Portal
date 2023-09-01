@@ -453,6 +453,30 @@ input[type=search]:focus {
   background-size: 23px 23px;
 }
 
+.menu-icon-test {
+  background-image: url('../img/icons/test-history.svg');
+  background-size: 23px 23px;
+}
+
+.menu-icon-payment {
+  background-image: url('../img/icons/payment.svg');
+  background-size: 23px 23px;
+}
+
+.menu-icon-payment:hover,
+.menu-icon-payment-active {
+  color: var(--primarycolor);
+  background-image: url('../img/icons/payment-iceblue.svg');
+  background-size: 23px 23px;
+}
+
+.menu-icon-test:hover,
+.menu-icon-test-active {
+  color: var(--primarycolor);
+  background-image: url('../img/icons/test-history-iceblue.svg');
+  background-size: 23px 23px;
+}
+
 .menu-icon-lab:hover,
 .menu-icon-lab-active {
   color: var(--primarycolor);
@@ -688,6 +712,10 @@ input[type=search]:focus {
   background-image: url(../img/b4.jpg);
 }
 
+.laboratory-header {
+  background-image: url(../img/b4.jpg);
+}
+
 .search-items {
   padding: 20px;
   margin: 10px;
@@ -733,7 +761,7 @@ input[type=search]:focus {
 }
 
 .slot_booking {
-  width: 45vw;
+  width: 41vw !important;
   text-align: center;
   font-family: 'Montserrat', sans-serif;
   border-top: 1px solid #2125291f;
@@ -812,4 +840,66 @@ input[type=search]:focus {
 .speciality-name-list {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.payment-history {
+  width: 73vw;
+  height: 50vh;
+  border-radius: 5px;
+  margin: 5vh 0 0 2vw;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+
+}
+
+.payment-visuals {
+  width: 73vw;
+  height: 20vh;
+  border-radius: 5px;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: 1px;
+  margin: 2vh 0 0 2vw;
+}
+
+.payment-visuals h3,
+.payment-history h3 {
+  margin-left: 2vw;
+  margin-top: 0;
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.payment-visuals-box {
+  width: 20vw;
+  height: 10vh;
+  background-color: #8b8bae2d;
+  border-radius: 5px;
+  align-items: center;
+
+}
+
+.payment-visuals-box img {
+  margin-left: 1vw;
+}
+
+.payment-visuals-box p {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.payment-visuals-box .amount {
+  margin-left: auto;
+}
+
+.payment-history table {
+  margin: auto;
+}
+
+.payment-history th {
+  font-size: 15px;
+}
+
+.payment_history_data {
+  min-height: 70px !important;
+  border: 1px solid #ccc;
 }

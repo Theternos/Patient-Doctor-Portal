@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-
+    <script src="../js/checkout.js"></script>
+    <?php session_start();
+    error_reporting(0); ?>
     <title>Sessions</title>
     <style>
         .popup {
@@ -48,9 +50,109 @@
             transform: scale(1.03);
         }
 
-        #payment-container {
+        #payButton {
             pointer-events: none;
             opacity: .7;
+        }
+
+        /* Style for checkboxes */
+        .checkbox-container {
+            display: inline-block;
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 2.5vh;
+        }
+
+        /* Hide the default checkbox */
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* Custom checkbox design */
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #eee;
+            border-radius: 3px;
+        }
+
+        /* Style the checked state */
+        .checkbox-container input:checked~.checkmark {
+            background-color: #2196F3;
+        }
+
+        /* Style the checkmark/indicator */
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-container input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .checkbox-container .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 6px;
+            height: 12px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .billing-disclaimer {
+            background-color: #4ecdc440;
+            color: #292D32;
+            padding: 1px 15px 0 20px;
+            margin: 3vh 0 2vh 0 !important;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border-radius: 5px;
+            height: 20vh;
+            text-align: left;
+        }
+
+        .billing-disclaimer h6 {
+            font-size: 13px;
+            margin-left: 5px;
+        }
+
+        .billing-disclaimer p {
+            margin-left: 30px;
+            margin-top: 0;
+        }
+
+
+        .bill-details h5 {
+            font-family: 'Josefin Sans', sans-serif;
+            letter-spacing: 1px;
+            text-align: left;
+            font-size: 18px;
+            color: #202020;
+        }
+
+        .bill-details p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+        }
+
+        .bill-details {
+            width: 23vw;
+            height: 70vh;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 0px 20px 10px 20px;
+            margin-left: auto;
         }
     </style>
 </head>
@@ -60,8 +162,7 @@
 
     //learn from w3schools.com
 
-    session_start();
-    error_reporting(0);
+
     date_default_timezone_set('UTC');
 
     if (isset($_SESSION["user"])) {
@@ -85,6 +186,7 @@
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
     $phone_number = $userfetch["ptel"];
+    setcookie('checkboxState', 0, time() + (3600), "/"); // 3600 = 1 hr
 
 
     date_default_timezone_set('Asia/Kolkata');
@@ -109,20 +211,62 @@
             $docemail = $row["docemail"];
             $scheduledate = $row["scheduledate"];
             $scheduletime = $row["scheduletime"];
+            $mode_result = $database->query("SELECT mode from schedule where scheduleid='$scheduleid'");
+            $mode_row = $mode_result->fetch_assoc();
+            $mode = $mode_row['mode'];
+            if ($mode == 'Video Consultancy') {
+                $price = 250;
+            } else {
+                $price = 100;
+            }
+            $org_price = $price;
             $sql2 = "select * from appointment where scheduleid=$urlid";
             //echo $sql2;
             $result12 = $database->query($sql2);
             $apponum = ($result12->num_rows) + 1;
             if (!isset($_COOKIE['insert_flag'])) {
-                $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
-                $output = shell_exec($command);
+                // $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
+                // $output = shell_exec($command);
                 // echo $command;
-                $sql2 = "insert into appointment(pid,apponum,scheduleid,appodate, payment_id) values ($userid,$apponum,$scheduleid,'$today', '$payment_id')";
+                $sql2 = "INSERT into appointment(pid,apponum,scheduleid,appodate, payment_id) values ($userid,$apponum,$scheduleid,'$today', '$payment_id')";
                 $result = $database->query($sql2);
+                echo $sql2;
+                $appo_result = $database->query("SELECT appoid from appointment where scheduleid='$scheduleid' and pid = '$userid' and payment_id='$payment_id'");
+                $appo_row = $appo_result->fetch_assoc();
+                $appoid = $appo_row['appoid'];
                 setcookie('insert_flag', '1', time() + (10), "/");
+    ?>
+                <span id="balance">
+                    <?php
+                    echo $_COOKIE['checkboxState'] . '<br>';
+                    $toggle = $_COOKIE['checkboxState'];
+                    $balance = 0;
+                    if ($toggle == 1) {
+                        $result34 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
+                        $row34 = $result34->fetch_assoc();
+                        $balance = $row34['balance'];
+                        $price  -= $balance;
+                        $discount = ($price / 100) * 2.5;
+                    } else
+                        $discount = ($price / 100) * 2.5;
+                    $result45 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
+                    $row45 = $result45->fetch_assoc();
+                    $fetch_balance = $row45['balance'];
+                    $price  -= $fetch_balance;
+                    $org_balance = $fetch_balance - ($org_price - $price);
+                    $insert_balance = $org_balance + $discount;
+                    ?>
+                </span>
+        <?php
+                $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + '$discount' WHERE pid = '$userid'");
+                $database->query("INSERT INTO payment_history (pid, appoid, discount, amount, title, payment_id) VALUES ('$userid', '$appoid', '$fetch_balance', '$price', '$title','$payment_id')");
             }
-            header("location: appointment.php?action=booking-added&id=" . $apponum . "&titleget=none");
-        }
+        } ?>
+        <script>
+            window.location.href = "appointment.php?action=booking-added&id=<?php echo $apponum ?>&titleget=none";
+        </script>
+    <?php
+        header("location : appointment.php?action=booking-added&id=.$apponum.&titleget=none");
     }
     ?>
     <div class="container">
@@ -130,7 +274,7 @@
             <table class="menu-container" border="0">
                 <tr>
                     <td style="padding:10px" colspan="2">
-                        <table border="0" class="profile-container">
+                        <table border="0" class="profile-container" style="padding-top: 4vh">
                             <tr>
                                 <td width="30%" style="padding-left:20px">
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
@@ -195,10 +339,19 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test">
+                        <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Assistant</p>
+                                <p class="menu-text">Analysis History</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-payment">
+                        <a href="payment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Payments</p>
                             </div>
                         </a>
                     </td>
@@ -275,22 +428,10 @@
 
 
                 </tr>
-
-
-                <tr>
-                    <td colspan="4" style="padding-top:10px;width: 100%;">
-                        <!-- <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49);font-weight:400;">Scheduled Sessions / Booking / <b>Review Booking</b></p> -->
-
-                    </td>
-
-                </tr>
-
-
-
                 <tr>
                     <td colspan="4">
                         <center>
-                            <div class="abc scroll">
+                            <div class="">
                                 <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none">
 
                                     <tbody>
@@ -316,10 +457,8 @@
                                             //echo $sql2;
                                             $schedule_result = $database->query($schedule_sql);
                                         ?>
-
-
                                             <td style="width: 50%;" rowspan="2">
-                                                <div class="dashboard-items search-items">
+                                                <div class="dashboard-items search-items" style="width: 45vw; min-height:fit-content; max-height:70vh">
                                                     <div style="width:100">
                                                         <div class="h1-search" style="font-size:25px;display: flex; flex-direction:row; align-items:center">
                                                             <div><?php echo $title ?></div>
@@ -443,43 +582,63 @@
                                                             <br>
                                                         </div>
                                                     </div>
+                                                </div>
                                             </td>
 
                                             <td style=" width: 25%;">
-                                                <div class="dashboard-items search-items">
-                                                    <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
-                                                        <div class="h1-search" style="font-size:20px;line-height: 35px;margin-left:8px;text-align:center;">
-                                                            Your Appointment Number
+                                                <div class="bill-details">
+                                                    <div class="billing-disclaimer">
+                                                        <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
+                                                            <div class="h1-search" style="font-size:17px;text-align:center;">
+                                                                Your Appointment Number
+                                                            </div>
+                                                            <center>
+                                                                <div id="apponum" style="margin-left: 0px; font-size: 50px; font-weight: 800; text-align: center; color: var(--btnnictext);"><?php echo $apponum ?></div>
+                                                            </center>
                                                         </div>
-                                                        <center>
-                                                            <div id="apponum" class="dashboard-icons" style="margin-left: 0px; width: 90%; font-size: 70px; font-weight: 800; text-align: center; color: var(--btnnictext); background-color: var(--btnice)"><?php echo $apponum ?></div>
-                                                        </center>
+                                                    </div>
+                                                    <div class="flex-row" style="justify-content:start;">
+                                                        <img src="../img/icons/discount.svg" alt="discount image" width="25px">
+                                                        <p style="margin-left: 10px; color: green;">You will recieve the 2.5% as cashback that you pay</p>
+                                                    </div>
+                                                    <div style="border-top: 1px solid #292D32; margin-top: 2vh; font-weight:500;">
+                                                        <?php
+                                                        $result12 = $database->query("SELECT * FROM wallet WHERE pid = '$userid'");
+                                                        $row12 = $result12->fetch_assoc();
+                                                        $balance = $row12['balance'];
+                                                        if ($mode == 'Video Consultancy') {
+                                                            $total_amount = 250;
+                                                        } else {
+                                                            $total_amount = 100;
+                                                        }
+                                                        ?>
+                                                        <h5 style="margin:2vh 0 2vh 0">Bill Details</h5>
+                                                        <div class="flex-row" style="justify-content: flex-start;">
+                                                            <label class="checkbox-container">
+                                                                <input type="checkbox" id="subtractBalanceCheckbox" onchange="toggleCheckbox()">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                            <p style="text-align: left; margin-left: 5px">PEaS Credit<br>
+                                                                <w style="font-size: 11px; font-weight: 400;">Available Balance: ₹<?php echo $balance; ?></w>
+                                                            </p>
+                                                        </div>
 
-                                                    </div><br>
-
-                                                    <br>
-                                                    <br>
+                                                        <div class="flex-row">
+                                                            <p style="text-align: left;">Item Total</p>
+                                                            <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $total_amount ?></p>
+                                                        </div>
+                                                        <div class="flex-row">
+                                                            <p style="text-align: left;">Payable Amount</p>
+                                                            <p id="payableAmount" style="margin-left: auto; margin-right:15px;"><?php echo '₹' . ($total_amount + 110) ?></p>
+                                                        </div>
+                                                        <p id="payButton" class="login-btn btn-primary btn" style="text-align: center;">Pay now</p>
+                                                    </div>
                                                 </div>
-
                             </div>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <div id="payment-container">
-                            <?php
-                                            if ($mode == 'Video Consultancy') {
-                                                echo '<form style="margin-left:10px;padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;width:100%;text-align: center;">
-                        <script src="../js/payment-button.js" data-payment_button_id="pl_MSQ71WPrRsMm2I" async> </script> </form>';
-                                            } else {
-                                                echo '<form style="margin-left:10px;padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;width:100%;text-align: center;">
-                        <script src="../js/payment-button.js" data-payment_button_id="pl_MQciFl4IXO0PBg" async> </script> </form>';
-                                            } ?>
-                        </div>
-                    </td>
-                </tr>
-            <?php
-                                        } else { ?>
+
+            <?php } else { ?>
                 <td style="width: 50%;" rowspan="2">
                     <div class="dashboard-items search-items">
                         <div style="width:100%; margin-top:0">
@@ -564,13 +723,9 @@
                         var selectedScid = div.getAttribute('data-scid');
                         setCookie('id', selectedScid, 5); // Set the cookie with a 5-minute expiration
 
-                        // Update the style or class to indicate selection
-                        div.classList.add('selected'); // For example, you can add a "selected" class
-                        // Or modify the style directly, like: div.style.backgroundColor = 'green';
+                        div.classList.add('selected');
 
-                        // You can also perform any other necessary actions here
 
-                        // Optionally, update UI to reflect the selection without reloading the page
                     });
                 });
 
@@ -610,7 +765,7 @@
                 timeSlotElements.forEach(function(timeSlot) {
                     timeSlot.addEventListener("click", function() {
                         const selectedTime = timeSlot.textContent.trim();
-                        const paymentContainer = document.getElementById("payment-container");
+                        const paymentContainer = document.getElementById("payButton");
 
                         if (timeSlot.classList.contains("selected")) {
                             // If the time_slot is already selected, unselect it and block actions
@@ -624,7 +779,112 @@
                 });
             });
         </script>
+        <script>
+            // Get references to elements
+            const subtractBalanceCheckbox = document.getElementById('subtractBalanceCheckbox');
+            const payableAmount = document.getElementById('payableAmount');
+            var newPayableAmount = <?php echo $total_amount + 0 ?>;
+            // Function to update payable amount based on checkbox state
+            function updatePayableAmount() {
+                const isChecked = subtractBalanceCheckbox.checked;
+                const totalAmount = <?php echo $total_amount ?>;
+                const registrationFee = 0;
+                let newPayableAmount = isChecked ? totalAmount + registrationFee - <?php echo $balance ?> : totalAmount + registrationFee;
 
+                payableAmount.textContent = '₹' + newPayableAmount;
+
+                var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
+
+                if (selectedTestsValue !== '') {
+                    document.cookie = 'selectedTestIndexes=' + encodeURIComponent(selectedTestsValue) + '; expires=' + new Date(new Date().getTime() + 3600 * 1000).toUTCString() + '; path=/';
+                }
+                const payButton = document.getElementById('payButton');
+
+                const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
+
+                document.getElementById('payButton').addEventListener('click', () => {
+                    const options = {
+                        key: apiKey,
+                        amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
+                        currency: 'INR',
+                        name: 'TEAM SLEEK - PEaS',
+                        description: 'Payment for Services',
+                        handler: response => {
+                            handlePaymentResponse(response);
+                        },
+                    };
+
+                    const rzp = new Razorpay(options);
+                    rzp.open();
+                });
+
+                function calculateDynamicAmount() {
+                    return (newPayableAmount * 100);
+                }
+
+                function handlePaymentResponse(response) {
+                    // Handle the payment response here
+                    console.log('Payment Response:', response);
+
+                    if (response.razorpay_payment_id) {
+                        const paymentId = response.razorpay_payment_id;
+                        const currentUrl = window.location.href;
+                        const updatedUrl = currentUrl + '?payment_id=' + paymentId;
+                        window.location.href = updatedUrl; // Redirect to the updated URL
+                    } else {
+                        console.log('Payment failed! Reason: ' + response.error.description);
+                    }
+                }
+            }
+
+            // Add an event listener to the checkbox
+            subtractBalanceCheckbox.addEventListener('change', updatePayableAmount);
+
+            // Initial update based on checkbox state
+            updatePayableAmount();
+            var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
+
+            if (selectedTestsValue !== '') {
+                document.cookie = 'selectedTestIndexes=' + encodeURIComponent(selectedTestsValue) + '; expires=' + new Date(new Date().getTime() + 3600 * 1000).toUTCString() + '; path=/';
+            }
+            const payButton = document.getElementById('payButton');
+
+            const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
+
+            document.getElementById('payButton').addEventListener('click', () => {
+                const options = {
+                    key: apiKey,
+                    amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
+                    currency: 'INR',
+                    name: 'TEAM SLEEK - PEaS',
+                    description: 'Payment for Services',
+                    handler: response => {
+                        handlePaymentResponse(response);
+                    },
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+            });
+
+            function calculateDynamicAmount() {
+                return (newPayableAmount * 100);
+            }
+
+            function handlePaymentResponse(response) {
+                // Handle the payment response here
+                console.log('Payment Response:', response);
+
+                if (response.razorpay_payment_id) {
+                    const paymentId = response.razorpay_payment_id;
+                    const currentUrl = window.location.href;
+                    const updatedUrl = currentUrl + '?payment_id=' + paymentId;
+                    window.location.href = updatedUrl; // Redirect to the updated URL
+                } else {
+                    console.log('Payment failed! Reason: ' + response.error.description);
+                }
+            }
+        </script>
 </body>
 
 

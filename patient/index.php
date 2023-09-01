@@ -30,6 +30,48 @@
             height: 110px;
             margin: 0 15px 0 15px;
         }
+
+        .rw-conversation-container .rw-header {
+            background-color: #0a76d8;
+        }
+
+        .rw-conversation-container .rw-messages-container .rw-message .rw-client {
+            background-color: #0a76d8;
+        }
+
+        .rw-launcher {
+            background-color: #0a76d8;
+        }
+
+        .stage>.stage-header h1 {
+            color: #0a76d8;
+        }
+
+        .stage>.stage-header h2 {
+            color: #ffffff;
+        }
+
+        a.nice-link {
+            color: #ffffff;
+        }
+
+        a.nice-link>.hover>span {
+            background: #0a76d8;
+        }
+
+        a.nice-link:hover,
+        a.nice-link.hover {
+            color: #ffffff;
+        }
+
+        .content {
+            background: #111111;
+            color: #ffffff;
+        }
+
+        .content .content-content.content-content--contact .contact-grid>li .fa {
+            color: #333333;
+        }
     </style>
 
 
@@ -76,7 +118,7 @@
             <table class="menu-container" border="0">
                 <tr>
                     <td style="padding:10px" colspan="2">
-                        <table border="0" class="profile-container">
+                        <table border="0" class="profile-container" style="padding-top: 4vh">
                             <tr>
                                 <td width="30%" style="padding-left:20px">
                                     <img src="../img/user.png" alt="" width="100%" style="border-radius:50%">
@@ -138,10 +180,19 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-assistant">
-                        <a href="assistant.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-test">
+                        <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Assistant</p>
+                                <p class="menu-text">Analysis History</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
+                    <td class="menu-btn menu-icon-payment">
+                        <a href="payment.php" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Payments</p>
                             </div>
                         </a>
                     </td>
@@ -364,23 +415,41 @@
         </div>
     </div>
 
-    <script>
-        const data = null;
-
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-
-        xhr.addEventListener('readystatechange', function() {
-            if (this.readyState === this.DONE) {
-                console.log(this.responseText);
-            }
-        });
-
-        xhr.open('GET', 'https://ind-nutrient-api1.p.rapidapi.com/food?limit=10');
-        xhr.setRequestHeader('X-RapidAPI-Key', '9ac6e39de4mshac558a6fd4b8c40p1b0977jsn45eb42749010');
-        xhr.setRequestHeader('X-RapidAPI-Host', 'ind-nutrient-api1.p.rapidapi.com');
-        xhr.send(data);
-    </script>
 </body>
+<script>
+    !(function() {
+        let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+        // Replace 1.x.x with the version that you want
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default({
+                    title: "Virtual Assistant",
+                    subtitle: "powered by SLEEK",
+
+                    initPayload: '/greet',
+                    customData: {
+                        language: "en",
+                    },
+                    socketUrl: "http://localhost:5005",
+                    profileAvatar: "../img/user.png",
+                    params: {
+                        images: {
+                            dims: {
+                                width: 200,
+                                height: 100,
+                            },
+                        },
+                        storage: "session",
+                    },
+                    // add other props here
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+    })();
+</script>
 
 </html>

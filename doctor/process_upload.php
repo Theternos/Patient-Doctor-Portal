@@ -7,4 +7,4 @@ $image_base64 = base64_decode($image_parts[1]);
 $file = $folderPath . uniqid() . '.png';
 file_put_contents($file, $image_base64);
 echo json_encode(["Image uploaded successfully."]);
-setcookie('prescription_name', $file, time() + (5), "/");
+setcookie('prescription_name', $file, time() + (60), "/");
