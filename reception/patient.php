@@ -92,6 +92,15 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
+                    <td class="menu-btn menu-icon-donation">
+                        <a href="requirement.php?action=blood_donor" class="non-style-link-menu">
+                            <div>
+                                <p class="menu-text">Donors</p>
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr class="menu-row">
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(0);
 
 if (isset($_SESSION["user"])) {
     if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
@@ -48,16 +49,37 @@ if ($result->num_rows == 0) {
 </td>
 </tr>';
 } else {
+    $prev_payment_id = NULL;
     while ($payment_row = $result->fetch_assoc()) {
         $paid_at = $payment_row['paid_at'];
         $title = $payment_row['title'];
+        $sqlll = "SELECT price FROM medical_test WHERE tname = '$title'";
+        $payment_id = $payment_row['payment_id'];
+        $result12 = $database->query($sqlll);
+
+
+        // Check if a row was found
+        if ($result12->num_rows > 0) {
+            // Fetch the price from the result
+            $price_row = $result12->fetch_assoc();
+            $price = $price_row['price'];
+        } else {
+            $sqlll = "SELECT schedule.mode FROM schedule INNER JOIN appointment on appointment.scheduleid = `schedule`.scheduleid INNER JOIN payment_history on payment_history.appoid = appointment.appoid WHERE payment_history.payment_id = '$payment_id' and payment_history.title = '$title' and appointment.pid = '$userid'";
+            $result12 = $database->query($sqlll);
+            $price_row = $result12->fetch_assoc();
+            $mode = $price_row['mode'];
+            if ($mode == 'Hospital Visit')
+                $price = 100;
+            else
+                $price = 250;
+        }
         $amount = $payment_row['amount'];
         $paid_at = $payment_row['paid_at'];
         $status = $payment_row['phstatus'];
         $discount = $payment_row['discount'];
-
+        $total_paid = $payment_row['total_paid'];
 ?>
-        <tr style="height:40px; text-align:center;">
+        <tr style="height:40px; text-align:center; font-size:14px;">
             <td><?php echo substr($paid_at, 0, 10); ?></td>
             <td><?php echo $title; ?></td>
             <td><?php if ($discount > 0) {
@@ -66,7 +88,11 @@ if ($result->num_rows == 0) {
                     echo '-';
                 } ?>
             </td>
-            <td><?php echo '₹' . $amount; ?></td>
+            <td><?php echo   '<strike>₹' . $price . '</strike> ₹' . $amount; ?></td>
+            <td><?php
+                echo '₹' . $total_paid;
+                ?>
+            </td>
             <?php if ($status == 1) { ?> <!--Payment Done to Hospital -->
                 <td>
                     <p class=" btn" style="width: 13vw; margin: auto; background-color: #1b998a20; color:#13af9d; font-weight:500">Paid</p>
@@ -81,5 +107,21 @@ if ($result->num_rows == 0) {
                 </td>
             <?php } ?>
         </tr>
-<?php }
+<?php
+        $prev_payment_id = $payment_id;
+    }
 } ?>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rows = document.querySelectorAll(".row-clickable");
+        rows.forEach(function(row) {
+            row.addEventListener("click", function() {
+                const paymentId = this.getAttribute("data-payment-id");
+                const detailsRows = document.querySelectorAll('.hidden-details[data-payment-id="' + paymentId + '"]');
+                detailsRows.forEach(function(detailsRow) {
+                    detailsRow.classList.toggle("hidden-details");
+                });
+            });
+        });
+    });
+</script>

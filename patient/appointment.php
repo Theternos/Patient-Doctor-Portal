@@ -563,10 +563,10 @@
             <div id="popup1" class="overlay">
                     <div class="popup" style="margin-top:33vh;">
                     <center>
-                        <h2>Successfully cancelled your selected tests</h2>
+                        <h2>Your booking has been successfully cancelled!</h2>
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
-                        You will be refunded in 3 to 4 business days!<br>
+                        Corresponding amount has been credited to your wallet.<br>
                         </div>
                         <div style="display: flex;justify-content: center;">
                         <a href="appointment.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Ok&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
@@ -624,8 +624,9 @@
                                         <tr>
                                             <div class="content" style="text-align: center; font-weight:500; font-size:15px;">
                                                 Your Test fee will be refunded.<br>
-                                                <red style="color:red; font-size:13px;font-weight:400;">Booking fee ₹110 will not refunded!</red><br><br>
+                                                <red style="color:red; font-size:13px;font-weight:400;">Note: Your refund will refelct into your wallet not your bank account</red>
                                             </div>
+                                            <br>
                                             <?php
                                             $test_result = $database->query("SELECT * FROM test_booking INNER JOIN medical_test ON medical_test.mtid = test_booking.mtid WHERE pid = '$userid' AND `status` = 0");
                                             for ($x = 0; $x < ($test_result->num_rows); $x++) {

@@ -225,9 +225,9 @@
             $result12 = $database->query($sql2);
             $apponum = ($result12->num_rows) + 1;
             if (!isset($_COOKIE['insert_flag'])) {
-                // $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
-                // $output = shell_exec($command);
-                // echo $command;
+                $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
+                $output = shell_exec($command);
+                echo $command;
                 $sql2 = "INSERT into appointment(pid,apponum,scheduleid,appodate, payment_id) values ($userid,$apponum,$scheduleid,'$today', '$payment_id')";
                 $result = $database->query($sql2);
                 echo $sql2;

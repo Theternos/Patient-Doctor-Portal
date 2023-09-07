@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-
-
-
-
     <title>Settings</title>
     <style>
         .dashbord-tables {
@@ -35,6 +31,123 @@
             letter-spacing: 1px;
             font-style: italic;
             font-weight: 400;
+        }
+
+        /* Style for the container */
+        .radio-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Hide the default radio button input */
+        .radio-label input[type="radio"] {
+            display: none;
+        }
+
+        /* Style for the custom radio button */
+        .radio-custom {
+            position: relative;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #3498db;
+            border-radius: 50%;
+            margin-right: 10px;
+            margin-bottom: 0;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Style for the label text */
+        .radio-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        /* Change the custom radio button's color when checked */
+        .radio-label input[type="radio"]:checked+.radio-custom {
+            border: 5px solid #3498db;
+            transition: 0.1s;
+        }
+
+        /* Style for label text */
+        .radio-label span {
+            margin-left: 10px;
+            font-size: 16px;
+        }
+
+        /* Optional: Add a transition effect for label text */
+        .radio-label span {
+            transition: color 0.3s ease;
+        }
+
+        /* Optional: Change label text color on hover */
+        .radio-label:hover span {
+            color: #3498db;
+        }
+
+        .radio-label w {
+            margin-top: 22px;
+        }
+
+
+        .donation-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+
+        .donation-form {
+            text-align: left;
+        }
+
+        .donation-item {
+            margin-bottom: 20px;
+        }
+
+
+        .radio-custom-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-radio {
+            display: none;
+        }
+
+        .custom-label {
+            margin-right: 10px;
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-radio:checked+.custom-label {
+            background-color: #27ae60;
+        }
+
+        .custom-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .custom-button:hover {
+            background-color: #2980b9;
         }
     </style>
 
@@ -69,6 +182,18 @@
     $userfetch = $result->fetch_assoc();
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
+
+
+    if ($_POST) {
+
+        $_SESSION["donate_organs"] = array(
+            'organ_selection' => $_POST['organ_selection'],
+        );
+        $donate_type = $_SESSION['donate_organs']['organ_selection'];
+
+        print_r($_SESSION["donate_organs"]);
+        header("location: settings.php?action=donate_next&id=$userid&error=0");
+    }
 
     ?>
     <div class="container">
@@ -222,24 +347,86 @@
                             </tr>
                             <tr>
                                 <td style="width: 25%;">
+                                    <?php
+                                    $result = $database->query("SELECT * FROM organ_donation WHERE pid = '$userid'");
+                                    if ($result->num_rows == null) {
+                                    ?>
+                                        <div style="width:91.7%; margin-left: 2vw;">
+                                            <div class="flex-row" style="justify-content:space-between;">
+                                                <div>
+                                                    <a href="?action=donate&id=<?php echo $userid ?>&error=0" class="non-style-link">
+                                                        <div class="dashboard-items setting-tabs" style="padding:20px;width:110%;display:flex; margin-left: 0;">
+                                                            <div class="btn-icon-donation"><img src="../img/icons/donate-iceblue.svg" alt="" width="28px"></div>
+                                                            <div>
+                                                                <div class="h1-dashboard">
+                                                                    Donate Organ &nbsp;
+                                                                </div><br>
+                                                                <div class="h3-dashboard" style="font-size: 15px;">
+                                                                    Donate organs to live in Others
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <a href="?action=donate&id=<?php echo $userid ?>&error=0" class="non-style-link">
+                                                        <div class="dashboard-items setting-tabs" style="padding:20px;width:102%;display: flex; margin-left:20px ;">
+                                                            <div class="btn-icon-donation"><img src="../img/icons/withdraw-iceblue.svg" alt="" width="28px"></div>
+                                                            <div>
+                                                                <div class="h1-dashboard" style="color: #ff5050;">
+                                                                    Withdraw &nbsp;
+                                                                </div><br>
+                                                                <div class="h3-dashboard" style="font-size: 14px;">
+                                                                    Choose this option to remove your existing registration from the register
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php } else { ?>
+                                        <div>
+                                            <div>
+                                                <a href="?action=donate&id=<?php echo $userid ?>&error=0" class="non-style-link">
+                                                    <div class="dashboard-items setting-tabs" style="padding:20px;margin:auto;width:95%;display: flex">
+                                                        <div class="btn-icon-donation"><img src="../img/icons/donate-iceblue.svg" alt="" width="28px"></div>
+                                                        <div>
+                                                            <div class="h1-dashboard">
+                                                                Donate Organ &nbsp;
+                                                            </div><br>
+                                                            <div class="h3-dashboard" style="font-size: 15px;">
+                                                                Donate organs to live in Others
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <p style="font-size: 5px">&nbsp;</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%;">
                                     <a href="?action=edit&id=<?php echo $userid ?>&error=0" class="non-style-link">
                                         <div class="dashboard-items setting-tabs" style="padding:20px;margin:auto;width:95%;display: flex">
                                             <div class="btn-icon-back dashboard-icons-setting" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
                                             <div>
                                                 <div class="h1-dashboard">
                                                     Account Settings &nbsp;
-
                                                 </div><br>
                                                 <div class="h3-dashboard" style="font-size: 15px;">
                                                     Edit your Account Details & Change Password
                                                 </div>
                                             </div>
-
                                         </div>
                                     </a>
                                 </td>
-
-
                             </tr>
                             <tr>
                                 <td colspan="4">
@@ -335,14 +522,13 @@
             $name = $row["pname"];
             $email = $row["pemail"];
             $address = $row["paddress"];
-
-
+            $b_group = $row["blood_group"];
             $dob = $row["pdob"];
             $nic = $row['pnic'];
             $tele = $row['ptel'];
             echo '
             <div id="popup1" class="overlay">
-                <div class="popup">
+                <div class="popup" style="transform: scale(.95); margin-top: 2vh">
                     <center>
                         <h2></h2>
                         <a class="close" href="settings.php">&times;</a>
@@ -390,6 +576,16 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
+                                <label for="b_group" class="form-label">Blood Group: </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label-td display-text" colspan="2">
+                                    ' . $b_group . '<br><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                <td class="td-label" colspan="2">
                                 <label for="Tele" class="form-label">Telephone: </label>
                                     </td>
                                 </tr>
@@ -431,6 +627,132 @@
                 </div>
             </div>
             ';
+        } elseif ($action == 'donate') {
+            $sqlmain = "select * from patient where pid=?";
+            $stmt = $database->prepare($sqlmain);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $name = $row["pname"];
+            $email = $row["pemail"];
+            $address = $row["paddress"];
+            $b_group = $row["blood_group"];
+            $dob = $row["pdob"];
+            $nic = $row['pnic'];
+            $tele = $row['ptel']; ?>
+            <div id="popup1" class="overlay">
+                <div class="popup" style="transform: scale(.95); margin-top: 2vh">
+                    <center>
+                        <h2></h2>
+                        <a class="close" href="settings.php">&times;</a>
+
+                        <div style="display: flex;justify-content: center;">
+                            <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
+
+                                <tr>
+                                    <td>
+                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Donate Organs.</p><br><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-label" colspan="2">
+                                        <label for="Tele" class="form-label">I want to donate * </label>
+                                    </td>
+                                </tr>
+                                <form action="" method="post">
+                                    <tr>
+                                        <td>
+                                            <div class="radio-container">
+                                                <label class="radio-label">
+                                                    <input type="radio" name="organ_selection" value="1">
+                                                    <span class="radio-custom"></span>
+                                                    <w class="display-text" style="font-size: 14px;">All my organs and tissue</w>
+                                                </label>
+                                                <label class="radio-label">
+                                                    <input type="radio" name="organ_selection" value="0">
+                                                    <span class="radio-custom"></span>
+                                                    <w class="display-text" style="font-size: 14px;">Some organs and tissue</w>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <center><button type="submit" class="login-btn btn-primary-soft btn">Next</button></center>
+                                        </td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </div>
+                    </center>
+                    <br><br>
+                </div>
+            </div>
+        <?php
+        } elseif ($action == 'donate_next') {
+            $sqlmain = "select * from patient where pid=?";
+            $stmt = $database->prepare($sqlmain);
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $name = $row["pname"];
+            $email = $row["pemail"];
+            $address = $row["paddress"];
+            $b_group = $row["blood_group"];
+            $dob = $row["pdob"];
+            $nic = $row['pnic'];
+            $tele = $row['ptel']; ?>
+            <div id="popup1" class="overlay">
+                <div class="popup" style="transform: scale(.95); margin-top: 2vh">
+                    <center>
+                        <h2></h2>
+                        <a class="close" href="settings.php">&times;</a>
+
+                        <div style="display: flex;justify-content: center;">
+                            <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
+
+                                <tr>
+                                    <td>
+                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Donate Organs.</p><br><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td-label" colspan="2">
+                                        <label for="Tele" class="form-label">I want to donate * </label>
+                                    </td>
+                                </tr>
+                                <form action="" method="post">
+                                    <tr>
+                                        <td>
+                                            <div class="radio-container">
+                                                <label class="radio-label">
+                                                    <input type="radio" name="organ_selection" value="1">
+                                                    <span class="radio-custom"></span>
+                                                    <w class="display-text" style="font-size: 14px;">All my organs and tissue</w>
+                                                </label>
+                                                <label class="radio-label">
+                                                    <input type="radio" name="organ_selection" value="0">
+                                                    <span class="radio-custom"></span>
+                                                    <w class="display-text" style="font-size: 14px;">Some organs and tissue</w>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <center><button type="submit" class="login-btn btn-primary-soft btn">Next</button></center>
+                                        </td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </div>
+                    </center>
+                    <br><br>
+                </div>
+            </div>
+    <?php
         } elseif ($action == 'edit') {
             $sqlmain = "select * from patient where pid=?";
             $stmt = $database->prepare($sqlmain);
@@ -604,5 +926,24 @@
     ?>
 
 </body>
+<script>
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name^="organ"]');
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            checkboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== checkbox) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+    // Add animation for form submission (optional)
+    document.querySelector('.donation-form').addEventListener('submit', function(e) {
+        e.preventDefault(); // Prevent actual form submission
+        // You can add animation or other actions here
+        alert('Form submitted successfully!');
+    });
+</script>
 
 </html>

@@ -52,6 +52,7 @@
         $address = $_SESSION['personal']['address'];
         $nic = $_SESSION['personal']['nic'];
         $dob = $_SESSION['personal']['dob'];
+        $blood_group = $_SESSION['personal']['blood_group'];
         $email = $_POST['newemail'];
         $tele = $_POST['tele'];
         $newpassword = $_POST['newpassword'];
@@ -67,8 +68,10 @@
                 $error = '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>';
             } else {
                 //TODO
-                $database->query("insert into patient(pemail,pname,ppassword, paddress, pnic,pdob,ptel) values('$email','$name','$newpassword','$address','$nic','$dob','$tele');");
-                $database->query("insert into webuser values('$email','p')");
+                // echo "INSERT into patient(pemail,pname,ppassword, paddress, pnic,pdob,ptel, blood_group) values ('$email','$name','$newpassword','$address','$nic','$dob','$tele', $blood_group);";
+                // echo "INSERT into webuser values('$email','p')";
+                $database->query("INSERT into patient(pemail,pname,ppassword, paddress, pnic,pdob,ptel, blood_group) values ('$email','$name','$newpassword','$address','$nic','$dob','$tele', '$blood_group');");
+                $database->query("INSERT into webuser values('$email','p')");
                 $result = $database->query("SELECT pid from patient where pemail = '$email'");
                 $row = mysqli_fetch_assoc($result);
                 $database->query("insert into wallet (pid) values('" . $row['pid'] . "')");

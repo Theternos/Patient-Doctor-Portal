@@ -463,6 +463,18 @@ input[type=search]:focus {
   background-size: 23px 23px;
 }
 
+.menu-icon-donation {
+  background-image: url('../img/icons/blood-donation.svg');
+  background-size: 23px 23px;
+}
+
+.menu-icon-donation:hover,
+.menu-icon-donation-active {
+  color: var(--primarycolor);
+  background-image: url('../img/icons/blood-donation-iceblue.svg');
+  background-size: 23px 23px;
+}
+
 .menu-icon-payment:hover,
 .menu-icon-payment-active {
   color: var(--primarycolor);
@@ -574,6 +586,19 @@ input[type=search]:focus {
   background-repeat: no-repeat;
   transition: 0.5s;
   padding: 8px 20px 8px 40px;
+}
+
+.btn-icon-donation {
+  width: 60px;
+  height: 60px;
+  background-position: 18px 50%;
+  background-repeat: no-repeat;
+  transition: 0.5s;
+  padding: 15px 20px 8px 17px;
+  background-color: rgba(184, 184, 184, 0.247);
+  border-radius: 7px;
+  margin-left: 5px;
+  margin-right: 20px;
 }
 
 .btn-icon-back:hover {
@@ -854,7 +879,7 @@ input[type=search]:focus {
 
 .payment-visuals {
   width: 73vw;
-  height: 20vh;
+  height: 24vh;
   border-radius: 5px;
   font-family: 'Montserrat', sans-serif;
   letter-spacing: 1px;

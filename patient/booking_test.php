@@ -440,41 +440,79 @@
                                     if ($payment_id != NULL) {
                                         if (isset($_COOKIE['selectedTestIndexes'])) {
                                             $selectedTestIndexesFromCookie = $_COOKIE['selectedTestIndexes'];
+                                            $toggle = $_COOKIE['checkboxState'];
                                             $selectedTestIndexesArray = explode(',', $selectedTestIndexesFromCookie);
+                                            $length = count($selectedTestIndexesArray);
+                                            $result34 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
+                                            $row34 = $result34->fetch_assoc();
+                                            $balance = $row34['balance'];
+                                            $insert_balance = 0;
+                                            $total_item_price = 0;
+                                            $temp_insert_balance = 0;
+                                            $overflow_amt = 0;
+                                            foreach ($selectedTestIndexesArray as $testIndex) {
+                                                $result23 = $database->query("SELECT * from medical_test INNER JOIN test_booking ON test_booking.mtid = medical_test.mtid WHERE medical_test.mtid = '$testIndex'");
+                                                $row23 = $result23->fetch_assoc();
+                                                $item_price = $row23['price'];
+                                                $total_item_price += $item_price;
+                                            }
+                                            // echo "Total item price : " . $total_item_price;
                                             foreach ($selectedTestIndexesArray as $testIndex) {
                                                 $database->query("INSERT INTO test_booking (pid, mtid, payment_id) VALUES ('$userid', '$testIndex', '$payment_id')");
                                                 $result23 = $database->query("SELECT * from medical_test INNER JOIN test_booking ON test_booking.mtid = medical_test.mtid WHERE medical_test.mtid = '$testIndex'");
                                                 $row23 = $result23->fetch_assoc();
                                                 $tid = $row23['tid'];
                                                 $title = $row23['tname'];
-                                                $price = $row23['price'];
-                                                $price += 110;
-                                                $org_price = $price;
+                                                $item_price = $row23['price'];
+                                                // echo "<br>Item Price: " . $item_price . "<br>";
+                                                if (isset($_COOKIE['newPayableAmount'])) {
+                                                    $price = $_COOKIE['newPayableAmount'];
+                                                } else {
+                                                    $price = $row23['price'];
+                                                }
+                                                $total_paid = $price;
+                                                if ($toggle == 1) {
+                                                    $price += (110 / $length);
+                                                    $item_price += (110 / $length);
+                                                }
+
+                                                if ($toggle == 1 && $total_paid > 1) {
+                                                    $insert_balance = 0;
+                                                    $applied_discount = ($balance / $length);
+                                                    if ($overflow_amt > 0)
+                                                        $applied_discount += $overflow_amt;
+                                                    if ($applied_discount > ($item_price - 1)) {
+                                                        $overflow_amt = $applied_discount - (($item_price - 1) - (110 / $length));
+                                                        $applied_discount -= $overflow_amt;
+                                                    }
+                                                    if ($length > 1)
+                                                        $priceee = ($item_price - (110 / $length))  - $applied_discount;
+                                                    else
+                                                        $priceee = ($item_price)  - $applied_discount;
+
+                                                    // echo "<br>Overflow Amount: " . $overflow_amt . "<br>";
+                                                } elseif ($toggle == 0) {
+                                                    $insert_balance = $balance;
+                                                    $applied_discount = 0;
+                                                    $priceee = $item_price + (110 / $length);
+                                                } elseif ($toggle == 1 && $total_paid == 1) {
+                                                    $temp_insert_balance += $item_price;
+                                                    $insert_balance = $balance - $temp_insert_balance;
+                                                    $applied_discount = ($total_item_price + 110) / $length;
+                                                    $priceee = $total_paid / $length;
+                                                }
+
+
+                                                // echo "<br>" . "INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')";
+                                                $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')");
+                                            }
+                                            $bonus = ($total_paid / 100) * 2.5;
+                                            $insert_balance += $bonus;
+                                            // echo "<br>PEaS Wallet: " . $balance . "<br>";
+
+                                            // echo "<br>" . "UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';" . "<br>";
+                                            $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';");
                                     ?>
-                                                <span id="balance">
-                                                    <?php
-                                                    echo $_COOKIE['checkboxState'] . '<br>';
-                                                    $toggle = $_COOKIE['checkboxState'];
-                                                    $balance = 0;
-                                                    if ($toggle == 1) {
-                                                        $result34 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
-                                                        $row34 = $result34->fetch_assoc();
-                                                        $balance = $row34['balance'];
-                                                        $price  -= $balance;
-                                                        $discount = ($price / 100) * 2.5;
-                                                    } else
-                                                        $discount = ($price / 100) * 2.5;
-                                                    $result45 = $database->query("SELECT balance from wallet WHERE pid = '$userid'");
-                                                    $row45 = $result45->fetch_assoc();
-                                                    $fetch_balance = $row45['balance'];
-                                                    $org_balance = $fetch_balance - ($org_price - $price);
-                                                    $insert_balance = $org_balance + $discount;
-                                                    ?>
-                                                </span>
-                                            <?php
-                                                $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + '$discount' WHERE pid = '$userid'");
-                                                $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id) VALUES ('$userid', '$tid', '$balance', '$price', '$title','$payment_id')");
-                                            } ?>
                                             <script>
                                                 window.location.href = './appointment.php';
                                             </script>
@@ -520,15 +558,18 @@
     function updatePayableAmount() {
         const isChecked = subtractBalanceCheckbox.checked;
         const totalAmount = <?php echo $total_amount ?>;
+        const balance = <?php echo $balance ?>;
         const registrationFee = 110;
-        let newPayableAmount = isChecked ? totalAmount + registrationFee - <?php echo $balance ?> : totalAmount + registrationFee;
+        let tempAmount = totalAmount + registrationFee - balance;
+        let newPayableAmount = isChecked ? (tempAmount >= 1 ? tempAmount.toFixed(2) : '1.00') : (totalAmount + registrationFee).toFixed(2);
 
         payableAmount.textContent = '₹' + newPayableAmount;
 
         var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
 
         if (selectedTestsValue !== '') {
-            document.cookie = 'selectedTestIndexes=' + encodeURIComponent(selectedTestsValue) + '; expires=' + new Date(new Date().getTime() + 3600 * 1000).toUTCString() + '; path=/';
+            document.cookie = 'selectedTestIndexes=' + encodeURIComponent(selectedTestsValue) + '; expires=' + new Date(new Date().getTime() + 120 * 1000).toUTCString() + '; path=/';
+            document.cookie = 'newPayableAmount=' + encodeURIComponent(newPayableAmount) + '; expires=' + new Date(new Date().getTime() + 100 * 1000).toUTCString() + '; path=/';
         }
         const payButton = document.getElementById('payButton');
 

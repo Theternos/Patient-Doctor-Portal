@@ -41,7 +41,8 @@
             'lname' => $_POST['lname'],
             'address' => $_POST['address'],
             'nic' => $_POST['nic'],
-            'dob' => $_POST['dob']
+            'dob' => $_POST['dob'],
+            'blood_group' => $_POST['blood_group']
         );
 
 
@@ -93,6 +94,26 @@
                 <tr>
                     <td class="label-td" colspan="2">
                         <input type="text" name="nic" class="input-text" placeholder="Aadhar Number" required>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label-td" colspan="2">
+                        <label for="bg" class="form-label">Blood Group: </label>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="label-td" colspan="2">
+                        <select name="blood_group" id="" class="input-text" required>
+                            <option value="A+ ve">A+ ve</option>
+                            <option value="A- ve">A- ve</option>
+                            <option value="B+ ve">B+ ve</option>
+                            <option value="B- ve">B- ve</option>
+                            <option value="O+ ve">O+ ve</option>
+                            <option value="O- ve">O- ve</option>
+                            <option value="AB+ ve">AB+ ve</option>
+                            <option value="AB- ve">AB- ve</option>
+                            <option value="Bombay Blood Group">Bombay Blood Group</option>
+                        </select>
                     </td>
                 </tr>
                 <tr>

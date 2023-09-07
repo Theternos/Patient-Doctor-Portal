@@ -36,6 +36,16 @@
             width: 10vw;
             margin-right: 2vw;
         }
+
+        .wallet-disclaimer {
+            background-color: #ece2d070;
+            color: #202020;
+            padding: 1vh 1vw 1vh 2.3vw;
+            margin: 2vh 2.1vw 2vh 2.1vw;
+            font-size: 14px;
+            letter-spacing: 1px;
+            border-radius: 5px;
+        }
     </style>
 
 
@@ -47,7 +57,7 @@
     //learn from w3schools.com
 
     session_start();
-
+    error_reporting(0);
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
             header("location: ../login.php");
@@ -232,6 +242,9 @@
                             <b>₹<?php echo $bonus ?></b>
                         </div>
                     </div>
+                    <div class="wallet-disclaimer">
+                        <p style="font-size: 15px;"><span style="color:red; margin-right:5px;">Note:</span> Wallet funds are non-withdrawable but can be used for future bookings.</p>
+                    </div>
                 </div>
                 <div class="payment-history">
                     <h3>Payments history</h3>
@@ -246,6 +259,10 @@
                                 </th>
                                 <th class="table-headin">
                                     Discount
+                                </th>
+                                <th class="table-headin flex-column">
+                                    Test / Consultancy Fee
+                                    <p style="font-weight: 400; margin: 0 0 0 0; font-size: 12px;">(Booking Charge included)</p>
                                 </th>
                                 <th class="table-headin">
                                     Paid
