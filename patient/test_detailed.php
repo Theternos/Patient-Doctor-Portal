@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <script src="../js/pdfobject-min.js"></script>
-
+    <?php include("./config.php") ?>
     <title>Consultancy</title>
     <style>
         .dashbord-tables {
@@ -114,7 +114,7 @@
                     <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -123,7 +123,7 @@
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -133,7 +133,7 @@
                     <td class="menu-btn menu-icon-session">
                         <a href="specialities.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -142,7 +142,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -151,7 +151,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -160,7 +160,7 @@
                     <td class="menu-btn menu-icon-test-active menu-active">
                         <a href="recent_tests.php" class="non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -169,7 +169,7 @@
                     <td class="menu-btn menu-icon-payment">
                         <a href="payment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['payments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -178,7 +178,7 @@
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Settings</p>
+                                <p class="menu-text"><?php echo $lang['settings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -190,15 +190,15 @@
                 <tr>
                     <td width="13%">
                         <a href="recent_tests.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                                <font class="tn-in-text">Back</font>
+                                <font class="tn-in-text"><?php echo $lang['ddback'] ?></font>
                             </button></a>
                     </td>
                     <td>
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;">View Report</p>
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;"><?php echo $lang['vr'] ?></p>
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            <?php echo $lang['tddate'] ?>
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
@@ -210,8 +210,23 @@
                             ?>
                         </p>
                     </td>
-                    <td width="10%">
+                    <td width="7%">
                         <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                    </td>
+                    <td width="9.4%">
+                        <div class="language-select" style="width: 70px;">
+                            <form action="donor_register.php" method="post">
+                                <select name="language" id="language" style="font-size:13px">
+                                    <option value="en"><?php echo $_SESSION['lang'] ?></option>
+                                    <option value="en">en</option>
+                                    <option value="tm">tm</option>
+                                    <option value="ka">ka</option>
+                                    <option value="ml">ml</option>
+                                    <option value="te">te</option>
+                                    <option value="hi">hi</option>
+                                </select><br>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </table>
@@ -223,16 +238,16 @@
                                 <thead>
                                     <tr>
                                         <th class="table-headin">
-                                            Lab Technician Name
+                                            <?php echo $lang['ltname'] ?>
                                         </th>
                                         <th class="table-headin">
-                                            Session Title
+                                            <?php echo $lang['sessiontitle'] ?>
                                         </th>
                                         <th class="table-headin">
-                                            Booked Date
+                                            <?php echo $lang['bookeddate'] ?>
                                         </th>
                                         <th class="table-headin">
-                                            Analysis Date
+                                            <?php echo $lang['analysisdate'] ?>
                                         </th>
                                     </tr>
                                 </thead>
@@ -283,6 +298,28 @@
 <script type="text/javascript">
     $(document).ready(function() {
         PDFObject.embed("<?php echo $file_name; ?>", "#pdf_view");
+    });
+</script>
+<script>
+    // Get a reference to the language dropdown
+    const languageDropdown = document.getElementById("language");
+
+    // Add an event listener to the dropdown
+    languageDropdown.addEventListener("change", function() {
+        // Get the selected language code
+        const selectedLanguage = this.value;
+
+        // Get the current URL
+        const currentURL = "./test_detailed.php"
+
+        // Check if there's already a query string in the URL
+        const separator = currentURL.includes("?") ? "&" : "?";
+
+        // Construct the new URL with the selected language
+        const newURL = currentURL + separator + "lang=" + selectedLanguage;
+
+        // Redirect to the new URL
+        window.location.href = newURL;
     });
 </script>
 

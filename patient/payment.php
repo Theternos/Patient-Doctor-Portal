@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="../js/jquery-min.js"></script>
-
+    <?php
+    include("./config.php") ?>
     <title>Dashboard</title>
     <style>
         .dashbord-tables {
@@ -56,7 +57,6 @@
 
     //learn from w3schools.com
 
-    session_start();
     error_reporting(0);
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
@@ -114,7 +114,7 @@
                     <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -122,7 +122,7 @@
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -131,7 +131,7 @@
                     <td class="menu-btn menu-icon-session">
                         <a href="specialities.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -140,7 +140,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -148,7 +148,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -157,7 +157,7 @@
                     <td class="menu-btn menu-icon-test">
                         <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -166,7 +166,7 @@
                     <td class="menu-btn menu-icon-payment-active menu-active">
                         <a href="payment.php" class="non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['payments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -175,7 +175,7 @@
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Settings</p>
+                                <p class="menu-text"><?php echo $lang['settings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -188,7 +188,7 @@
                 <tr>
 
                     <td colspan="1" class="nav-bar">
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;">Payment Report</p>
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;"><?php echo $lang['payreport'] ?></p>
 
                     </td>
                     <td width="25%">
@@ -196,7 +196,7 @@
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            <?php echo $lang['tddate'] ?>
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
@@ -207,14 +207,29 @@
                             ?>
                         </p>
                     </td>
-                    <td width="10%">
+                    <td width="7%">
                         <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                    </td>
+                    <td width="8.5%">
+                        <div class="language-select" style="width: 70px;">
+                            <form action="donor_register.php" method="post">
+                                <select name="language" id="language" style="font-size:13px">
+                                    <option value="en"><?php echo $_SESSION['lang'] ?></option>
+                                    <option value="en">en</option>
+                                    <option value="tm">tm</option>
+                                    <option value="ka">ka</option>
+                                    <option value="ml">ml</option>
+                                    <option value="te">te</option>
+                                    <option value="hi">hi</option>
+                                </select><br>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             </table>
             <div class="flex-column">
                 <div class="payment-visuals">
-                    <h3>Summary</h3>
+                    <h3><?php echo $lang['paysummary'] ?></h3>
                     <div class="flex-row">
                         <?php
                         $result = $database->query("SELECT * from wallet INNER JOIN payment_history ON payment_history.pid = wallet.pid WHERE wallet.pid = '$userid' and phstatus != 3");
@@ -228,47 +243,49 @@
                         ?>
                         <div class="payment-visuals-box flex-row">
                             <img src="../img/icons/balance.svg" alt="Balance icon" width="35px">
-                            <p>My Balance</p>
+                            <p><?php echo $lang['paybalance'] ?></p>
                             <b>₹<?php echo $balance ?></b>
                         </div>
                         <div class="payment-visuals-box flex-row">
                             <img src="../img/icons/total-spent.svg" alt="Total Spent icon" width="35px">
-                            <p>Total Spent</p>
+                            <p><?php echo $lang['paytspent'] ?></p>
                             <b>₹<?php echo $amount ?></b>
                         </div>
                         <div class="payment-visuals-box flex-row">
                             <img src="../img/icons/total-bonus.svg" alt="Total Bonus icon" width="35px">
-                            <p>Totoal Bonus</p>
+                            <p><?php echo $lang['paytbonus'] ?></p>
                             <b>₹<?php echo $bonus ?></b>
                         </div>
                     </div>
                     <div class="wallet-disclaimer">
-                        <p style="font-size: 15px;"><span style="color:red; margin-right:5px;">Note:</span> Wallet funds are non-withdrawable but can be used for future bookings.</p>
+                        <p style="font-size: 15px;"><span style="color:red; margin-right:5px;"><?php echo $lang['note'] ?></span> <?php echo $lang['wafund'] ?></p>
                     </div>
                 </div>
                 <div class="payment-history">
-                    <h3>Payments history</h3>
+                    <h3><?php echo $lang['phistory'] ?></h3>
                     <table width="95%" class="sub-table scrolldown" border="0">
                         <thead>
                             <tr>
                                 <th class="table-headin">
-                                    Date
+                                    <?php echo $lang['date'] ?>
                                 </th>
                                 <th class="table-headin">
-                                    Session Title
+                                    <?php echo $lang['sessiontitle'] ?>
+
                                 </th>
                                 <th class="table-headin">
-                                    Discount
+                                    <?php echo $lang['discount'] ?>
+
                                 </th>
                                 <th class="table-headin flex-column">
-                                    Test / Consultancy Fee
-                                    <p style="font-weight: 400; margin: 0 0 0 0; font-size: 12px;">(Booking Charge included)</p>
+                                    <?php echo $lang['tcfee'] ?>
+                                    <p style="font-weight: 400; margin: 0 0 0 0; font-size: 12px;"><?php echo $lang['bcrgincluded'] ?></p>
                                 </th>
                                 <th class="table-headin">
-                                    Paid
+                                    <?php echo $lang['paid'] ?>
                                 </th>
                                 <th class="table-headin">
-                                    Status
+                                    <?php echo $lang['status'] ?>
                                 </th>
                             </tr>
                         </thead>
@@ -277,8 +294,8 @@
                         </tbody>
                     </table>
                     <div id="pagination" class="flex-row" style="justify-content: center;">
-                        <button class="logout-btn btn-primary-soft btn" id="prevButton" onclick="loadPayments(-1)">Previous</button>
-                        <button class="logout-btn btn-primary-soft btn" id="nextButton" onclick="loadPayments(1)">Next</button>
+                        <button class="logout-btn btn-primary-soft btn" id="prevButton" onclick="loadPayments(-1)"> <?php echo $lang['previous'] ?></button>
+                        <button class="logout-btn btn-primary-soft btn" id="nextButton" onclick="loadPayments(1)"> <?php echo $lang['next'] ?></button>
                     </div>
                 </div>
             </div>
@@ -316,6 +333,28 @@
 
     // Initial load
     loadPayments(0);
+</script>
+<script>
+    // Get a reference to the language dropdown
+    const languageDropdown = document.getElementById("language");
+
+    // Add an event listener to the dropdown
+    languageDropdown.addEventListener("change", function() {
+        // Get the selected language code
+        const selectedLanguage = this.value;
+
+        // Get the current URL
+        const currentURL = "./payment.php"
+
+        // Check if there's already a query string in the URL
+        const separator = currentURL.includes("?") ? "&" : "?";
+
+        // Construct the new URL with the selected language
+        const newURL = currentURL + separator + "lang=" + selectedLanguage;
+
+        // Redirect to the new URL
+        window.location.href = newURL;
+    });
 </script>
 
 </html>

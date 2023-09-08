@@ -910,7 +910,7 @@
                                     <tr>
                                         <td class="label-td" colspan="2">
                                             <form action="edit-user.php" method="POST" class="add-new-form">
-                                            <label for="Email" class="form-label">' . $lang["email "] . ' </label>
+                                            <label for="Email" class="form-label">' . $lang["email"] . ' </label>
                                             <input type="hidden" value="' . $id . '" name="id00">
                                         </td>
                                     </tr>
@@ -923,7 +923,7 @@
                                     <tr>
                                         
                                         <td class="label-td" colspan="2">
-                                            <label for="name" class="form-label">' . $lang["name "] . '</label>
+                                            <label for="name" class="form-label">' . $lang["name"] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -971,7 +971,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="password" class="input-text" placeholder="Defind a Password" required><br>
+                                            <input type="password" name="password" class="input-text" placeholder="Define a Password" required><br>
                                         </td>
                                     </tr><tr>
                                         <td class="label-td" colspan="2">

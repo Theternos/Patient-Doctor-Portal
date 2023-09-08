@@ -68,7 +68,7 @@ $lang = array(
     "amount-refunded" => "Corresponding amount has been credited to your wallet.",
     "booked-medical-tests" => "Booked Medical Tests.",
     "test-willbe-refunded" => "Your Test fee will be refunded.",
-    "note-refund" => "Note: Your refund will refelct into your wallet not your bank account",
+    "note-refund" => "Note: Your refund will refelct into your wallet not your bank account",
     "cancel-selected-seats" => "Cancel Selected Tests",
     "todays-date" => "Today's Date",
     "starts" => "Start:",
@@ -138,5 +138,33 @@ $lang = array(
     "edit-warning" => "If You change your email also Please logout and login again with your new email ",
     "donate-more" => "Register for Organ Donation",
     "reset" => "Reset",
-    "save" => "Save"
+    "save" => "Save",
+    #payment.php
+    "payreport" => "Payment Report",
+    "paysummary" => "Summary",
+    "paybalance" => "My Balance",
+    "paytspent" => "Total Spent",
+    "paytbonus" => "Total Bonus",
+    "note" => "Note:",
+    "wafund" => " Wallet funds are non-withdrawable but can be used for future bookings.",
+    "phistory" => "Payments history",
+    "date" => "Date",
+    "discount" => "Discount",
+    "tcfee" => " Test / Consultancy Fee",
+    "bcrgincluded" => "(Booking Charge included)",
+    "paid" => "Paid",
+    "status" => "Status",
+    "next" => "Next",
+    "previous" => "Previous",
+    // recent_test.php
+    "retests" => "Recent Tests",
+    "ltname" => "Lab Technician Name",
+    "analysisdate" => "Analysis Date",
+    "bookeddate" => "Booked Date",
+    "notconsdr" => "You have not consulted any doctor yet !",
+    "Consnow" => "Consult Now",
+    "view" => "View",
+    "cons" => "Consultancy",
+    #test_detailed.php
+    "vr" => "View Report"
 );
