@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Sep 01, 2023 at 08:09 PM
+-- Generation Time: Sep 08, 2023 at 05:34 AM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -34,7 +34,6 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `apassword` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`aemail`)
 ) ;
-
 --
 -- Dumping data for table `admin`
 --
@@ -65,14 +64,12 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   KEY `pid` (`pid`),
   KEY `scheduleid` (`scheduleid`)
 ) ;
-
 --
 -- Dumping data for table `appointment`
 --
 
 INSERT INTO `appointment` (`appoid`, `pid`, `apponum`, `scheduleid`, `appodate`, `status`, `roomid`, `room_flag`, `payment_id`, `booking_date`) VALUES
-(21, 1, 1, 28, '2023-09-01', 0, NULL, 0, 'pay_MWw4pbnjqMh6jt', '2023-09-01 09:45:27'),
-(29, 1, 1, 17, '2023-09-02', 0, NULL, 0, 'pay_MXAuv651VnV8uN', '2023-09-02 00:16:26');
+(1, 1, 1, 1, '2023-09-02', 0, NULL, 0, 'pay_MXQEwuf4Vd1Gz7', '2023-09-02 15:15:57');
 
 -- --------------------------------------------------------
 
@@ -92,14 +89,14 @@ CREATE TABLE IF NOT EXISTS `doctor` (
   `specialties` int DEFAULT NULL,
   PRIMARY KEY (`docid`),
   KEY `specialties` (`specialties`)
-) ;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `doctor`
 --
 
 INSERT INTO `doctor` (`docid`, `docemail`, `docname`, `docpassword`, `docnic`, `doctel`, `qualification`, `specialties`) VALUES
-(1, 'doctor@bitsathy.ac.in', 'Test Doctor', '123', '23456789o', '0110000000', 'MBBS', 1),
+(1, 'doctor@bitsathy.ac.in', 'Test Doctor', '123', '23456789653', '0110000000', 'MBBS', 18),
 (2, 'sanjay.ad21@bitsathy.ac.in', 'Sanjay A R', 'vinu', '641879279568', '9826879642', 'MBBS, Orthopaedics', 35);
 
 -- --------------------------------------------------------
@@ -254,7 +251,25 @@ CREATE TABLE IF NOT EXISTS `metrices` (
 --
 
 INSERT INTO `metrices` (`uid`, `pid`, `docid`, `appoid`, `scheduleid`, `weight`, `height`, `sugar`, `bp`, `temp`, `reason`, `allergy`, `timestamp`) VALUES
-(1, 1, 1, 13, 16, 72, 197, '104', '94', '100.2', 'Fever', 'No', '2023-08-31 21:14:15');
+(1, 1, 1, 13, 16, 72, 197, '104', '94', '100.2', 'Fever', 'No', '2023-08-31 21:14:15'),
+(2, 1, 1, 30, 32, 72, 180, '104', '72', '100.2', 'Fever', 'No', '2023-09-02 14:46:56'),
+(3, 1, 1, 1, 1, 72, 180, '94', '72', '100.2', 'Fever', 'No', '2023-09-02 15:25:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `organ_donation`
+--
+
+DROP TABLE IF EXISTS `organ_donation`;
+CREATE TABLE IF NOT EXISTS `organ_donation` (
+  `odid` int NOT NULL AUTO_INCREMENT,
+  `pid` int DEFAULT NULL,
+  `organ` varchar(45) DEFAULT NULL,
+  `status` int DEFAULT '0',
+  PRIMARY KEY (`odid`),
+  UNIQUE KEY `odid_UNIQUE` (`odid`)
+) ;
 
 -- --------------------------------------------------------
 
@@ -297,16 +312,19 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `pnic` varchar(15) DEFAULT NULL,
   `pdob` date DEFAULT NULL,
   `ptel` varchar(15) DEFAULT NULL,
+  `blood_group` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`pid`)
 ) ;
+
 --
 -- Dumping data for table `patient`
 --
 
-INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`) VALUES
-(1, 'patient@bitsathy.ac.in', 'Kavinkumar B', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947'),
-(3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947'),
-(4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470');
+INSERT INTO `patient` (`pid`, `pemail`, `pname`, `ppassword`, `paddress`, `pnic`, `pdob`, `ptel`, `blood_group`) VALUES
+(1, 'patient@bitsathy.ac.in', 'Kavinkumar B', '123', 'Sathy', '0000000000', '2000-01-01', '8072677947', 'AB+ ve'),
+(3, 'kavinkumar.cs21@bitsathy.ac.in', 'Kavinkumar B', 'vinu', 'Anaippalayam', '934194569785', '2003-11-29', '8072677947', 'O+ ve'),
+(4, 'anusuya1342004@gmail.com', 'Anusuya J', 'vinu', 'Pallathottam, Onnipalayam, Bilichi, Coimbatore, 641019', '234587675639', '2003-03-13', '9677927470', 'B+ ve'),
+(9, 'saaivignesh.cs21@bitsathy.ac.in', 'Saaivignesh S', '123', 'Coimbatore', '62033456820', '2003-05-25', '9444342043', 'A+ ve');
 
 -- --------------------------------------------------------
 
@@ -320,30 +338,27 @@ CREATE TABLE IF NOT EXISTS `payment_history` (
   `pid` int DEFAULT NULL,
   `appoid` int DEFAULT NULL,
   `tid` int DEFAULT NULL,
-  `amount` int DEFAULT NULL,
-  `discount` int DEFAULT '0',
+  `amount` decimal(10,2) DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT '0.00',
   `title` varchar(150) DEFAULT NULL,
   `payment_id` varchar(100) DEFAULT NULL,
+  `total_paid` decimal(10,2) DEFAULT NULL,
   `paid_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `phstatus` int DEFAULT '1',
   PRIMARY KEY (`phid`),
   UNIQUE KEY `phid_UNIQUE` (`phid`)
-);
+) ;
 
 --
 -- Dumping data for table `payment_history`
 --
 
-INSERT INTO `payment_history` (`phid`, `pid`, `appoid`, `tid`, `amount`, `discount`, `title`, `payment_id`, `paid_at`, `phstatus`) VALUES
-(3, 1, 1, NULL, 250, 0, 'Paediatrics', 'pay_MWuFGAt3rtMC91', '2023-09-01 09:46:52', 1),
-(2, 1, 1, NULL, 100, 0, 'Paediatrics', 'pay_MWuDyQpZVdmQ89', '2023-09-01 09:46:52', 1),
-(4, 1, 21, NULL, 100, 0, 'Paediatrics', 'pay_MWw4pbnjqMh6jt', '2023-09-01 09:46:52', 3),
-(5, 1, NULL, 9, 550, 0, 'D-dimer Test', 'pay_MX2FOA31U2J2lX', '2023-09-01 15:48:44', 1),
-(6, 1, NULL, 2, 660, 0, 'ALT Test', 'pay_MX2JzyIzelrVCB', '2023-09-01 15:51:55', 1),
-(22, 1, NULL, 52, 660, 0, 'Aldolase Test', 'pay_MXBHEQGBqxawyw', '2023-09-02 00:37:33', 1),
-(23, 1, NULL, 53, 487, 23, 'Radiology', 'pay_MXBLLmvzKCmlPw', '2023-09-02 00:41:27', 1),
-(21, 1, 29, NULL, 244, 6, 'Paediatrics', 'pay_MXAuv651VnV8uN', '2023-09-02 00:16:26', 1),
-(12, 1, NULL, 15, 630, 30, 'Lithium Test', 'pay_MX62nIU1iEkIAY', '2023-09-01 19:30:25', 1);
+INSERT INTO `payment_history` (`phid`, `pid`, `appoid`, `tid`, `amount`, `discount`, `title`, `payment_id`, `total_paid`, `paid_at`, `phstatus`) VALUES
+(1, 1, 1, NULL, '75.00', '25.00', 'General Practice', 'pay_MXQEwuf4Vd1Gz7', '75.00', '2023-09-02 15:15:57', 1),
+(2, 1, NULL, 1, '592.50', '12.50', 'ALT Test', 'pay_MYWSqdSrLpuiix', '2646.35', '2023-09-02 15:23:16', 3),
+(33, 1, NULL, 427, '110.00', '2000.00', 'Biopsy', 'pay_MYgZVH8e3GRiWX', '110.00', '2023-09-05 19:53:22', 1),
+(34, 1, NULL, 428, '605.00', '0.00', 'Albimin Test', 'pay_MYh7ijnTgWCsvY', '1310.00', '2023-09-05 20:25:45', 3),
+(35, 1, NULL, 429, '705.00', '0.00', 'Blood Test', 'pay_MYh7ijnTgWCsvY', '1310.00', '2023-09-05 20:25:45', 3);
 
 -- --------------------------------------------------------
 
@@ -357,7 +372,7 @@ CREATE TABLE IF NOT EXISTS `refund` (
   `pid` int DEFAULT NULL,
   `appoid` int DEFAULT NULL,
   `tid` int DEFAULT NULL,
-  `rps` int DEFAULT NULL,
+  `rps` decimal(10,2) DEFAULT NULL,
   `payment_id` varchar(100) DEFAULT NULL,
   `status` varchar(45) DEFAULT '0',
   PRIMARY KEY (`refid`),
@@ -369,10 +384,10 @@ CREATE TABLE IF NOT EXISTS `refund` (
 --
 
 INSERT INTO `refund` (`refid`, `pid`, `appoid`, `tid`, `rps`, `payment_id`, `status`) VALUES
-(1, 1, NULL, 3, 1000, 'pay_MWNjiYWIJVmGME', '0'),
-(2, 1, NULL, 7, 7500, 'pay_MWNjiYWIJVmGME', '0'),
-(3, 1, NULL, 8, 7500, 'pay_MWykVbgGHv17ox', '0'),
-
+(1, 1, NULL, 2, '2000.00', 'pay_MXQMpcZ0Wbg9Tv', '0'),
+(2, 1, NULL, 3, '550.00', 'pay_MYW45g2GqOrx4d', '0'),
+(3, 1, NULL, 6, '1000.00', 'pay_MYWWO0RF9D2tEX', '0'),
+(4, 1, NULL, 0, '0.00', '', '0');
 
 -- --------------------------------------------------------
 
@@ -399,7 +414,8 @@ CREATE TABLE IF NOT EXISTS `report` (
 --
 
 INSERT INTO `report` (`repid`, `pid`, `docid`, `scheduleid`, `appoid`, `uid`, `prescription`, `report`, `next_appointment`) VALUES
-(1, 1, 1, 16, 13, 1, 0x2e2e2f75706c6f6164732f707265736372697074696f6e2f363466306461616266316531322e706e67, 0x2e2e2f75706c6f6164732f7265706f72742f3131333136363466306461616635643530632e504446, 0);
+(1, 1, 1, 16, 13, 1, 0x2e2e2f75706c6f6164732f707265736372697074696f6e2f363466306461616266316531322e706e67, 0x2e2e2f75706c6f6164732f7265706f72742f3131333136363466306461616635643530632e504446, 0),
+(2, 1, 1, 32, 30, 2, '', 0x2e2e2f75706c6f6164732f7265706f72742f3133303332363466326664656138323365312e504446, 0);
 
 -- --------------------------------------------------------
 
@@ -428,12 +444,11 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleid`, `docid`, `title`, `scheduledate`, `scheduletime`, `nop`, `mode`, `mail_flag`, `leave_status`, `leave_reason`) VALUES
-(15, '1', 'Paediatrics', '2023-09-03', '09:00:00', 2, 'Hospital Visit', 0, 0, NULL),
-(16, '1', 'Anaesthetics', '2023-08-31', '18:00:00', 10, 'Hospital Visit', 0, 0, NULL),
-(17, '2', 'Paediatrics', '2023-09-03', '17:30:00', 3, 'Video Consultancy', 0, 0, NULL),
-(27, '2', 'Paediatrics', '2023-08-31', '19:15:00', 2, 'Video Consultancy', 0, 0, NULL),
-(28, '2', 'Paediatrics', '2023-09-03', '15:45:00', 3, 'Hospital Visit', 0, 0, NULL),
-(30, '1', 'Allergology', '2023-08-31', '18:00:00', 7, 'Hospital Visit', 0, 0, NULL);
+(1, '1', 'General Practice', '2023-09-05', '17:10:00', 8, 'Hospital Visit', 0, 0, NULL),
+(2, '1', 'General Practice', '2023-09-08', '10:30:00', 12, 'Hospital Visit', 0, 0, NULL),
+(3, '1', 'General Practice', '2023-09-07', '09:15:00', 7, 'Hospital Visit', 0, 0, NULL),
+(4, '1', 'General Practice', '2023-09-07', '19:15:00', 5, 'Video Consultancy', 0, 0, NULL),
+(5, '2', 'General Practice', '2023-09-06', '17:30:00', 14, 'Hospital Visit', 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -529,17 +544,13 @@ CREATE TABLE IF NOT EXISTS `test_booking` (
   PRIMARY KEY (`tid`),
   UNIQUE KEY `tid_UNIQUE` (`tid`)
 ) ;
-
 --
 -- Dumping data for table `test_booking`
 --
 
 INSERT INTO `test_booking` (`tid`, `pid`, `mtid`, `status`, `payment_id`, `booked_time`) VALUES
-(2, 1, 47, 1, 'pay_MWNjiYWIJVmGME', '2023-08-30 16:39:13'),
-(12, 1, 38, 0, 'pay_MX2X1iRn3eb1SJ', '2023-09-01 16:04:15'),
-(53, 1, 22, 0, 'pay_MXBLLmvzKCmlPw', '2023-09-02 00:41:27'),
-(14, 1, 3, 0, 'pay_MX2jBtAYuqjkqS', '2023-09-01 16:15:46'),
-(52, 1, 42, 0, 'pay_MXBHEQGBqxawyw', '2023-09-02 00:37:33');
+(1, 1, 47, 1, 'pay_MXQMpcZ0Wbg9Tv', '2023-09-02 15:23:16'),
+(427, 1, 18, 0, 'pay_MYgZVH8e3GRiWX', '2023-09-05 19:53:22');
 
 -- --------------------------------------------------------
 
@@ -565,7 +576,7 @@ CREATE TABLE IF NOT EXISTS `test_report` (
 --
 
 INSERT INTO `test_report` (`trid`, `pid`, `lid`, `tid`, `mtid`, `file_name`, `seen_at`) VALUES
-(1, 1, 1, 2, 47, 0x2e2e2f75706c6f6164732f746573742d7265706f72742f31343731363466303562303637353861362e504446, '2023-08-31 14:49:02');
+(1, 1, 1, 1, 47, 0x2e2e2f75706c6f6164732f746573742d7265706f72742f31343731363466333133663230356335302e504446, '2023-09-02 16:22:34');
 
 -- --------------------------------------------------------
 
@@ -576,8 +587,8 @@ INSERT INTO `test_report` (`trid`, `pid`, `lid`, `tid`, `mtid`, `file_name`, `se
 DROP TABLE IF EXISTS `wallet`;
 CREATE TABLE IF NOT EXISTS `wallet` (
   `pid` int NOT NULL,
-  `balance` int DEFAULT '0',
-  `bonus` int DEFAULT '0',
+  `balance` decimal(10,2) DEFAULT '0.00',
+  `bonus` decimal(10,2) DEFAULT '0.00',
   PRIMARY KEY (`pid`),
   UNIQUE KEY `pid_UNIQUE` (`pid`)
 ) ;
@@ -587,9 +598,10 @@ CREATE TABLE IF NOT EXISTS `wallet` (
 --
 
 INSERT INTO `wallet` (`pid`, `balance`, `bonus`) VALUES
-(1, 12, 140),
-(3, 0, 0),
-(4, 0, 0);
+(1, '2.50', '221.55'),
+(3, '0.00', '0.00'),
+(4, '0.00', '0.00'),
+(9, '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -617,10 +629,5 @@ INSERT INTO `webuser` (`email`, `usertype`) VALUES
 ('reception@bitsathy.ac.in', 'r'),
 ('pharmacy@bitsathy.ac.in', 'm'),
 ('anusuya1342004@gmail.com', 'p'),
-('allwin.cs21@bitsathy.ac.in', 'l');
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-0
+('allwin.cs21@bitsathy.ac.in', 'l'),
+('saaivignesh.cs21@bitsathy.ac.in', 'p');
