@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-    <title>Settings</title>
+    <?php include("./config.php") ?>
+    <title><?php echo $lang['settings'] ?></title>
     <style>
         .dashbord-tables {
             animation: transitionIn-Y-over 0.5s;
@@ -102,8 +103,6 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
         }
 
-
-
         .donation-form {
             text-align: left;
         }
@@ -157,10 +156,6 @@
 <body>
     <?php
 
-    //learn from w3schools.com
-
-    session_start();
-
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
             header("location: ../login.php");
@@ -186,12 +181,8 @@
 
     if ($_POST) {
 
-        $_SESSION["donate_organs"] = array(
-            'organ_selection' => $_POST['organ_selection'],
-        );
-        $donate_type = $_SESSION['donate_organs']['organ_selection'];
+        $_SESSION["donate_organs"] = $_POST['organ_selection'];
 
-        print_r($_SESSION["donate_organs"]);
         header("location: settings.php?action=donate_next&id=$userid&error=0");
     }
 
@@ -224,7 +215,7 @@
                     <td class="menu-btn menu-icon-home ">
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                         </a>
         </div></a>
         </td>
@@ -233,7 +224,7 @@
             <td class="menu-btn menu-icon-doctor">
                 <a href="doctors.php" class="non-style-link-menu">
                     <div>
-                        <p class="menu-text">All Doctors</p>
+                        <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                 </a>
     </div>
     </td>
@@ -243,7 +234,7 @@
         <td class="menu-btn menu-icon-session">
             <a href="specialities.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Book Appointment</p>
+                    <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                 </div>
             </a>
         </td>
@@ -252,7 +243,7 @@
         <td class="menu-btn menu-icon-appoinment">
             <a href="appointment.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">My Bookings</p>
+                    <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
             </a></div>
         </td>
     </tr>
@@ -260,7 +251,7 @@
         <td class="menu-btn menu-icon-recent">
             <a href="recent.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Recent Consultancy</p>
+                    <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                 </div>
             </a>
         </td>
@@ -269,7 +260,7 @@
         <td class="menu-btn menu-icon-test">
             <a href="recent_tests.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Analysis History</p>
+                    <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                 </div>
             </a>
         </td>
@@ -278,7 +269,7 @@
         <td class="menu-btn menu-icon-payment">
             <a href="payment.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Payments</p>
+                    <p class="menu-text"><?php echo $lang['payments'] ?></p>
                 </div>
             </a>
         </td>
@@ -287,7 +278,7 @@
         <td class="menu-btn menu-icon-settings  menu-active menu-icon-settings-active">
             <a href="settings.php" class="non-style-link-menu  non-style-link-menu-active">
                 <div>
-                    <p class="menu-text">Settings</p>
+                    <p class="menu-text"><?php echo $lang['settings'] ?></p>
             </a></div>
         </td>
     </tr>
@@ -300,17 +291,17 @@
 
                 <td width="13%">
                     <a href="settings.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                            <font class="tn-in-text">Back</font>
+                            <font class="tn-in-text"><?php echo $lang['ddback'] ?></font>
                         </button></a>
                 </td>
                 <td>
-                    <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Settings</p>
+                    <p style="font-size: 23px;padding-left:12px;font-weight: 600;"><?php echo $lang['settings'] ?></p>
 
                 </td>
 
                 <td width="15%">
                     <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                        Today's Date
+                        <?php echo $lang['todays-date'] ?>
                     </p>
                     <p class="heading-sub12" style="padding: 0;margin: 0;">
                         <?php
@@ -329,8 +320,23 @@
                         ?>
                     </p>
                 </td>
-                <td width="10%">
+                <td width="7%">
                     <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                </td>
+                <td width="8.5%">
+                    <div style="width: 70px;">
+                        <form action="donor_register.php" method="post">
+                            <select name="language" id="language" style="font-size:13px">
+                                <option value="en"><?php echo $_SESSION['lang'] ?></option>
+                                <option value="en">en</option>
+                                <option value="tm">tm</option>
+                                <option value="ka">ka</option>
+                                <option value="ml">ml</option>
+                                <option value="te">te</option>
+                                <option value="hi">hi</option>
+                            </select><br>
+                        </form>
+                    </div>
                 </td>
 
 
@@ -349,40 +355,23 @@
                                 <td style="width: 25%;">
                                     <?php
                                     $result = $database->query("SELECT * FROM organ_donation WHERE pid = '$userid'");
-                                    if ($result->num_rows == null) {
+                                    if ($result->num_rows) {
                                     ?>
-                                        <div style="width:91.7%; margin-left: 2vw;">
-                                            <div class="flex-row" style="justify-content:space-between;">
-                                                <div>
-                                                    <a href="?action=donate&id=<?php echo $userid ?>&error=0" class="non-style-link">
-                                                        <div class="dashboard-items setting-tabs" style="padding:20px;width:110%;display:flex; margin-left: 0;">
-                                                            <div class="btn-icon-donation"><img src="../img/icons/donate-iceblue.svg" alt="" width="28px"></div>
-                                                            <div>
-                                                                <div class="h1-dashboard">
-                                                                    Donate Organ &nbsp;
-                                                                </div><br>
-                                                                <div class="h3-dashboard" style="font-size: 15px;">
-                                                                    Donate organs to live in Others
-                                                                </div>
+                                        <div>
+                                            <div>
+                                                <a href="?action=remove_donate&id=<?php echo $userid ?>&error=0" class="non-style-link">
+                                                    <div class="dashboard-items setting-tabs" style="padding:20px;margin:auto;width:95%;display: flex">
+                                                        <div class="btn-icon-donation"><img src="../img/icons/withdraw-iceblue.svg" alt="" width="28px"></div>
+                                                        <div>
+                                                            <div class="h1-dashboard" style="color: #ff5050;">
+                                                                <?php echo $lang['cancel-organ-donation'] ?>&nbsp;
+                                                            </div><br>
+                                                            <div class="h3-dashboard" style="font-size: 14px;">
+                                                                <?php echo $lang['remove-registration-donation'] ?>
                                                             </div>
                                                         </div>
-                                                    </a>
-                                                </div>
-                                                <div>
-                                                    <a href="?action=donate&id=<?php echo $userid ?>&error=0" class="non-style-link">
-                                                        <div class="dashboard-items setting-tabs" style="padding:20px;width:102%;display: flex; margin-left:20px ;">
-                                                            <div class="btn-icon-donation"><img src="../img/icons/withdraw-iceblue.svg" alt="" width="28px"></div>
-                                                            <div>
-                                                                <div class="h1-dashboard" style="color: #ff5050;">
-                                                                    Withdraw &nbsp;
-                                                                </div><br>
-                                                                <div class="h3-dashboard" style="font-size: 14px;">
-                                                                    Choose this option to remove your existing registration from the register
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                                    </div>
+                                                </a>
                                             </div>
                                         </div>
                                     <?php } else { ?>
@@ -393,10 +382,10 @@
                                                         <div class="btn-icon-donation"><img src="../img/icons/donate-iceblue.svg" alt="" width="28px"></div>
                                                         <div>
                                                             <div class="h1-dashboard">
-                                                                Donate Organ &nbsp;
+                                                                <?php echo $lang['donate-more'] ?> &nbsp;
                                                             </div><br>
                                                             <div class="h3-dashboard" style="font-size: 15px;">
-                                                                Donate organs to live in Others
+                                                                <?php echo $lang['donate-more-sentimental'] ?>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -418,10 +407,10 @@
                                             <div class="btn-icon-back dashboard-icons-setting" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
                                             <div>
                                                 <div class="h1-dashboard">
-                                                    Account Settings &nbsp;
+                                                    <?php echo $lang['acc-settings'] ?> &nbsp;
                                                 </div><br>
                                                 <div class="h3-dashboard" style="font-size: 15px;">
-                                                    Edit your Account Details & Change Password
+                                                    <?php echo $lang['edit-acc-details'] ?>
                                                 </div>
                                             </div>
                                         </div>
@@ -440,11 +429,11 @@
                                             <div class="btn-icon-back dashboard-icons-setting " style="background-image: url('../img/icons/view-iceblue.svg');"></div>
                                             <div>
                                                 <div class="h1-dashboard">
-                                                    View Account Details
+                                                    <?php echo $lang['view-acc-details'] ?>
 
                                                 </div><br>
                                                 <div class="h3-dashboard" style="font-size: 15px;">
-                                                    View Personal information About Your Account
+                                                    <?php echo $lang['view-pers-info'] ?>
                                                 </div>
                                             </div>
 
@@ -465,11 +454,11 @@
                                             <div class="btn-icon-back dashboard-icons-setting" style="background-image: url('../img/icons/patients-hover.svg');"></div>
                                             <div>
                                                 <div class="h1-dashboard" style="color: #ff5050;">
-                                                    Delete Account
+                                                    <?php echo $lang['del-account'] ?>
 
                                                 </div><br>
                                                 <div class="h3-dashboard" style="font-size: 15px;">
-                                                    Will Permanently Remove your Account
+                                                    <?php echo $lang['org-donation-can-success'] ?>
                                                 </div>
                                             </div>
 
@@ -497,15 +486,55 @@
             <div id="popup1" class="overlay">
                     <div class="popup">
                     <center>
-                        <h2>Are you sure?</h2>
+                        <h2>' . $lang["are-you-sure"] . '</h2>
                         <a class="close" href="settings.php">&times;</a>
                         <div class="content">
-                            You want to delete Your Account<br>(' . substr($nameget, 0, 40) . ').
+                            ' . $lang["del-acc-echo"] . '<br>(' . substr($nameget, 0, 40) . ').
                             
                         </div>
                         <div style="display: flex;justify-content: center;">
-                        <a href="delete-account.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
-                        <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
+                        <a href="delete-account.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;' . $lang['yes'] . '&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['no'] . '&nbsp;&nbsp;</font></button></a>
+
+                        </div>
+                    </center>
+            </div>
+            </div>
+            ';
+        } elseif ($action == 'remove_donate') {
+            $nameget = $_GET["name"];
+            echo '
+            <div id="popup1" class="overlay">
+                    <div class="popup">
+                    <center>
+                        <h2>' . $lang["are-you-sure"] . '</h2>
+                        <a class="close" href="settings.php">&times;</a>
+                        <div class="content">
+                            ' . $lang["cancel-org-donation"] . '
+                            
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                        <a href="remove_organ_donation.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;' . $lang['yes'] . '&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['no'] . '&nbsp;&nbsp;</font></button></a>
+
+                        </div>
+                    </center>
+            </div>
+            </div>
+            ';
+        } elseif ($action == 'organ_remove_success') {
+            $nameget = $_GET["name"];
+            echo '
+            <div id="popup1" class="overlay">
+                    <div class="popup">
+                    <center>
+                        <h2>' . $lang["cancelled-success"] . '</h2>
+                        <a class="close" href="settings.php">&times;</a>
+                        <div class="content">
+                            ' . $lang["org-donation-can-success"] . '
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                        <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['ok'] . '&nbsp;&nbsp;</font></button></a>
 
                         </div>
                     </center>
@@ -538,14 +567,14 @@
                             
                                 <tr>
                                     <td>
-                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Details of Me !</p><br><br>
+                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">' . $lang["details-of-me"] . '</p><br><br>
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     
                                     <td class="td-label" colspan="2">
-                                        <label for="name" class="form-label">Name: </label>
+                                        <label for="name" class="form-label">' . $lang["name"] . '</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -556,7 +585,7 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="Email" class="form-label">Email: </label>
+                                <label for="Email" class="form-label">' . $lang["email"] . '</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -566,7 +595,7 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="nic" class="form-label">Aadhar: </label>
+                                <label for="nic" class="form-label">' . $lang["aadhar"] . '</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -576,7 +605,7 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="b_group" class="form-label">Blood Group: </label>
+                                <label for="b_group" class="form-label">' . $lang["blood-group"] . '</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -586,7 +615,7 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="Tele" class="form-label">Telephone: </label>
+                                <label for="Tele" class="form-label">' . $lang["telephone"] . '</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -596,7 +625,7 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="address" class="form-label">Address: </label>
+                                <label for="address" class="form-label">' . $lang["address"] . '</label>
                                         
                                     </td>
                                 </tr>
@@ -607,7 +636,7 @@
                                 </tr>
                                 <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="spec" class="form-label">Date of Birth: </label>
+                                <label for="spec" class="form-label">' . $lang["dob"] . '</label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -617,13 +646,47 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <center><a href="settings.php"><input type="button" value="Okay" class="login-btn btn-primary-soft btn" ></a></center>
+                                        <center><a href="settings.php"><input type="button" value="' . $lang['ok'] . '" class="login-btn btn-primary-soft btn" ></a></center>
                                     </td>
                                 </tr>
                             </table>
                         </div>
                     </center>
                     <br><br>
+                </div>
+            </div>
+            ';
+        } elseif ($action == 'donate_reg__success') {
+            echo '
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <center>
+                        <h2>' . $lang["register-success"] . '</h2>
+                        <a class="close" href="settings.php">&times;</a>
+                        <div class="content">
+                            ' . $lang["org-donation-registration-success"] . '<br>
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                            <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['ok'] . '&nbsp;&nbsp;</font></button></a>
+                        </div>
+                    </center>
+                </div>
+            </div>
+            ';
+        } elseif ($action == 'donor_reg_canceled') {
+            echo '
+            <div id="popup1" class="overlay">
+                <div class="popup">
+                    <center>
+                        <h2>' . $lang["register-withdrawed"] . '</h2>
+                        <a class="close" href="settings.php">&times;</a>
+                        <div class="content">
+                            ' . $lang["org-donation-cancellation-success"] . '<br>
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                            <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['ok'] . '&nbsp;&nbsp;</font></button></a>
+                        </div>
+                    </center>
                 </div>
             </div>
             ';
@@ -652,12 +715,12 @@
 
                                 <tr>
                                     <td>
-                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Donate Organs.</p><br><br>
+                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;"><?php echo $lang['donate-organs'] ?></p><br><br>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="td-label" colspan="2">
-                                        <label for="Tele" class="form-label">I want to donate * </label>
+                                        <label for="Tele" class="form-label"><?php echo $lang['i-want-to-donate'] ?></label>
                                     </td>
                                 </tr>
                                 <form action="" method="post">
@@ -667,19 +730,19 @@
                                                 <label class="radio-label">
                                                     <input type="radio" name="organ_selection" value="1">
                                                     <span class="radio-custom"></span>
-                                                    <w class="display-text" style="font-size: 14px;">All my organs and tissue</w>
+                                                    <w class="display-text" style="font-size: 14px;"><?php echo $lang['all-org'] ?></w>
                                                 </label>
                                                 <label class="radio-label">
                                                     <input type="radio" name="organ_selection" value="0">
                                                     <span class="radio-custom"></span>
-                                                    <w class="display-text" style="font-size: 14px;">Some organs and tissue</w>
+                                                    <w class="display-text" style="font-size: 14px;"><?php echo $lang['some-org'] ?></w>
                                                 </label>
                                             </div>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td colspan="2">
-                                            <center><button type="submit" class="login-btn btn-primary-soft btn">Next</button></center>
+                                            <center><button type="submit" class="login-btn btn-primary-soft btn"><?php echo $lang['next'] ?></button></center>
                                         </td>
                                     </tr>
                                 </form>
@@ -689,7 +752,7 @@
                     <br><br>
                 </div>
             </div>
-        <?php
+            <?php
         } elseif ($action == 'donate_next') {
             $sqlmain = "select * from patient where pid=?";
             $stmt = $database->prepare($sqlmain);
@@ -697,91 +760,135 @@
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            $name = $row["pname"];
-            $email = $row["pemail"];
-            $address = $row["paddress"];
-            $b_group = $row["blood_group"];
-            $dob = $row["pdob"];
-            $nic = $row['pnic'];
-            $tele = $row['ptel']; ?>
-            <div id="popup1" class="overlay">
-                <div class="popup" style="transform: scale(.95); margin-top: 2vh">
-                    <center>
-                        <h2></h2>
-                        <a class="close" href="settings.php">&times;</a>
+            $donate_type = $_SESSION['donate_organs'];
+            echo $donate_type;
+            if ($donate_type == 1) { ?>
+                <script>
+                    window.location.href = './donor_register.php?=';
+                </script> <?php    } else {
+                            ?> <div id="popup1" class="overlay">
+                    <div class="popup" style="transform: scale(.95); margin-top: 2vh">
+                        <center>
+                            <h2></h2>
+                            <a class="close" href="settings.php">&times;</a>
 
-                        <div style="display: flex;justify-content: center;">
-                            <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
+                            <div style="display: flex;justify-content: center;">
+                                <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
 
-                                <tr>
-                                    <td>
-                                        <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Donate Organs.</p><br><br>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="td-label" colspan="2">
-                                        <label for="Tele" class="form-label">I want to donate * </label>
-                                    </td>
-                                </tr>
-                                <form action="" method="post">
                                     <tr>
                                         <td>
-                                            <div class="radio-container">
-                                                <label class="radio-label">
-                                                    <input type="radio" name="organ_selection" value="1">
-                                                    <span class="radio-custom"></span>
-                                                    <w class="display-text" style="font-size: 14px;">All my organs and tissue</w>
-                                                </label>
-                                                <label class="radio-label">
-                                                    <input type="radio" name="organ_selection" value="0">
-                                                    <span class="radio-custom"></span>
-                                                    <w class="display-text" style="font-size: 14px;">Some organs and tissue</w>
-                                                </label>
-                                            </div>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;"><?php echo $lang['donate-organs'] ?></p><br><br>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2">
-                                            <center><button type="submit" class="login-btn btn-primary-soft btn">Next</button></center>
+                                        <td class="td-label" colspan="2">
+                                            <label for="Tele" class="form-label"><?php echo $lang['org-choice'] ?></label>
                                         </td>
                                     </tr>
-                                </form>
-                            </table>
-                        </div>
-                    </center>
-                    <br><br>
+                                    <form action="donor_register.php" method="post">
+                                        <input type="hidden" name="donate_type" value="<?php echo $donate_type ?>">
+                                        <tr>
+                                            <td class="td-label" colspan="2">
+                                                <div class="label-td display-text">
+                                                    <label for="heart"><?php echo $lang['dil'] ?></label>
+                                                    <select class="label-td display-text" name="heart" id="heart">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="lungs"><?php echo $lang['nurai-eeral'] ?></label>
+                                                    <select class="label-td display-text" name="lungs" id="lungs">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="kidneys"><?php echo $lang['siru-neeragam'] ?></label>
+                                                    <select class="label-td display-text" name="kidneys" id="kidneys">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="liver"><?php echo $lang['eeral'] ?> </label>
+                                                    <select class="label-td display-text" name="liver" id="liver">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="corneas"><?php echo $lang['cornea'] ?> </label>
+                                                    <select class="label-td display-text" name="corneas" id="corneas">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="pancreas"><?php echo $lang['pancreas'] ?> </label>
+                                                    <select class="label-td display-text" name="pancreas" id="pancreas">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="tissue"><?php echo $lang['tissuel'] ?> </label>
+                                                    <select class="label-td display-text" name="tissue" id="tissue">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                                <div class="label-td display-text">
+                                                    <label for="small_bowel"><?php echo $lang['small-bowel'] ?> </label>
+                                                    <select class="label-td display-text" name="small_bowel" id="small_bowel">
+                                                        <option value="No"><?php echo $lang['no'] ?></option>
+                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
+                                                    </select><br>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <center><button type="submit" class="login-btn btn-primary-soft btn"><?php echo $lang['register'] ?></button></center>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                </table>
+                            </div>
+                        </center>
+                        <br><br>
+                    </div>
                 </div>
-            </div>
-    <?php
-        } elseif ($action == 'edit') {
-            $sqlmain = "select * from patient where pid=?";
-            $stmt = $database->prepare($sqlmain);
-            $stmt->bind_param("i", $id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_assoc();
-            $name = $row["pname"];
-            $email = $row["pemail"];
+    <?php }
+                    } elseif ($action == 'edit') {
+                        $sqlmain = "select * from patient where pid=?";
+                        $stmt = $database->prepare($sqlmain);
+                        $stmt->bind_param("i", $id);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        $row = $result->fetch_assoc();
+                        $name = $row["pname"];
+                        $email = $row["pemail"];
 
 
 
-            $address = $row["paddress"];
-            $nic = $row['pnic'];
-            $tele = $row['ptel'];
+                        $address = $row["paddress"];
+                        $nic = $row['pnic'];
+                        $tele = $row['ptel'];
 
-            $error_1 = $_GET["error"];
-            $errorlist = array(
-                '1' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>',
-                '2' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Conformation Error! Reconform Password</label>',
-                '3' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>',
-                '4' => "",
-                '0' => '',
+                        $error_1 = $_GET["error"];
+                        $errorlist = array(
+                            '1' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Already have an account for this Email address.</label>',
+                            '2' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;">Password Conformation Error! Reconform Password</label>',
+                            '3' => '<label for="promter" class="form-label" style="color:rgb(255, 62, 62);text-align:center;"></label>',
+                            '4' => "",
+                            '0' => '',
 
-            );
+                        );
 
-            if ($error_1 != '4') {
-                echo '
-                    <div id="popup1" class="overlay">
+                        if ($error_1 != '4') {
+                            echo '
+                            <div id="popup1" class="overlay">
                             <div class="popup">
                             <center>
                             
@@ -791,19 +898,19 @@
                                 <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                                 <tr>
                                         <td class="label-td" colspan="2">' .
-                    $errorlist[$error_1]
-                    . '</td>
+                                $errorlist[$error_1]
+                                . '</td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit User Account Details.</p>
-                                        User ID : ' . $id . ' (Auto Generated)<br><br>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">' . $lang["edit-acc-details"] . '</p>
+                                        User ID : [ P - ' . $id . ' ] ' . $lang["auto-gen"] . '<br><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
                                             <form action="edit-user.php" method="POST" class="add-new-form">
-                                            <label for="Email" class="form-label">Email: </label>
+                                            <label for="Email" class="form-label">' . $lang["email "] . ' </label>
                                             <input type="hidden" value="' . $id . '" name="id00">
                                         </td>
                                     </tr>
@@ -816,7 +923,7 @@
                                     <tr>
                                         
                                         <td class="label-td" colspan="2">
-                                            <label for="name" class="form-label">Name: </label>
+                                            <label for="name" class="form-label">' . $lang["name "] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -828,17 +935,17 @@
                                     
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="nic" class="form-label">Aadhar: </label>
+                                            <label for="nic" class="form-label">' . $lang["aadhar"] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="nic" class="input-text" placeholder="NIC Number" value="' . $nic . '" required><br>
+                                            <input type="text" name="nic" class="input-text" placeholder="Aadhar Number" value="' . $nic . '" required><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="Tele" class="form-label">Telephone: </label>
+                                            <label for="Tele" class="form-label">' . $lang["telephone"] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -848,7 +955,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="spec" class="form-label">Address</label>
+                                            <label for="spec" class="form-label">' . $lang["address"] . '</label>
                                             
                                         </td>
                                     </tr>
@@ -859,7 +966,7 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="password" class="form-label">Password: </label>
+                                            <label for="password" class="form-label">' . $lang["pass"] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
@@ -868,21 +975,21 @@
                                         </td>
                                     </tr><tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="cpassword" class="form-label">Conform Password: </label>
+                                            <label for="cpassword" class="form-label">' . $lang["confirm-pass"] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required><br>
+                                            <input type="password" name="cpassword" class="input-text" placeholder="' . $lang['confirm-pass'] . '" required><br>
                                         </td>
                                     </tr>
                                     
                         
                                     <tr>
                                         <td colspan="2">
-                                            <input type="reset" value="Reset" class="login-btn btn-primary-soft btn" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="reset" value="' . $lang['reset'] . '" class="login-btn btn-primary-soft btn" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         
-                                            <input type="submit" value="Save" class="login-btn btn-primary btn">
+                                            <input type="submit" value="' . $lang['save'] . '" class="login-btn btn-primary btn">
                                         </td>
                         
                                     </tr>
@@ -897,22 +1004,22 @@
                     </div>
                     </div>
                     ';
-            } else {
-                echo '
+                        } else {
+                            echo '
                 <div id="popup1" class="overlay">
                         <div class="popup">
                         <center>
                         <br><br><br><br>
-                            <h2>Edit Successfully!</h2>
+                            <h2>' . $lang["edit-success"] . '</h2>
                             <a class="close" href="settings.php">&times;</a>
                             <div class="content">
-                                If You change your email also Please logout and login again with your new email
+                                ' . $lang["edit-warning"] . '
                                 
                             </div>
                             <div style="display: flex;justify-content: center;">
                             
-                            <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;OK&nbsp;&nbsp;</font></button></a>
-                            <a href="../logout.php" class="non-style-link"><button  class="btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;Log out&nbsp;&nbsp;</font></button></a>
+                            <a href="settings.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['ok'] . '&nbsp;&nbsp;</font></button></a>
+                            <a href="../logout.php" class="non-style-link"><button  class="btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['logout'] . '&nbsp;&nbsp;</font></button></a>
 
                             </div>
                             <br><br>
@@ -920,9 +1027,9 @@
                 </div>
                 </div>
     ';
-            };
-        }
-    }
+                        };
+                    }
+                }
     ?>
 
 </body>
@@ -943,6 +1050,28 @@
         e.preventDefault(); // Prevent actual form submission
         // You can add animation or other actions here
         alert('Form submitted successfully!');
+    });
+</script>
+<script>
+    // Get a reference to the language dropdown
+    const languageDropdown = document.getElementById("language");
+
+    // Add an event listener to the dropdown
+    languageDropdown.addEventListener("change", function() {
+        // Get the selected language code
+        const selectedLanguage = this.value;
+
+        // Get the current URL
+        const currentURL = "./settings.php"
+
+        // Check if there's already a query string in the URL
+        const separator = currentURL.includes("?") ? "&" : "?";
+
+        // Construct the new URL with the selected language
+        const newURL = currentURL + separator + "lang=" + selectedLanguage;
+
+        // Redirect to the new URL
+        window.location.href = newURL;
     });
 </script>
 

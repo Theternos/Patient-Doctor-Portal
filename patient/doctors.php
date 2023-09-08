@@ -36,7 +36,7 @@
     <?php
 
     //learn from w3schools.com
-
+    include("./config.php");
     session_start();
     error_reporting(0);
     if (isset($_SESSION["user"])) {
@@ -86,7 +86,7 @@
                     <td class="menu-btn menu-icon-home ">
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -94,7 +94,7 @@
                     <td class="menu-btn menu-icon-doctor menu-active menu-icon-doctor-active">
                         <a href="doctors.php" class="non-style-link-menu non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -103,7 +103,7 @@
                     <td class="menu-btn menu-icon-session">
                         <a href="specialities.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -112,7 +112,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -120,7 +120,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -129,7 +129,7 @@
                     <td class="menu-btn menu-icon-test">
                         <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -138,7 +138,7 @@
                     <td class="menu-btn menu-icon-payment">
                         <a href="payment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['payments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -147,7 +147,7 @@
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Settings</p>
+                                <p class="menu-text"><?php echo $lang['settings'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -158,12 +158,12 @@
                 <tr>
                     <td width="13%">
                         <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                                <font class="tn-in-text">Back</font>
+                                <font class="tn-in-text"><?php echo $lang['ddback'] ?></font>
                             </button></a>
                     </td>
                     <td>
                         <form action="" method="post" class="header-search">
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email" list="doctors">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="<?php echo $lang['drcsearch'] ?>" list="doctors">&nbsp;&nbsp;
                             <?php
                             echo '<datalist id="doctors">';
                             $list11 = $database->query("select  docname,docemail from  doctor;");
@@ -178,14 +178,14 @@
 
                             echo ' </datalist>';
                             ?>
-                            <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
+                            <input type="Submit" value="<?php echo $lang['dsearch'] ?>" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
 
                         </form>
 
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            <?php echo $lang['tddate'] ?>
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
@@ -196,13 +196,28 @@
                             ?>
                         </p>
                     </td>
-                    <td width="10%">
+                    <td width="7%">
                         <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                    </td>
+                    <td width="8.5%">
+                        <div class="language-select" style="width: 70px;">
+                            <form action="donor_register.php" method="post">
+                                <select name="language" id="language" style="font-size:13px">
+                                    <option value="en"><?php echo $_SESSION['lang'] ?></option>
+                                    <option value="en">en</option>
+                                    <option value="tm">tm</option>
+                                    <option value="ka">ka</option>
+                                    <option value="ml">ml</option>
+                                    <option value="te">te</option>
+                                    <option value="hi">hi</option>
+                                </select><br>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top:10px;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Doctors (<?php echo $list11->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $lang['alldoctors'] ?> (<?php echo $list11->num_rows; ?>)</p>
                     </td>
                 </tr>
                 <?php
@@ -222,16 +237,16 @@
                                     <thead>
                                         <tr>
                                             <th class="table-headin">
-                                                Doctor Name
+                                                <?php echo $lang['drname'] ?>
                                             </th>
                                             <th class="table-headin">
-                                                Email
+                                                <?php echo $lang['dremail'] ?>
                                             </th>
                                             <th class="table-headin">
-                                                Specialties
+                                                <?php echo $lang['drspecialties'] ?>
                                             </th>
                                             <th class="table-headin">
-                                                Events
+                                                <?php echo $lang['drevents'] ?>
                                             </th>
                                         </tr>
                                     </thead>
@@ -250,7 +265,7 @@
                                     <img src="../img/notfound.svg" width="25%">
                                     
                                     <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
+                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">' . $lang['search'] . '</p>
                                     <a class="non-style-link" href="doctors.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Doctors &nbsp;</font></button>
                                     </a>
                                     </center>
@@ -273,7 +288,7 @@
                                                         <td>' . substr($spcil_name, 0, 40) . '</td>
                                                         <td>
                                                             <div style="display:flex;justify-content: center;">
-                                                                <a href="?action=view&id=' . $docid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                                                <a href="?action=view&id=' . $docid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">' . $lang['view'] . '</font></button></a>
                                                                 &nbsp;&nbsp;&nbsp;
                                                             </div>
                                                         </td>
@@ -308,7 +323,7 @@
                         <h2>Are you sure?</h2>
                         <a class="close" href="doctors.php">&times;</a>
                         <div class="content">
-                            You want to delete this record<br>(' . substr($nameget, 0, 40) . ').
+                        ' . $lang['deleterecord'] . '<br>(' . substr($nameget, 0, 40) . ').
                             
                         </div>
                         <div style="display: flex;justify-content: center;">
@@ -358,7 +373,7 @@
                             
                             <tr>
                                 <td class="td-label" colspan="2">
-                                    <label for="email" class="form-label">Email: </label>
+                                    <label for="email" class="form-label">' . $lang['dremail'] . '</label>
                                 </td>
                             </tr>
                             <tr>
@@ -367,7 +382,7 @@
                                 </td>
                             </tr>
                                 <td class="td-label" colspan="2">
-                                <label for="licence" class="form-label">Licence No: </label>
+                                <label for="licence" class="form-label">' . $lang['drlicence'] . '</label>
                                 </td>
                             </tr>
                             <tr>
@@ -377,7 +392,7 @@
                             </tr>
                             <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="qualification" class="form-label">Qualification: </label>
+                                <label for="qualification" class="form-label">' . $lang['drqualification'] . '</label>
                                 </td>
                             </tr>
                             <tr>
@@ -387,7 +402,7 @@
                             </tr>
                             <!-- <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="Tele" class="form-label">Telephone: </label>
+                                <label for="Tele" class="form-label">' . $lang['drtele'] . '</label>
                                 </td>
                             </tr>
                             <tr>
@@ -397,7 +412,7 @@
                             </tr> -->
                             <tr>
                                 <td class="td-label" colspan="2">
-                                <label for="spec" class="form-label">Specialties: </label>
+                                <label for="spec" class="form-label">' . $lang['drspecialties'] . ' </label>
                                 </td>
                             </tr>
                             <tr>
@@ -431,7 +446,7 @@
                         <h2>Redirect to Doctors sessions?</h2>
                         <a class="close" href="doctors.php">&times;</a>
                         <div class="content">
-                            You want to view All sessions by <br>(' . substr($name, 0, 40) . ').
+                        ' . $lang['drviewall'] . ' <br>(' . substr($name, 0, 40) . ').
                             
                         </div>
                         <form action="schedule.php" method="post" style="display: flex">
@@ -492,6 +507,7 @@
                                 <a class="close" href="doctors.php">&times;</a> 
                                 <div style="display: flex;justify-content: center;">
                                 <div class="abc">
+                         
                                 <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                                 <tr>
                                         <td class="label-td" colspan="2">' .
@@ -500,7 +516,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">Edit Doctor Details.</p>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">' . $lang['dredit'] . '</p>
                                         Doctor ID : ' . $id . ' (Auto Generated)<br><br>
                                         </td>
                                     </tr>
@@ -513,18 +529,17 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                        <input type="email" name="email" class="input-text" placeholder="Email Address" value="' . $email . '" required><br>
+                                        <input type="email" name="email" class="input-text" placeholder="' . $lang['dremailad'] . '" value="' . $email . '" required><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         
                                         <td class="label-td" colspan="2">
-                                            <label for="name" class="form-label">Name: </label>
-                                        </td>
+                                            <label for="name" class="form-label">Name:' . $lang['drname'] . '
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="name" class="input-text" placeholder="Doctor Name" value="' . $name . '" required><br>
+                                            <input type="text" name="name" class="input-text" placeholder="' . $lang['drspdenmae'] . ' value="' . $name . '" required><br>
                                         </td>
                                         
                                     </tr>
@@ -536,22 +551,22 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="text" name="nic" class="input-text" placeholder="NIC Number" value="' . $nic . '" required><br>
+                                            <input type="text" name="nic" class="input-text" placeholder="' . $lang['drnicno'] . '" value="' . $nic . '" required><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="Tele" class="form-label">Telephone: </label>
+                                            <label for="Tele" class="form-label">' . $lang['drtele'] . ' </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="tel" name="Tele" class="input-text" placeholder="Telephone Number" value="' . $tele . '" required><br>
+                                            <input type="tel" name="Tele" class="input-text" placeholder="' . $lang['drdisptele'] . '" value="' . $tele . '" required><br>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="spec" class="form-label">Choose specialties: (Current' . $spcil_name . ')</label>
+                                            <label for="spec" class="form-label">' . $lang['drchspec'] . ' (Current' . $spcil_name . ')</label>
                                             
                                         </td>
                                     </tr>
@@ -577,21 +592,21 @@
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="password" class="form-label">Password: </label>
+                                            <label for="password" class="form-label">' . $lang['drpass'] . '</label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="password" class="input-text" placeholder="Defind a Password" required><br>
+                                            <input type="password" name="password" class="input-text" placeholder="' . $lang['drippass'] . '" required><br>
                                         </td>
                                     </tr><tr>
                                         <td class="label-td" colspan="2">
-                                            <label for="cpassword" class="form-label">Conform Password: </label>
+                                            <label for="cpassword" class="form-label">' . $lang['drcnpass'] . ' </label>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="label-td" colspan="2">
-                                            <input type="password" name="cpassword" class="input-text" placeholder="Conform Password" required><br>
+                                            <input type="password" name="cpassword" class="input-text" placeholder="' . $lang['drcnpass'] . '" required><br>
                                         </td>
                                     </tr>
                                     
@@ -621,7 +636,7 @@
                         <div class="popup">
                         <center>
                         <br><br><br><br>
-                            <h2>Edit Successfully!</h2>
+                            <h2>' . $lang['dreditsuc'] . '</h2>
                             <a class="close" href="doctors.php">&times;</a>
                             <div class="content">
                                 
@@ -644,5 +659,27 @@
     </div>
 
 </body>
+<script>
+    // Get a reference to the language dropdown
+    const languageDropdown = document.getElementById("language");
+
+    // Add an event listener to the dropdown
+    languageDropdown.addEventListener("change", function() {
+        // Get the selected language code
+        const selectedLanguage = this.value;
+
+        // Get the current URL
+        const currentURL = "./doctors.php"
+
+        // Check if there's already a query string in the URL
+        const separator = currentURL.includes("?") ? "&" : "?";
+
+        // Construct the new URL with the selected language
+        const newURL = currentURL + separator + "lang=" + selectedLanguage;
+
+        // Redirect to the new URL
+        window.location.href = newURL;
+    });
+</script>
 
 </html>

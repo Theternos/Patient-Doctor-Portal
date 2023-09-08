@@ -148,6 +148,7 @@ body {
 .btn-in-text {
   font-size: 15px;
   letter-spacing: 0.5px;
+  width: fit-content;
 }
 
 .non-style-link:link,
@@ -927,4 +928,63 @@ input[type=search]:focus {
 .payment_history_data {
   min-height: 70px !important;
   border: 1px solid #ccc;
+}
+
+/* Style the select container */
+select {
+  padding: 10px;
+  /* Add padding for spacing */
+  font-size: 16px;
+  /* Increase font size */
+  border: 2px solid #ccc;
+  /* Add a border */
+  border-radius: 5px;
+  /* Rounded corners */
+  background-color: #fff;
+  /* White background */
+  color: #333;
+  /* Text color */
+  width: 100%;
+  /* Full width by default */
+  transition: border-color 0.2s ease;
+  /* Smooth border transition */
+}
+
+/* Style the select on hover and focus */
+.language-select select:hover,
+.language-select select:focus {
+  border-color: #555;
+  /* Darker border on hover/focus */
+}
+
+/* Style the dropdown arrow */
+.language-select select::-ms-expand {
+  display: none;
+  /* Hide default arrow in IE/Edge */
+}
+
+.language-select select option {
+  font-size: 14px;
+  /* Font size for options */
+}
+
+/* Style the select when it's disabled */
+.language-select select:disabled {
+  background-color: #f5f5f5;
+  /* Light gray background */
+  cursor: not-allowed;
+  /* Disabled cursor */
+}
+
+/* Style the select when it's in a disabled state */
+.language-select select[disabled] option {
+  color: #999;
+  /* Grayed-out text for options */
+}
+
+/* Style the select when it's in a disabled state */
+.language-select select[disabled]:hover,
+.language-select select[disabled]:focus {
+  border-color: #ccc;
+  /* Lighter border on hover/focus */
 }

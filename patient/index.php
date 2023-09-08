@@ -72,6 +72,65 @@
         .content .content-content.content-content--contact .contact-grid>li .fa {
             color: #333333;
         }
+
+        /* Style the select container */
+        select {
+            padding: 10px;
+            /* Add padding for spacing */
+            font-size: 16px;
+            /* Increase font size */
+            border: 2px solid #ccc;
+            /* Add a border */
+            border-radius: 5px;
+            /* Rounded corners */
+            background-color: #fff;
+            /* White background */
+            color: #333;
+            /* Text color */
+            width: 100%;
+            /* Full width by default */
+            transition: border-color 0.2s ease;
+            /* Smooth border transition */
+        }
+
+        /* Style the select on hover and focus */
+        select:hover,
+        select:focus {
+            border-color: #555;
+            /* Darker border on hover/focus */
+        }
+
+        /* Style the dropdown arrow */
+        select::-ms-expand {
+            display: none;
+            /* Hide default arrow in IE/Edge */
+        }
+
+        select option {
+            font-size: 14px;
+            /* Font size for options */
+        }
+
+        /* Style the select when it's disabled */
+        select:disabled {
+            background-color: #f5f5f5;
+            /* Light gray background */
+            cursor: not-allowed;
+            /* Disabled cursor */
+        }
+
+        /* Style the select when it's in a disabled state */
+        select[disabled] option {
+            color: #999;
+            /* Grayed-out text for options */
+        }
+
+        /* Style the select when it's in a disabled state */
+        select[disabled]:hover,
+        select[disabled]:focus {
+            border-color: #ccc;
+            /* Lighter border on hover/focus */
+        }
     </style>
 
 
@@ -81,8 +140,8 @@
     <?php
 
     //learn from w3schools.com
+    include("./config.php");
 
-    session_start();
 
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
@@ -140,7 +199,7 @@
                     <td class="menu-btn menu-icon-home menu-active menu-icon-home-active">
                         <a href="index.php" class="non-style-link-menu non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -148,7 +207,7 @@
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -157,7 +216,7 @@
                     <td class="menu-btn menu-icon-session">
                         <a href="specialities.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -166,7 +225,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
                         </a>
                     </td>
                 </tr>
@@ -174,7 +233,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -183,7 +242,7 @@
                     <td class="menu-btn menu-icon-test">
                         <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -192,7 +251,7 @@
                     <td class="menu-btn menu-icon-payment">
                         <a href="payment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['payments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -201,7 +260,7 @@
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Settings</p>
+                                <p class="menu-text"><?php echo $lang['settings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -212,60 +271,63 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;">
 
                 <tr>
-
                     <td colspan="1" class="nav-bar">
-                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;">Home</p>
-
-                    </td>
-                    <td width="25%">
+                        <p style="font-size: 23px;padding-left:12px;font-weight: 600;margin-left:20px;"><?php echo $lang['home'] ?></p>
 
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            <?php echo $lang['tddate'] ?>
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
                             date_default_timezone_set('Asia/Kolkata');
-
                             $today = date('Y-m-d');
                             echo $today;
-
-
                             $patientrow = $database->query("select  * from  patient;");
                             $doctorrow = $database->query("select  * from  doctor;");
                             $appointmentrow = $database->query("select  * from  appointment where appodate>='$today';");
                             $schedulerow = $database->query("select  * from  schedule where scheduledate='$today';");
-
-
                             ?>
                         </p>
                     </td>
-                    <td width="10%">
+                    <td width="7%">
                         <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
                     </td>
-
-
+                    <td width="8.5%">
+                        <div style="width: 70px;">
+                            <form action="donor_register.php" method="post">
+                                <select name="language" id="language" style="font-size:13px">
+                                    <option value="en"><?php echo $_SESSION['lang'] ?></option>
+                                    <option value="en">en</option>
+                                    <option value="tm">tm</option>
+                                    <option value="ka">ka</option>
+                                    <option value="ml">ml</option>
+                                    <option value="te">te</option>
+                                    <option value="hi">hi</option>
+                                </select><br>
+                            </form>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td colspan="4">
-
                         <center>
                             <table class="filter-container doctor-header patient-header" style="border: none;width:95%" border="0">
                                 <tr>
                                     <td>
-                                        <h3>Welcome!</h3>
+                                        <h3><?php echo $lang['welcome'] ?></h3>
                                         <h1><?php echo $username  ?>. [P-<?php echo $userid; ?>]</h1>
-                                        <p>Haven't any idea about doctors? no problem let's jumping to
-                                            <a href="doctors.php" class="non-style-link"><b>"All Doctors"</b></a> section or
-                                            <a href="schedule.php" class="non-style-link"><b>"Sessions"</b> </a><br>
-                                            Track your past and future appointments history.<br>Also find out the expected arrival time of your doctor or medical consultant.<br><br>
+                                        <p><?php echo $lang['introline'] ?>
+                                            <a href="doctors.php" class="non-style-link"><b>"<?php echo $lang['alldoctors'] ?>"</b></a><?php echo $lang['sectionor'] ?>
+                                            <a href="schedule.php" class="non-style-link"><b>"<?php echo $lang['sessions'] ?>"</b> </a><br>
+                                            <?php echo $lang['dashline2'] ?><br><br>
                                         </p>
 
-                                        <h3>Channel a Doctor Here</h3>
+                                        <h3><?php echo $lang['channeldoctor'] ?></h3>
                                         <form action="schedule.php" method="post" style="display: flex">
 
-                                            <input type="search" name="search" class="input-text " placeholder="Search Doctor and We will Find The Session Available" list="doctors" style="width:45%;">&nbsp;&nbsp;
+                                            <input type="search" name="search" class="input-text " placeholder="<?php echo $lang['searchdoctoravailable'] ?>" list="doctors" style="width:45%;">&nbsp;&nbsp;
 
                                             <?php
                                             echo '<datalist id="doctors">';
@@ -282,7 +344,7 @@
                                             ?>
 
 
-                                            <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
+                                            <input type="Submit" value="<?php echo $lang['dsearch'] ?>" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
 
                                             <br>
                                             <br>
@@ -300,7 +362,7 @@
                                 <table class="filter-container" style="border: none;" border="0">
                                     <tr>
                                         <td colspan="4">
-                                            <p style="font-size: 20px;font-weight:600;padding-left: 30px; margin-top:0;" class="anime">Live Status</p>
+                                            <p style="font-size: 20px;font-weight:600;padding-left: 30px; margin-top:0;" class="anime"><?php echo $lang['livestatuss'] ?></p>
                                         </td>
                                     </tr>
                                     <tr>
@@ -311,7 +373,7 @@
                                                         <?php echo "72"  ?>
                                                     </div><br>
                                                     <div class="h3-dashboard">
-                                                        Heart Rate&nbsp;&nbsp;
+                                                        <?php echo $lang['heartrate'] ?>&nbsp;&nbsp;
                                                     </div>
                                                 </div>
                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
@@ -326,7 +388,7 @@
                                                         <?php echo "96%"  ?>
                                                     </div><br>
                                                     <div class="h3-dashboard">
-                                                        Oxygen Level&nbsp;&nbsp;&nbsp;&nbsp;
+                                                        <?php echo $lang['oxygenlevel'] ?>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                 </div>
                                                 <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/oxygen-iceblue.svg'); background-size: 25px 25px;"></div>
@@ -338,23 +400,23 @@
             </table>
             </td>
             <td>
-                <p style="font-size: 20px;font-weight:600;padding-left: 40px;" class="anime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Your Upcoming Booking</p>
+                <p style="font-size: 20px;font-weight:600;padding-left: 40px;" class="anime">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $lang['upcomingbooking'] ?></p>
                 <center>
                     <div class="abc scroll" style="height: 250px;padding: 0;margin: 0; ">
                         <table width="90%" class="sub-table scrolldown" border="0">
                             <thead>
                                 <tr>
                                     <th class="table-headin" style="width: 50px;">
-                                        Appoint. Number
+                                        <?php echo $lang['Appnumber'] ?>
                                     </th>
                                     <th class="table-headin">
-                                        Session Title
+                                        <?php echo $lang['sessiontitle'] ?>
                                     </th>
                                     <th class="table-headin">
-                                        Doctor
+                                        <?php echo $lang['doctors'] ?>
                                     </th>
                                     <th class="table-headin">
-                                        Sheduled Date & Time
+                                        <?php echo $lang['sheduledatetime'] ?>
                                     </th>
                                 </tr>
                             </thead>
@@ -373,7 +435,7 @@
                                                     <img src="../img/notfound.svg" width="25%">
                                                     
                                                     <br>
-                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Nothing to show here!</p>
+                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">' . $lang['drsearch'] . '</p>
                                                     <a class="non-style-link" href="schedule.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Channel a Doctor &nbsp;</font></button>
                                                     </a>
                                                     </center>
@@ -450,6 +512,28 @@
         }),
         t.insertBefore(e, t.firstChild);
     })();
+</script>
+<script>
+    // Get a reference to the language dropdown
+    const languageDropdown = document.getElementById("language");
+
+    // Add an event listener to the dropdown
+    languageDropdown.addEventListener("change", function() {
+        // Get the selected language code
+        const selectedLanguage = this.value;
+
+        // Get the current URL
+        const currentURL = "./index.php"
+
+        // Check if there's already a query string in the URL
+        const separator = currentURL.includes("?") ? "&" : "?";
+
+        // Construct the new URL with the selected language
+        const newURL = currentURL + separator + "lang=" + selectedLanguage;
+
+        // Redirect to the new URL
+        window.location.href = newURL;
+    });
 </script>
 
 </html>
