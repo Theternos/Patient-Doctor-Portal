@@ -322,5 +322,8 @@ $lang = array(
     "bno-schedulefound" => "പുതിയ ഷെഡ്യൂൽ കണ്ടെത്തിയില്ല !",
     "bconsultfee" => "ആലോചന ഫീ: <b>₹ 250</b>",
     "bbookingfee" => "ബുക്കിംഗ് ഫീ: <b>₹ 100</b>",
+    "booked-success-popup" => "പരിശോധിച്ചത് വളരെ നന്ദി",
+    "appointment-number" => "നിങ്ങളുടെ അപ്പോയിന്റ്മെന്റ് നമ്പർ",
+    "ok" => "ശരി",
 
 );

@@ -404,4 +404,7 @@ $lang = array(
     "bno-schedulefound" => "कोई शेड्यूल नहीं मिला!",
     "bconsultfee" => "सलाहकारी शुल्क: <b>₹ 250</b>",
     "bbookingfee" => "बुकिंग शुल्क: <b>₹ 100</b>",
+    "booked-success-popup" => "सफलतापूर्वक बुक किया गया",
+    "appointment-number" => "आपका अपॉइंटमेंट नंबर है",
+    "ok" => "ठीक है",
 );

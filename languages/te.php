@@ -379,4 +379,7 @@ $lang = array(
     "bno-schedulefound" => "షెడ్యూల్ కనబడలేదు!",
     "bconsultfee" => "సలహా పేరు: <b>₹ 250</b>",
     "bbookingfee" => "బుకింగ్ పేరు: <b>₹ 100</b>",
+    "booked-success-popup" => "విజయవంతంగా బుక్ చేయబడింది",
+    "appointment-number" => "మీ అపాయింట్మెంట్ సంఖ్య ఇది",
+    "ok" => "సరే",
 );

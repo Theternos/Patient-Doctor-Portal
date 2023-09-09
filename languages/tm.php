@@ -390,4 +390,7 @@ $lang = array(
     "bno-schedulefound" => "அட்டவணை கிடைக்கவில்லை!",
     "bconsultfee" => "ஆலோசனை கட்டணம்: <b>₹ 250</b>",
     "bbookingfee" => "குழுமம் கட்டணம்: <b>₹ 100</b>",
+    "booked-success-popup" => "வெற்றிகரமாக பதிவு செய்யப்பட்டது",
+    "appointment-number" => "உங்கள் அப்பாய்ட்மெண்ட் எண்",
+    "ok" => "சரி",
 );

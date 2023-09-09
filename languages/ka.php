@@ -373,4 +373,7 @@ $lang = array(
     "bno-schedulefound" => "ಯಾವ ಶೇಡ್ಯೂಲ್ ಕಂಡುಬಂದಿಲ್ಲ!",
     "bconsultfee" => "ಪರಾಮರ್ಶ ಶುಲ್ಕ: <b>₹ 250</b>",
     "bbookingfee" => "ಬುಕ್ ಶುಲ್",
+    "booked-success-popup" => "ಯಶಸ್ವಿಯಾಗಿ ಬುಕ್ ಮಾಡಲಾಗಿದೆ",
+    "appointment-number" => "ನಿಮ್ಮ ಸಂದರ್ಭ ಸಂಖ್ಯೆ",
+    "ok" => "ಸರಿ",
 );
