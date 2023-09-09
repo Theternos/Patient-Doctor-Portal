@@ -199,12 +199,12 @@
                             <form action="donor_register.php" method="post">
                                 <select name="language" id="language" style="font-size:13px">
                                     <option value="en"><?php echo $_SESSION['lang'] ?></option>
-                                    <option value="en">en</option>
-                                    <option value="tm">tm</option>
-                                    <option value="ka">ka</option>
-                                    <option value="ml">ml</option>
-                                    <option value="te">te</option>
-                                    <option value="hi">hi</option>
+                                    <option value="en">English</option>
+                                    <option value="tm">தமிழ்</option>
+                                    <option value="ka">ಕನ್ನಡ</option>
+                                    <option value="ml">മലയാളം</option>
+                                    <option value="te">తెలుగు</option>
+                                    <option value="hi">हिंदी</option>
                                 </select><br>
                             </form>
                         </div>

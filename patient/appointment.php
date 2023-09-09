@@ -291,12 +291,12 @@
                             <form action="donor_register.php" method="post">
                                 <select name="language" id="language" style="font-size:13px">
                                     <option value="en"><?php echo $_SESSION['lang'] ?></option>
-                                    <option value="en">en</option>
-                                    <option value="tm">tm</option>
-                                    <option value="ka">ka</option>
-                                    <option value="ml">ml</option>
-                                    <option value="te">te</option>
-                                    <option value="hi">hi</option>
+                                    <option value="en">English</option>
+                                    <option value="tm">தமிழ்</option>
+                                    <option value="ka">ಕನ್ನಡ</option>
+                                    <option value="ml">മലയാളം</option>
+                                    <option value="te">తెలుగు</option>
+                                    <option value="hi">हिंदी</option>
                                 </select><br>
                             </form>
                         </div>
@@ -417,7 +417,7 @@
                                                         <div style="width:100%;">
                                                             <div style="display: flex; flex-direction:row; justify-content:space-between;">
                                                                 <div class="h1-search" style="display:flex; flex-direction:row; align-items:center; justify-content:center; font-size:17px; color:#006dd3; padding:5px 0 10px 0; letter-spacing:.5px;">
-                                                                    <div><?php echo substr($title, 0, 30) ?></div>&nbsp;
+                                                                    <div><?php echo substr($lang[$title], 0, 30) ?></div>&nbsp;
                                                                     <div class="h3-search" style="color:#000; font-size:14px; margin-top:0;"> - <?php
                                                                                                                                                 if ($mode == "Hospital Visit") {
                                                                                                                                                     echo $lang['hospital-visit'];
@@ -533,7 +533,7 @@
                     <div class="popup">
                     <center>
                     <br><br>
-                        <h2>' . $lang['booked-successfully'] . '.</h2>
+                        <h2>' . $lang['booked-success-popup'] . '.</h2>
                         <a class="close" href="appointment.php">&times;</a>
                         <div class="content">
                         ' . $lang["appointment-number"] . ' ' . $id . '.<br><br>
@@ -566,7 +566,7 @@
                         <div class="content">
                             ' . $lang["cancel-appoint-ques"] . '<br>
                             <red style = "color:red; font-size:13px">' . $lang["refund-policy"] . ' </red><br><br>
-                            ' . $lang['session-name'] . ' &nbsp;<b>' . substr($title, 0, 40) . '</b> - ' . substr($mode1, 0, 40) . '<br>
+                            ' . $lang['session-name'] . ' &nbsp;<b>' . substr($lang[$title], 0, 40) . '</b> - ' . substr($mode1, 0, 40) . '<br>
                             ' . $lang['dispdename'] . '&nbsp; : <b>' . substr($docname, 0, 40) . '</b><br><br>
                             
                         </div>

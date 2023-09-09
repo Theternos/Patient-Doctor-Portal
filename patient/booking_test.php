@@ -10,10 +10,8 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="../js/checkout.js"></script>
-    <?php
-    session_start();
-    error_reporting(0);
-    ?>
+    <?php include("./config.php"); ?>
+
     <title>Booking Tests</title>
     <style>
         .popup {
@@ -165,8 +163,6 @@
 <body>
     <?php
 
-    //learn from w3schools.com
-
     date_default_timezone_set('UTC');
 
     if (isset($_SESSION["user"])) {
@@ -180,7 +176,6 @@
     }
     //import database
     include("../connection.php");
-
     $sqlmain = "select * from patient where pemail=?";
     $stmt = $database->prepare($sqlmain);
     $stmt->bind_param("s", $useremail);
@@ -190,11 +185,8 @@
     $userid = $userfetch["pid"];
     $username = $userfetch["pname"];
     $phone_number = $userfetch["ptel"];
-
     setcookie('checkboxState', 0, time() + (3600), "/"); // 3600 = 1 hr
-
     date_default_timezone_set('Asia/Kolkata');
-
     $today = date('Y-m-d');
     ?>
     <div class="container">
@@ -224,7 +216,7 @@
                     <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -233,7 +225,7 @@
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -243,7 +235,7 @@
                     <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
                         <a href="specialities.php" class="non-style-link-menu non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -252,7 +244,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -261,7 +253,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -270,7 +262,7 @@
                     <td class="menu-btn menu-icon-test">
                         <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -279,7 +271,7 @@
                     <td class="menu-btn menu-icon-payment">
                         <a href="payment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['payments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -288,7 +280,7 @@
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Settings</p>
+                                <p class="menu-text"><?php echo $lang['settings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -300,13 +292,13 @@
                 <tr>
                     <td width="13%">
                         <a href="specialities.php?action=book_test"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                                <font class="tn-in-text">Back</font>
+                                <font class="tn-in-text"><?php echo $lang['ddback'] ?></font>
                             </button></a>
                     </td>
                     <td>
                         <form action="schedule.php" method="post" class="header-search">
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email or Date (YYYY-MM-DD)" list="doctors">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="<?php echo $lang['scrded'] ?>" list="doctors">&nbsp;&nbsp;
 
                             <?php
                             echo '<datalist id="doctors">';
@@ -337,7 +329,7 @@
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            <?php echo $lang['tddate'] ?>
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
@@ -356,7 +348,7 @@
                                 <?php
                                 if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
                                     <div class="registration-disclaimer">
-                                        <p>One-time non-refundable registration fee of ₹110 is added. Kindly avoid re-registration.</p>
+                                        <p><?php echo $lang['onetime'] ?></p>
                                     </div>
                                     <div class="flex-row">
                                         <div class="registration-details">
@@ -383,7 +375,7 @@
                                                     </div>
                                             <?php
                                                 } else {
-                                                    echo "No tests selected.";
+                                                    echo $lang['nts'];
                                                 }
                                             }
                                             ?>
@@ -392,13 +384,13 @@
                                             <div class="billing-disclaimer">
                                                 <div class="flex-row">
                                                     <img src="../img/tick.svg" alt="" width="25px">
-                                                    <h6>You can visit any day this week to get the tests done.</h6>
+                                                    <h6><?php echo $lang['uvis'] ?></h6>
                                                 </div>
-                                                <p>General lab visiting timings: 10am to 4pm</p>
+                                                <p><?php echo $lang['grvis'] ?></p>
                                             </div>
                                             <div class="flex-row" style="justify-content:start;">
                                                 <img src="../img/icons/discount.svg" alt="discount image" width="25px">
-                                                <p style="margin-left: 5px; color: green;">You will recieve the 2.5% as cashback that you pay</p>
+                                                <p style="margin-left: 5px; color: green;"><?php echo $lang['cb'] ?></p>
                                             </div>
                                             <div style="border-top: 1px solid #292D32; margin-top: 1vh; font-weight:500; padding: 0 0 0 0;">
                                                 <?php
@@ -406,30 +398,30 @@
                                                 $row12 = $result12->fetch_assoc();
                                                 $balance = $row12['balance'];
                                                 ?>
-                                                <h5 style="margin:4vh 0 2vh 0 ">Bill Details</h5>
+                                                <h5 style="margin:4vh 0 2vh 0 "><?php echo $lang['bdet'] ?></h5>
                                                 <div class="flex-row" style="justify-content: flex-start; margin: 0 0 0 0;">
                                                     <label class="checkbox-container">
                                                         <input type="checkbox" id="subtractBalanceCheckbox" onchange="toggleCheckbox()">
                                                         <span class="checkmark"></span>
                                                     </label>
-                                                    <p style="text-align: left; margin-left: 5px">PEaS Credit<br>
-                                                        <w style="font-size: 11px; font-weight: 400;">Available Balance: ₹<?php echo $balance; ?></w>
+                                                    <p style="text-align: left; margin-left: 5px"><?php echo $lang['peas'] ?><br>
+                                                        <w style="font-size: 11px; font-weight: 400;"><?php echo $lang['avba'] ?><?php echo $balance; ?></w>
                                                     </p>
                                                 </div>
 
                                                 <div class="flex-row">
-                                                    <p style="text-align: left;">Registration Fee</p>
+                                                    <p style="text-align: left;"><?php echo $lang['regfee'] ?></p>
                                                     <p style="margin-left: auto; margin-right:15px;">₹110</p>
                                                 </div>
                                                 <div class="flex-row">
-                                                    <p style="text-align: left;">Item Total</p>
+                                                    <p style="text-align: left;"><?php echo $lang['item'] ?>/p>
                                                     <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $total_amount ?></p>
                                                 </div>
                                                 <div class="flex-row">
-                                                    <p style="text-align: left;">Payable Amount</p>
+                                                    <p style="text-align: left;"><?php echo $lang['paam'] ?></p>
                                                     <p id="payableAmount" style="margin-left: auto; margin-right:15px;"><?php echo '₹' . ($total_amount + 110) ?></p>
                                                 </div>
-                                                <p id="payButton" class="login-btn btn-primary btn">Pay now</p>
+                                                <p id="payButton" class="login-btn btn-primary btn"><?php echo $lang['pn'] ?></p>
                                             </div>
                                         </div>
                                     </div>

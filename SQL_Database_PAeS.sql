@@ -468,64 +468,63 @@ CREATE TABLE IF NOT EXISTS `specialties` (
 -- Dumping data for table `specialties`
 --
 
-INSERT INTO `specialties` (`id`, `sname`, `imgname`) VALUES
-(1, 'Accident and emergency medicine', '../img/sicon/1.png'),
-(2, 'Allergology', '../img/sicon/2.png'),
-(3, 'Anaesthetics', '../img/sicon/3.png'),
-(4, 'Biological hematology', '../img/sicon/4.png'),
-(5, 'Cardiology', '../img/sicon/5.png'),
-(6, 'Child psychiatry', '../img/sicon/6.png'),
-(7, 'Clinical biology', '../img/sicon/7.png'),
-(8, 'Clinical chemistry', '../img/sicon/8.png'),
-(9, 'Clinical neurophysiology', '../img/sicon/9.png'),
-(10, 'Clinical radiology', '../img/sicon/10.png'),
-(11, 'Dental, oral and maxillo-facial surgery', '../img/sicon/11.png'),
-(12, 'Dermato-venerology', '../img/sicon/12.png'),
-(13, 'Dermatology', '../img/sicon/13.png'),
-(14, 'Endocrinology', '../img/sicon/14.png'),
-(15, 'Gastro-enterologic surgery', '../img/sicon/15.png'),
-(16, 'Gastroenterology', '../img/sicon/16.png'),
-(17, 'General hematology', '../img/sicon/17.png'),
-(18, 'General Practice', '../img/sicon/18.png'),
-(19, 'General surgery', '../img/sicon/19.png'),
-(20, 'Geriatrics', '../img/sicon/20.png'),
-(21, 'Immunology', '../img/sicon/21.png'),
-(22, 'Infectious diseases', '../img/sicon/22.png'),
-(23, 'Internal medicine', '../img/sicon/23.png'),
-(24, 'Laboratory medicine', '../img/sicon/24.png'),
-(25, 'Maxillo-facial surgery', '../img/sicon/25.png'),
-(26, 'Microbiology', '../img/sicon/26.png'),
-(27, 'Nephrology', '../img/sicon/27.png'),
-(28, 'Neuro-psychiatry', '../img/sicon/28.png'),
-(29, 'Neurology', '../img/sicon/29.png'),
-(30, 'Neurosurgery', '../img/sicon/30.png'),
-(31, 'Nuclear medicine', '../img/sicon/31.png'),
-(32, 'Obstetrics and gynecology', '../img/sicon/32.png'),
-(33, 'Occupational medicine', '../img/sicon/33.png'),
-(34, 'Ophthalmology', '../img/sicon/34.png'),
-(35, 'Orthopaedics', '../img/sicon/35.png'),
-(36, 'Otorhinolaryngology', '../img/sicon/36.png'),
-(37, 'Paediatric surgery', '../img/sicon/37.png'),
-(38, 'Paediatrics', '../img/sicon/38.png'),
-(39, 'Pathology', '../img/sicon/39.png'),
-(40, 'Pharmacology', '../img/sicon/40.png'),
-(41, 'Physical medicine and rehabilitation', '../img/sicon/41.png'),
-(42, 'Plastic surgery', '../img/sicon/42.png'),
-(43, 'Podiatric Medicine', '../img/sicon/43.png'),
-(44, 'Podiatric Surgery', '../img/sicon/44.png'),
-(45, 'Psychiatry', '../img/sicon/45.png'),
-(46, 'Public health and Preventive Medicine', '../img/sicon/46.png'),
-(47, 'Radiology', '../img/sicon/47.png'),
-(48, 'Radiotherapy', '../img/sicon/48.png'),
-(49, 'Respiratory medicine', '../img/sicon/49.png'),
-(50, 'Rheumatology', '../img/sicon/50.png'),
-(51, 'Stomatology', '../img/sicon/51.png'),
-(52, 'Thoracic surgery', '../img/sicon/52.png'),
-(53, 'Tropical medicine', '../img/sicon/53.png'),
-(54, 'Urology', '../img/sicon/54.png'),
-(55, 'Vascular surgery', '../img/sicon/55.png'),
-(56, 'Venereology', '../img/sicon/56.png'),
-(57, 'General OP', '../img/sicon/57.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (1,'accident-and-emergency-medicine','../img/sicon/1.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (2,'allergology','../img/sicon/2.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (3,'anaesthetics','../img/sicon/3.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (4,'biological-hematology','../img/sicon/4.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (5,'cardiology','../img/sicon/5.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (6,'child-psychiatry','../img/sicon/6.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (7,'clinical-biology','../img/sicon/7.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (8,'clinical-chemistry','../img/sicon/8.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (9,'clinical-neurophysiology','../img/sicon/9.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (10,'clinical-radiology','../img/sicon/10.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (11,'dental-oral-and-maxillo-facial-surgery','../img/sicon/11.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (12,'dermato-venerology','../img/sicon/12.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (13,'dermatology','../img/sicon/13.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (14,'endocrinology','../img/sicon/14.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (15,'gastro-enterologic-surgery','../img/sicon/15.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (16,'gastroenterology','../img/sicon/16.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (17,'general-hematology','../img/sicon/17.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (18,'general-practice','../img/sicon/18.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (19,'general-surgery','../img/sicon/19.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (20,'geriatrics','../img/sicon/20.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (21,'immunology','../img/sicon/21.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (22,'infectious-diseases','../img/sicon/22.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (23,'internal-medicine','../img/sicon/23.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (24,'laboratory-medicine','../img/sicon/24.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (25,'maxillo-facial-surgery','../img/sicon/25.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (26,'microbiology','../img/sicon/26.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (27,'nephrology','../img/sicon/27.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (28,'neuro-psychiatry','../img/sicon/28.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (29,'neurology','../img/sicon/29.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (30,'neurosurgery','../img/sicon/30.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (31,'nuclear-medicine','../img/sicon/31.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (32,'obstetrics-and-gynecology','../img/sicon/32.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (33,'occupational-medicine','../img/sicon/33.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (34,'ophthalmology','../img/sicon/34.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (35,'orthopaedics','../img/sicon/35.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (36,'otorhinolaryngology','../img/sicon/36.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (37,'paediatric-surgery','../img/sicon/37.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (38,'paediatrics','../img/sicon/38.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (39,'pathology','../img/sicon/39.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (40,'pharmacology','../img/sicon/40.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (41,'physical-medicine-and-rehabilitation','../img/sicon/41.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (42,'plastic-surgery','../img/sicon/42.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (43,'podiatric-medicine','../img/sicon/43.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (44,'podiatric-surgery','../img/sicon/44.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (45,'psychiatry','../img/sicon/45.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (46,'public-health-and-preventive-medicine','../img/sicon/46.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (47,'radiology','../img/sicon/47.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (48,'radiotherapy','../img/sicon/48.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (49,'respiratory-medicine','../img/sicon/49.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (50,'rheumatology','../img/sicon/50.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (51,'stomatology','../img/sicon/51.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (52,'thoracic-surgery','../img/sicon/52.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (53,'tropical-medicine','../img/sicon/53.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (54,'urology','../img/sicon/54.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (55,'vascular-surgery','../img/sicon/55.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (56,'venereology','../img/sicon/56.png');
+INSERT INTO `` (`id`,`sname`,`imgname`) VALUES (57,'general-op','../img/sicon/57.png');
 
 -- --------------------------------------------------------
 

@@ -204,12 +204,12 @@
                             <form action="donor_register.php" method="post">
                                 <select name="language" id="language" style="font-size:13px">
                                     <option value="en"><?php echo $_SESSION['lang'] ?></option>
-                                    <option value="en">en</option>
-                                    <option value="tm">tm</option>
-                                    <option value="ka">ka</option>
-                                    <option value="ml">ml</option>
-                                    <option value="te">te</option>
-                                    <option value="hi">hi</option>
+                                    <option value="en">English</option>
+                                    <option value="tm">தமிழ்</option>
+                                    <option value="ka">ಕನ್ನಡ</option>
+                                    <option value="ml">മലയാളം</option>
+                                    <option value="te">తెలుగు</option>
+                                    <option value="hi">हिंदी</option>
                                 </select><br>
                             </form>
                         </div>
@@ -285,7 +285,7 @@
                                                 echo '<tr>
                                                         <td> &nbsp;' . substr($name, 0, 30) . '</td>
                                                         <td>' . substr($email, 0, 40) . '</td>
-                                                        <td>' . substr($spcil_name, 0, 40) . '</td>
+                                                        <td>' . substr($lang[$spcil_name], 0, 40) . '</td>
                                                         <td>
                                                             <div style="display:flex;justify-content: center;">
                                                                 <a href="?action=view&id=' . $docid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">' . $lang['view'] . '</font></button></a>
@@ -327,8 +327,8 @@
                             
                         </div>
                         <div style="display: flex;justify-content: center;">
-                        <a href="delete-doctor.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
-                        <a href="doctors.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
+                        <a href="delete-doctor.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;' . $lang['yes'] . '&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="doctors.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;' . $lang['no'] . '&nbsp;&nbsp;</font></button></a>
 
                         </div>
                     </center>

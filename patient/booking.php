@@ -10,9 +10,8 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="../js/checkout.js"></script>
-    <?php session_start();
-    error_reporting(0); ?>
-    <title>Sessions</title>
+    <?php include("./config.php") ?>
+    <title><?php echo $lang['bsessions'] ?></title>
     <style>
         .popup {
             animation: transitionIn-Y-bottom 0.5s;
@@ -286,7 +285,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <a href="../logout.php"><input type="button" value="Log out" class="logout-btn btn-primary-soft btn"></a>
+                                    <a href="../logout.php"><input type="button" value=<?php echo $lang['logout'] ?> class="logout-btn btn-primary-soft btn"></a>
                                 </td>
                             </tr>
                         </table>
@@ -296,7 +295,7 @@
                     <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['bhome'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -305,7 +304,7 @@
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['ball-doctors'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -315,7 +314,7 @@
                     <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
                         <a href="specialities.php" class="non-style-link-menu non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['bbook-appointment'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -324,7 +323,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['bmy-booking'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -333,7 +332,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['brecent-consultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -342,7 +341,7 @@
                     <td class="menu-btn menu-icon-test">
                         <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['banalysis'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -351,7 +350,7 @@
                     <td class="menu-btn menu-icon-payment">
                         <a href="payment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['bpayments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -360,7 +359,7 @@
                     <td class="menu-btn menu-icon-settings">
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Settings</p>
+                                <p class="menu-text"><?php echo $lang['bsettings'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -372,13 +371,13 @@
                 <tr>
                     <td width="13%">
                         <a href="specialities.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                                <font class="tn-in-text">Back</font>
+                                <font class="tn-in-text"><?php echo $lang['bback'] ?></font>
                             </button></a>
                     </td>
                     <td>
                         <form action="schedule.php" method="post" class="header-search">
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Doctor name or Email or Date (YYYY-MM-DD)" list="doctors">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="<?php echo $lang['bbodentry'] ?>" list="doctors">&nbsp;&nbsp;
 
                             <?php
                             echo '<datalist id="doctors">';
@@ -404,12 +403,12 @@
                             ?>
 
 
-                            <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
+                            <input type="Submit" value="<?php echo $lang['bsearch'] ?>" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
                         </form>
                     </td>
                     <td width="15%">
                         <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                            Today's Date
+                            <?php echo $lang['btodaysdate'] ?>
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
@@ -425,7 +424,6 @@
                     <td width="10%">
                         <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
                     </td>
-
 
                 </tr>
                 <tr>
@@ -456,25 +454,30 @@
                                             $schedule_sql = "select * from schedule where docid='$docid' and schedule.scheduledate >= '$today'";
                                             //echo $sql2;
                                             $schedule_result = $database->query($schedule_sql);
+                                            if ($mode == 'Video Consultancy') {
+                                                $mode1 = $lang['hpvc'];
+                                            } else {
+                                                $mode1 = $lang['hpv'];
+                                            }
                                         ?>
                                             <td style="width: 50%;" rowspan="2">
                                                 <div class="dashboard-items search-items" style="width: 45vw; min-height:fit-content; max-height:70vh">
                                                     <div style="width:100">
                                                         <div class="h1-search" style="font-size:25px;display: flex; flex-direction:row; align-items:center">
-                                                            <div><?php echo $title ?></div>
-                                                            <div style="font-size: 15px; color:#6a6a6a; font-weight:500;">&nbsp;[<?php echo  substr($mode, 0, 40) ?>]</div>
+                                                            <div><?php echo $lang[$title] ?></div>
+                                                            <div style="font-size: 15px; color:#6a6a6a; font-weight:500;">&nbsp;[<?php echo  substr($mode1, 0, 40) ?>]</div>
                                                         </div>
                                                         <div class="h3-search" style="font-size:16px;line-height:30px">
-                                                            Doctor name: &nbsp;&nbsp;<b><?php echo $docname ?></b><br>
-                                                            Doctor Email: &nbsp;&nbsp;<b><?php echo $docemail ?></b><br>
+                                                            <?php echo $lang['bdoctor-name'] ?>&nbsp;&nbsp;<b><?php echo $docname ?></b><br>
+                                                            <?php echo $lang['bdoctor-email'] ?>&nbsp;&nbsp;<b><?php echo $docemail ?></b><br>
                                                             <?php
                                                             if ($mode == 'Video Consultancy') {
-                                                                echo 'Consultancy fee : <b>₹ 250</b>';
+                                                                echo '' . $lang["bconsultfee"] . '';
                                                             } else {
-                                                                echo 'Booking fee: <b>₹ 100</b>';
+                                                                echo '' . $lang["bbookingfee"] . '';
                                                             } ?>&nbsp;
                                                             <black style=" color:#000; font-size:13px">[</black>
-                                                            <red style="color:red; font-size:13px"> Non-refundable </red>
+                                                            <red style="color:red; font-size:13px"><?php echo $lang['bnon-refundable'] ?></red>
                                                             <black style="color:#000; font-size:13px">]</black>
                                                             <div>
                                                                 <?php
@@ -492,7 +495,7 @@
                                                                     <table class="slot_booking">
                                                                         <tr>
                                                                             <?php
-                                                                            $days = array("Today", "Tomorrow", "&nbsp;", "&nbsp;", "&nbsp;");
+                                                                            $days = array($lang['btoday'],  $lang['btomorrow'], "&nbsp;", "&nbsp;", "&nbsp;");
                                                                             date_default_timezone_set("Asia/Kolkata");
 
                                                                             for ($i = 0; $i < 5; $i++) {
@@ -590,7 +593,7 @@
                                                     <div class="billing-disclaimer">
                                                         <div style="width:100%;padding-top: 15px;padding-bottom: 15px;">
                                                             <div class="h1-search" style="font-size:17px;text-align:center;">
-                                                                Your Appointment Number
+                                                                <?php echo $lang['byour-appointmentnuml'] ?>
                                                             </div>
                                                             <center>
                                                                 <div id="apponum" style="margin-left: 0px; font-size: 50px; font-weight: 800; text-align: center; color: var(--btnnictext);"><?php echo $apponum ?></div>
@@ -599,7 +602,7 @@
                                                     </div>
                                                     <div class="flex-row" style="justify-content:start;">
                                                         <img src="../img/icons/discount.svg" alt="discount image" width="25px">
-                                                        <p style="margin-left: 10px; color: green;">You will recieve the 2.5% as cashback that you pay</p>
+                                                        <p style="margin-left: 10px; color: green;"> <?php echo $lang['bcashback-prompt'] ?> </p>
                                                     </div>
                                                     <div style="border-top: 1px solid #292D32; margin-top: 2vh; font-weight:500;">
                                                         <?php
@@ -612,26 +615,26 @@
                                                             $total_amount = 100;
                                                         }
                                                         ?>
-                                                        <h5 style="margin:2vh 0 2vh 0">Bill Details</h5>
+                                                        <h5 style="margin:2vh 0 2vh 0"><?php echo $lang['bbilldetails'] ?></h5>
                                                         <div class="flex-row" style="justify-content: flex-start;">
                                                             <label class="checkbox-container">
                                                                 <input type="checkbox" id="subtractBalanceCheckbox" onchange="toggleCheckbox()">
                                                                 <span class="checkmark"></span>
                                                             </label>
-                                                            <p style="text-align: left; margin-left: 5px">PEaS Credit<br>
-                                                                <w style="font-size: 11px; font-weight: 400;">Available Balance: ₹<?php echo $balance; ?></w>
+                                                            <p style="text-align: left; margin-left: 5px"><?php echo $lang['bpeas-creditor'] ?><br>
+                                                                <w style="font-size: 11px; font-weight: 400;"><?php echo $lang['bavailable-balance'] ?><?php echo $balance; ?></w>
                                                             </p>
                                                         </div>
 
                                                         <div class="flex-row">
-                                                            <p style="text-align: left;">Item Total</p>
+                                                            <p style="text-align: left;"><?php echo $lang['bitem-total'] ?></p>
                                                             <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $total_amount ?></p>
                                                         </div>
                                                         <div class="flex-row">
-                                                            <p style="text-align: left;">Payable Amount</p>
+                                                            <p style="text-align: left;"><?php echo $lang['bpayable-amount'] ?></p>
                                                             <p id="payableAmount" style="margin-left: auto; margin-right:15px;"><?php echo '₹' . ($total_amount + 110) ?></p>
                                                         </div>
-                                                        <p id="payButton" class="login-btn btn-primary btn" style="text-align: center;">Pay now</p>
+                                                        <p id="payButton" class="login-btn btn-primary btn" style="text-align: center;"><?php echo $lang['bpaynow'] ?></p>
                                                     </div>
                                                 </div>
                             </div>
@@ -647,7 +650,7 @@
                                     <br><br>
                                     <img src="../img/notfound.svg" width="25%">
                                     <br><br>
-                                    <p class="heading-main12" style="margin-left: 30px;font-size:20px;color:rgb(49, 49, 49)">No Schedule found !</p>
+                                    <p class="heading-main12" style="margin-left: 30px;font-size:20px;color:rgb(49, 49, 49)"> <?php echo $lang['bno-schedulefound'] ?></p>
                                     <a class="non-style-link" href="schedule.php"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Check Again! &nbsp;</font></button>
                                     </a>
                                 </center>

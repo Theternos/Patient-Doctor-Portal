@@ -15,12 +15,31 @@ intents:
   - vision_symptom
   - stomach_symptom
   - bot_challenge
+  - back_pain_symptom
+  - fever_symptom
+  - cough_symptom
+  - sore_throat_symptom
+  - fatigue_symptom
+  - skin_rash_symptom
+  - anxiety_symptom
+  - depression_symptom
+  - allergy_symptom
+  - hypertension_symptom
+  - joint_pain_symptom
+  - insomnia_symptom
+  - shortness_of_breath_symptom
+  - nausea_symptom
+  - diarrhea_symptom
+  - migraine_symptom
+  - hearing_loss_symptom
+
 
 responses:
   utter_greet:
-  - text: "Hi! How may I help you? Are you facing any of these problems: Headache | Stomache | Flu | Vision"
+    - text: "Hi! How may I help you? Are you facing any  problems,Say me?..."
+
   utter_did_that_help:
-  - text: "I hope that this helps you.\n\ If you wish to continue please select which problem: Headache | Stomach-ache | Flu | Vision.\n\ Else you can exit"
+  - text: "I hope that this helps you.\n\ If you wish to continue please select any other problem...\n\ Else you can exit"
   utter_happy:
   - text: "Great, carry on!"
   utter_goodbye:
@@ -57,6 +76,55 @@ responses:
   - text: "Following are the remedies for some other causes of Stomach-ache :\n\ Lower Abdomen Pain - 1. Use a heating bag, 2.Reduce your intake of coffee, tea and alcohol as these can make the pain worse. 3.Get plenty of rest.\n\ Vomiting - 1.Eat light, bland foods 2.Avoid fried, greasy, or sweet foods. 3.Eat slowly and eat smaller, more frequent meals.\n\ Loose Motions - 1.Drink ginger juice, 2. Drink lemon and salt water 3. Eat pomegranate"
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
+  utter_back_pain_response:
+  - text: "Back pain can be caused by various factors, including muscle strain, poor posture, or underlying medical conditions. To alleviate back pain, you can try rest, gentle stretches, and applying ice or heat. If the pain persists, consult a healthcare professional."
+
+  utter_fever_response:
+  - text: "Fever is a common symptom of various illnesses. It's essential to monitor your temperature, stay hydrated, and get plenty of rest when you have a fever. If it's high or prolonged, consult a doctor."
+
+  utter_cough_response:
+  - text: "Coughs can be caused by respiratory infections, allergies, or other factors. Stay hydrated, use a humidifier, and consider over-the-counter cough remedies. If the cough persists or worsens, seek medical advice."
+
+  utter_sore_throat_response:
+  - text: "A sore throat can be due to viral or bacterial infections. Gargling with warm salt water, staying hydrated, and resting can help soothe a sore throat. If it's severe or accompanied by other symptoms, consult a healthcare provider."
+
+  utter_fatigue_response:
+  - text: "Fatigue can result from various factors, including lack of sleep, stress, or underlying health issues. Ensure you get enough rest, maintain a balanced diet, and consider stress-reduction techniques. If fatigue persists, consult a doctor."
+
+  utter_skin_rash_response:
+  - text: "Skin rashes can have many causes, such as allergies, infections, or dermatological conditions. Keep the affected area clean and dry, and avoid scratching. If the rash persists or worsens, consult a dermatologist."
+
+  utter_anxiety_response:
+  - text: "Anxiety can manifest as feelings of unease or worry. Practicing relaxation techniques, regular exercise, and seeking support from a mental health professional can help manage anxiety."
+
+  utter_depression_response:
+  - text: "Depression is a mental health condition characterized by persistent sadness and loss of interest. It's important to talk to a mental health expert about your symptoms and explore treatment options."
+
+  utter_allergy_response:
+  - text: "Allergies can lead to various symptoms, such as sneezing, itching, and congestion. Identify and avoid allergens, and consider antihistamines or allergy shots for relief. Consult an allergist for further evaluation."
+
+  utter_hypertension_response:
+  - text: "Hypertension (high blood pressure) can be managed through lifestyle changes like a healthy diet, regular exercise, and stress reduction. Regular blood pressure monitoring is essential. Consult a healthcare provider for guidance."
+  utter_joint_pain_response:
+  - text: "Joint pain can result from various factors, such as arthritis, injury, or overuse. Rest, gentle exercises, and pain relievers may help. Consult a healthcare provider for persistent joint pain."
+
+  utter_insomnia_response:
+  - text: "Insomnia is characterized by difficulty falling asleep or staying asleep. Maintain a sleep schedule, avoid caffeine close to bedtime, and create a comfortable sleep environment for better sleep."
+
+  utter_shortness_of_breath_response:
+  - text: "Shortness of breath can occur due to various reasons, including respiratory issues or anxiety. If it persists or worsens, seek medical evaluation."
+
+  utter_nausea_response:
+  - text: "Nausea can be caused by infections, motion sickness, or pregnancy. Ginger, peppermint, and bland foods may help alleviate nausea."
+
+  utter_diarrhea_response:
+  - text: "Diarrhea can be due to infections, food poisoning, or certain medications. Stay hydrated with clear fluids and follow a bland diet during diarrhea."
+
+  utter_migraine_response:
+  - text: "Migraines are severe headaches often accompanied by other symptoms. Identify triggers, consider medications, and rest in a dark, quiet room during an attack."
+
+  utter_hearing_loss_response:
+  - text: "Hearing loss can result from aging, exposure to loud noise, or medical conditions. Consult an audiologist for a hearing evaluation and potential solutions."
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

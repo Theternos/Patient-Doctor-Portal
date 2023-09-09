@@ -265,7 +265,7 @@
                                                 . '</td >
 
                                         <td style="font-weight:600;text-align:center;">
-                                        ' . substr($tname, 0, 15) . '
+                                        ' . substr($lang[$tname], 0, 15) . '
                                         </td>
                                         <td style="text-align:center;">
                                             ' . substr($booked_time, 0, 10) . '
@@ -274,7 +274,6 @@
                                         <td style="text-align:center;">
                                             ' . substr($seen_at, 0, 10) . '
                                         </td>
-
                                         <td>
                                         <div style="display:flex;justify-content: center;">
                                        <a href="test_detailed.php?lname=' . $lname . '&tname=' . $tname . '&booked_time=' . $booked_time . '&seen_at=' . $seen_at . '&file_name=' . $file_name . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">' . $lang['view'] . '</font></button></a>
@@ -292,24 +291,12 @@
         </div>
 </body>
 <script>
-    // Get a reference to the language dropdown
     const languageDropdown = document.getElementById("language");
-
-    // Add an event listener to the dropdown
     languageDropdown.addEventListener("change", function() {
-        // Get the selected language code
         const selectedLanguage = this.value;
-
-        // Get the current URL
         const currentURL = "./recent_tests.php"
-
-        // Check if there's already a query string in the URL
         const separator = currentURL.includes("?") ? "&" : "?";
-
-        // Construct the new URL with the selected language
         const newURL = currentURL + separator + "lang=" + selectedLanguage;
-
-        // Redirect to the new URL
         window.location.href = newURL;
     });
 </script>

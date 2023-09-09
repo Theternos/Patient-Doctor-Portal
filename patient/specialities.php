@@ -11,8 +11,8 @@
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
     <script src="../js/jquery-min.js"></script>
     <?php
-    session_start();
-    error_reporting(0);
+    include("./config.php");
+    // error_reporting(0);
     ?>
 
     <title>Sessions</title>
@@ -284,10 +284,10 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-home ">
+                    <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu ">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['sp-home'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -296,7 +296,7 @@
                     <td class="menu-btn menu-icon-doctor">
                         <a href="doctors.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text"><?php echo $lang['sp-all-doctors'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -306,7 +306,7 @@
                     <td class="menu-btn menu-icon-session menu-active menu-icon-session-active">
                         <a href="specialities.php" class="non-style-link-menu non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Book Appointment</p>
+                                <p class="menu-text"><?php echo $lang['sp-book-appointment'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -315,7 +315,7 @@
                     <td class="menu-btn menu-icon-appoinment">
                         <a href="appointment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">My Bookings</p>
+                                <p class="menu-text"><?php echo $lang['sp-my-bookings'] ?></p>
 
                             </div>
                         </a>
@@ -325,7 +325,7 @@
                     <td class="menu-btn menu-icon-recent">
                         <a href="recent.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Recent Consultancy</p>
+                                <p class="menu-text"><?php echo $lang['sp-recent-consultancy'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -334,7 +334,7 @@
                     <td class="menu-btn menu-icon-test">
                         <a href="recent_tests.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Analysis History</p>
+                                <p class="menu-text"><?php echo $lang['sp-analysis-history'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -343,7 +343,7 @@
                     <td class="menu-btn menu-icon-payment">
                         <a href="payment.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Payments</p>
+                                <p class="menu-text"><?php echo $lang['sp-payments'] ?></p>
                             </div>
                         </a>
                     </td>
@@ -353,240 +353,251 @@
                         <a href="settings.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Settings</p>
+                            </div>
                         </a>
+                    </td>
+                </tr>
+            </table>
         </div>
-        </td>
-        </tr>
-        </table>
-    </div>
-    <?php
-    if ($_GET['action'] == null) {
-        $sqlmain = "SELECT * from specialties order by sname ASC";
-        $sqlpt1 = "";
-        $insertkey = "";
-        $q = '';
-        $searchtype = "All";
-        if ($_POST) {
-            //print_r($_POST);
+        <?php
+        if ($_GET['action'] == null) {
+            $sqlmain = "SELECT * from specialties order by sname ASC";
+            $sqlpt1 = "";
+            $insertkey = "";
+            $q = '';
+            $searchtype = $lang['sp-all'];
+            if ($_POST) {
+                //print_r($_POST);
 
-            if (!empty($_POST["search"])) {
-                /*TODO: make and understand */
-                $keyword = $_POST["search"];
-                $sqlmain = "select * from specialties where (sname='$keyword' or sname like '$keyword%' or sname like '%$keyword' or sname like '%$keyword%') order by sname asc";
-                #echo $sqlmain;
-                $insertkey = $keyword;
-                $searchtype = "Search Result : ";
-                $q = '"';
+                if (!empty($_POST["search"])) {
+                    /*TODO: make and understand */
+                    $keyword = $_POST["search"];
+                    $sqlmain = "select * from specialties where (sname='$keyword' or sname like '$keyword%' or sname like '%$keyword' or sname like '%$keyword%') order by sname asc";
+                    #echo $sqlmain;
+                    $insertkey = $keyword;
+                    $searchtype = $lang['sp-search-result'];
+                    $q = '"';
+                }
+            }
+        } else if ($_GET['action'] == 'book_test') {
+            $sqlmain = "SELECT * from medical_test order by tname ASC";
+            $sqlpt1 = "";
+            $insertkey = "";
+            $q = '';
+            $searchtype = $lang['sp-all'];
+            if ($_POST) {
+                //print_r($_POST);
+
+                if (!empty($_POST["search"])) {
+                    /*TODO: make and understand */
+                    $keyword = $_POST["search"];
+                    $sqlmain = "SELECT * from medical_test where (tname='$keyword' or tname like '$keyword%' or tname like '%$keyword' or tname like '%$keyword%') order by tname ASC";
+                    #echo $sqlmain;
+                    $insertkey = $keyword;
+                    $searchtype = $lang['sp-search-result'];
+                    $q = '"';
+                }
             }
         }
-    } else if ($_GET['action'] == 'book_test') {
-        $sqlmain = "SELECT * from medical_test order by tname ASC";
-        $sqlpt1 = "";
-        $insertkey = "";
-        $q = '';
-        $searchtype = "All";
-        if ($_POST) {
-            //print_r($_POST);
-
-            if (!empty($_POST["search"])) {
-                /*TODO: make and understand */
-                $keyword = $_POST["search"];
-                $sqlmain = "SELECT * from medical_test where (tname='$keyword' or tname like '$keyword%' or tname like '%$keyword' or tname like '%$keyword%') order by tname ASC";
-                #echo $sqlmain;
-                $insertkey = $keyword;
-                $searchtype = "Search Result : ";
-                $q = '"';
-            }
-        }
-    }
-    $stmt = $database->prepare($sqlmain);
-    $stmt->execute();
-    $result = $stmt->get_result();
+        $stmt = $database->prepare($sqlmain);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
 
-    ?>
+        ?>
 
-    <div class="dash-body">
-        <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
-            <tr>
-                <td width="13%">
-                    <a href="specialities.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                            <font class="tn-in-text">Back</font>
-                        </button></a>
-                </td>
-                <td>
-                    <form action="" method="post" class="header-search">
+        <div class="dash-body">
+            <table border="0" width="0%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; max-width:90%">
+                <tr>
+                    <td>
+                        <a href="specialities.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                                <font class="tn-in-text"><?php echo $lang['sp-back'] ?></font>
+                            </button></a>
+                    </td>
+                    <td>
+                        <form action="" method="post" class="header-search">
 
 
+                            <?php if ($_GET['action'] == null) { ?>
+                                <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
+                            <?php } else if ($_GET['action'] == 'book_test') { ?>
+                                <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Tests" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
+                            <?php }
+
+                            echo '<datalist id="doctors">';
+                            if ($_GET['action'] == null) {
+                                $list11 = $database->query("select DISTINCT * from  specialties;");
+                            } else if ($_GET['action'] == 'book_test') {
+                                $list11 = $database->query("select DISTINCT * from  medical_test;");
+                            }
+                            $list12 = $database->query("select DISTINCT * from  schedule GROUP BY title;");
+
+                            for ($y = 0; $y < $list11->num_rows; $y++) {
+                                $row00 = $list11->fetch_assoc();
+                                $d = $row00["docname"];
+
+                                echo "<option value='$d'><br/>";
+                            };
+
+
+                            for ($y = 0; $y < $list12->num_rows; $y++) {
+                                $row00 = $list12->fetch_assoc();
+                                $d = $row00["title"];
+
+                                echo "<option value='$d'><br/>";
+                            };
+
+                            echo ' </datalist>';
+                            ?>
+                            <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
+                        </form>
+                    </td>
+                    <td>
+                        <div class="flex-row" style="margin-left: auto;">
+                            <div class="flex-row" style="margin-left:auto;">
+                                <div class="flex-column">
+                                    <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
+                                        <?php echo $lang['sp-todays-date'] ?>
+                                    </p>
+                                    <p class="heading-sub12" style="padding: 0;margin: 0;">
+                                        <?php
+                                        echo $today;
+                                        ?>
+                                    </p>
+                                </div>
+                                <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
+                            </div>
+                            <div class="language-select" style="width: 70px; margin-left:auto;">
+                                <form action="donor_register.php" method="post">
+                                    <select name="language" id="language" style="font-size:13px">
+                                        <option value="en"><?php echo $_SESSION['lang'] ?></option>
+                                        <option value="en">English</option>
+                                        <option value="tm">தமிழ்</option>
+                                        <option value="ka">ಕನ್ನಡ</option>
+                                        <option value="ml">മലയാളം</option>
+                                        <option value="te">తెలుగు</option>
+                                        <option value="hi">हिंदी</option>
+                                    </select><br>
+                                </form>
+                            </div>
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td colspan="4" style="padding-top:10px;width: 100%;">
                         <?php if ($_GET['action'] == null) { ?>
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
+                            <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . $lang["sp-sp"] . "(" . $result->num_rows . ")"; ?> </p>
                         <?php } else if ($_GET['action'] == 'book_test') { ?>
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Tests" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
-                        <?php }
-
-                        echo '<datalist id="doctors">';
-                        if ($_GET['action'] == null) {
-                            $list11 = $database->query("select DISTINCT * from  specialties;");
-                        } else if ($_GET['action'] == 'book_test') {
-                            $list11 = $database->query("select DISTINCT * from  medical_test;");
-                        }
-                        $list12 = $database->query("select DISTINCT * from  schedule GROUP BY title;");
-
-                        for ($y = 0; $y < $list11->num_rows; $y++) {
-                            $row00 = $list11->fetch_assoc();
-                            $d = $row00["docname"];
-
-                            echo "<option value='$d'><br/>";
-                        };
-
-
-                        for ($y = 0; $y < $list12->num_rows; $y++) {
-                            $row00 = $list12->fetch_assoc();
-                            $d = $row00["title"];
-
-                            echo "<option value='$d'><br/>";
-                        };
-
-                        echo ' </datalist>';
-                        ?>
-
-
-                        <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
-                    </form>
-                </td>
-                <td width="15%">
-                    <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                        Today's Date
-                    </p>
-                    <p class="heading-sub12" style="padding: 0;margin: 0;">
-                        <?php
-
-
-                        echo $today;
-
-
-                        ?>
-                    </p>
-                </td>
-                <td width="10%">
-                    <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
-                </td>
-
-            </tr>
-
-            <tr>
-                <td colspan="4" style="padding-top:10px;width: 100%;">
-                    <?php if ($_GET['action'] == null) { ?>
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Specialities" . "(" . $result->num_rows . ")"; ?> </p>
-                    <?php } else if ($_GET['action'] == 'book_test') { ?>
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . " Tests" . "(" . $result->num_rows . ")"; ?> </p>
-                    <?php } ?>
-                </td>
-            </tr>
+                            <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)"><?php echo $searchtype . $lang["sp-test"] . "(" . $result->num_rows . ")"; ?> </p>
+                        <?php } ?>
+                    </td>
+                </tr>
 
 
 
-            <tr>
-                <td colspan="4">
-                    <center>
-                        <div class="abc scroll">
-                            <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none">
-                                <tbody>
-                                    <?php if ($_GET['action'] == null) { ?>
-                                        <tr>
-                                            <div class="image-display">
-                                                <a href="?action=book_test">
-                                                    <div class="special-box booooking-test" style="width:73.9vw; padding:0 0 0 0; display:flex; flex-direction: row; justify-content: center;">
-                                                        <img src="../img/sicon/medical-test.png" alt="image" width="55px" height="55px">
-                                                        <p class="book-text-button">Book for a Test</p>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </tr>
-                                        <tr>
-                                            <?php
-                                            $a = 0;
-                                            while ($userrow = $result->fetch_assoc()) {
-                                                $sname = $userrow['sname'];
-                                                $imgname = $userrow['imgname'];
-                                                $sid = $userrow['id'];
-                                                if ($a % 3 == 0) {
-                                            ?> <div class="image-display">
-                                                        <a href="schedule.php?id=<?php echo $sid ?>">
-                                                            <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
-                                                                <p><?php echo $sname; ?></p>
-                                                            </div>
-                                                        </a>
-                                                    <?php } else if ($a % 3 == 1) { ?>
-                                                        <a href="schedule.php?id=<?php echo $sid ?>">
-                                                            <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
-                                                                <p><?php echo $sname; ?></p>
-                                                            </div>
-                                                        </a>
-                                                    <?php } else { ?>
-                                                        <a href="schedule.php?id=<?php echo $sid ?>">
-                                                            <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
-                                                                <p><?php echo $sname; ?></p>
-                                                            </div>
-                                                        </a>
-                                                    </div>
-                                            <?php    }
-                                                $a++;
-                                            }
-                                            ?>
-                                        </tr>
-                                    <?php } else if ($_GET['action'] == 'book_test') { ?>
-                                        <div class="flex-row">
-                                            <div class="speciality-name-list" style="height: 76vh; overflow-y:scroll; margin-top: 1vh">
+                <tr>
+                    <td colspan="4">
+                        <center>
+                            <div class="abc scroll">
+                                <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none">
+                                    <tbody>
+                                        <?php if ($_GET['action'] == null) { ?>
+                                            <tr>
+                                                <div class="image-display">
+                                                    <a href="?action=book_test">
+                                                        <div class="special-box booooking-test" style="width:73.9vw; padding:0 0 0 0; display:flex; flex-direction: row; justify-content: center;">
+                                                            <img src="../img/sicon/medical-test.png" alt="image" width="55px" height="55px">
+                                                            <p class="book-text-button"><?php echo $lang['sp-book-for-test'] ?></p>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                            </tr>
+                                            <tr>
                                                 <?php
                                                 $a = 0;
                                                 while ($userrow = $result->fetch_assoc()) {
-                                                    $sname = $userrow['tname'];
-                                                    $sprice = $userrow['price'];
-                                                    $imgname = $userrow['imagename'];
-                                                    $sid = $userrow['mtid'];
-                                                ?>
-                                                    <div class="image-display">
-                                                        <div class="special-box box-tests">
-                                                            <img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
-                                                            <p id="sname-<?php echo $a; ?>"><?php echo $sname; ?></p>
-                                                            <p class="sprice" id="sprice-<?php echo $a; ?>" style="display:none"><?php echo $sprice; ?></p>
-                                                            <div class="add-icon-container">
-                                                                <p class="login-btn btn-primary-soft add-btn" data-sid="<?php echo $sid; ?>">+ ADD</p>
-                                                            </div>
+                                                    $sname = $userrow['sname'];
+                                                    $imgname = $userrow['imgname'];
+                                                    $sid = $userrow['id'];
+                                                    if ($a % 3 == 0) {
+                                                ?> <div class="image-display">
+                                                            <a href="schedule.php?id=<?php echo $sid ?>">
+                                                                <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                                    <p><?php echo $lang[$sname]; ?></p>
+                                                                </div>
+                                                            </a>
+                                                        <?php } else if ($a % 3 == 1) { ?>
+                                                            <a href="schedule.php?id=<?php echo $sid ?>">
+                                                                <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                                    <p><?php echo $lang[$sname]; ?></p>
+                                                                </div>
+                                                            </a>
+                                                        <?php } else { ?>
+                                                            <a href="schedule.php?id=<?php echo $sid ?>">
+                                                                <div class="special-box"><img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                                    <p><?php echo $lang[$sname]; ?></p>
+                                                                </div>
+                                                            </a>
                                                         </div>
-                                                    </div>
-                                                <?php
+                                                <?php    }
                                                     $a++;
                                                 }
                                                 ?>
-                                            </div>
-                                            <div class="bill-cart">
-                                                <div class="flex-row" style="justify-content: center; border-bottom: 1px solid #ccc; border-radius: 10px;background-color: #202020;color: #eaeaea;">
-                                                    <img src="../img/shoping-cart.svg" alt="" width="25px">
-                                                    <h3>Cart</h3>
+                                            </tr>
+                                        <?php } else if ($_GET['action'] == 'book_test') { ?>
+                                            <div class="flex-row">
+                                                <div class="speciality-name-list" style="height: 76vh; overflow-y:scroll; margin-top: 1vh">
+                                                    <?php
+                                                    $a = 0;
+                                                    while ($userrow = $result->fetch_assoc()) {
+                                                        $sname = $userrow['tname'];
+                                                        $sprice = $userrow['price'];
+                                                        $imgname = $userrow['imagename'];
+                                                        $sid = $userrow['mtid'];
+                                                    ?>
+                                                        <div class="image-display">
+                                                            <div class="special-box box-tests">
+                                                                <img src="<?php echo $imgname ?>" alt="image" width="35px" height="35px">
+                                                                <p id="sname-<?php echo $a; ?>"><?php echo $lang[$sname]; ?></p>
+                                                                <p class="sprice" id="sprice-<?php echo $a; ?>" style="display:none"><?php echo $sprice; ?></p>
+                                                                <div class="add-icon-container">
+                                                                    <p class="login-btn btn-primary-soft add-btn" data-sid="<?php echo $sid; ?>"><?php echo $lang['sp-add'] ?></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php
+                                                        $a++;
+                                                    }
+                                                    ?>
                                                 </div>
-                                                <div class="billing-cart">
-                                                    <div id="nothing" style="padding-top: 11vh;">
-                                                        <img src="../img/notfound.svg" width="45%"><br>
-                                                        <p style="color: #4c4c4c;">No Tests Selected</p>
+                                                <div class="bill-cart">
+                                                    <div class="flex-row" style="justify-content: center; border-bottom: 1px solid #ccc; border-radius: 10px;background-color: #202020;color: #eaeaea;">
+                                                        <img src="../img/shoping-cart.svg" alt="" width="25px">
+                                                        <h3><?php echo $lang['sp-cart'] ?></h3>
+                                                    </div>
+                                                    <div class="billing-cart">
+                                                        <div id="nothing" style="padding-top: 11vh;">
+                                                            <img src="../img/notfound.svg" width="45%"><br>
+                                                            <p style="color: #4c4c4c;"><?php echo $lang['sp-no-selected'] ?></p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex-column" style="border-top: 2px solid #202020;">
+                                                        <p class="bill-amount"><?php echo $lang['sp-total'] ?> &nbsp;&nbsp; - &nbsp;&nbsp; <b>₹</b><span id="total">0.00</span></p>
+                                                        <p id="payButton" class="login-btn btn-primary-soft"><?php echo $lang['sp-checkout'] ?></p>
                                                     </div>
                                                 </div>
-                                                <div class="flex-column" style="border-top: 2px solid #202020;">
-                                                    <p class="bill-amount">Total &nbsp;&nbsp; - &nbsp;&nbsp; <b>₹</b><span id="total">0.00</span></p>
-                                                    <p id="payButton" class="login-btn btn-primary-soft">Checkout</p>
-                                                </div>
                                             </div>
-                                        </div>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </center>
-                </td>
-            </tr>
-        </table>
-    </div>
+                                        <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </center>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
 
 </body>
@@ -664,7 +675,7 @@
             nothing1.style.display = 'none';
 
             const removeButton = document.createElement('p');
-            removeButton.textContent = 'REMOVE';
+            removeButton.textContent = "<?php echo $lang['sp-remove'] ?>";
             removeButton.className = 'login-btn btn-primary-soft remove-from-cart';
             removeButton.setAttribute('data-sid', testIndex);
 
@@ -717,6 +728,28 @@
     if (seatleft === 0) {
         bookingLink.classList.add("disabled-link");
     }
+</script>
+<script>
+    // Get a reference to the language dropdown
+    const languageDropdown = document.getElementById("language");
+
+    // Add an event listener to the dropdown
+    languageDropdown.addEventListener("change", function() {
+        // Get the selected language code
+        const selectedLanguage = this.value;
+
+        // Get the current URL
+        const currentURL = window.location.href;
+
+        // Check if there's already a query string in the URL
+        const separator = currentURL.includes("?") ? "&" : "?";
+
+        // Construct the new URL with the selected language
+        const newURL = currentURL + separator + "lang=" + selectedLanguage;
+
+        // Redirect to the new URL
+        window.location.href = newURL;
+    });
 </script>
 
 </html>

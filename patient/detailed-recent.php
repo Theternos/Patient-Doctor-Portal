@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../css/animations.css">
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
-
+    <?php include("./config.php"); ?>
     <title>Consultancy</title>
     <style>
         .dashbord-tables {
@@ -112,7 +112,7 @@
                     <td class="menu-btn menu-icon-home">
                         <a href="index.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">Home</p>
+                                <p class="menu-text"><?php echo $lang['home'] ?></p>
                         </a>
         </div></a>
         </td>
@@ -121,7 +121,7 @@
             <td class="menu-btn menu-icon-doctor">
                 <a href="doctors.php" class="non-style-link-menu">
                     <div>
-                        <p class="menu-text">All Doctors</p>
+                        <p class="menu-text"><?php echo $lang['alldoctors'] ?></p>
                 </a>
     </div>
     </td>
@@ -131,7 +131,7 @@
         <td class="menu-btn menu-icon-session">
             <a href="specialities.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Book Appointment</p>
+                    <p class="menu-text"><?php echo $lang['bookappoinments'] ?></p>
                 </div>
             </a>
         </td>
@@ -140,7 +140,7 @@
         <td class="menu-btn menu-icon-appoinment">
             <a href="appointment.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">My Bookings</p>
+                    <p class="menu-text"><?php echo $lang['mybookings'] ?></p>
                 </div>
             </a>
         </td>
@@ -149,7 +149,7 @@
         <td class="menu-btn menu-icon-recent menu-active menu-icon-recent-active">
             <a href="recent.php" class="non-style-link-menu non-style-link-menu-active">
                 <div>
-                    <p class="menu-text">Recent Consultancy</p>
+                    <p class="menu-text"><?php echo $lang['recentconsultancy'] ?></p>
                 </div>
             </a>
         </td>
@@ -158,7 +158,7 @@
         <td class="menu-btn menu-icon-test">
             <a href="recent_tests.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Analysis History</p>
+                    <p class="menu-text"><?php echo $lang['analysishistory'] ?></p>
                 </div>
             </a>
         </td>
@@ -167,7 +167,7 @@
         <td class="menu-btn menu-icon-payment">
             <a href="payment.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Payments</p>
+                    <p class="menu-text"><?php echo $lang['payments'] ?></p>
                 </div>
             </a>
         </td>
@@ -176,7 +176,7 @@
         <td class="menu-btn menu-icon-settings">
             <a href="settings.php" class="non-style-link-menu">
                 <div>
-                    <p class="menu-text">Settings</p>
+                    <p class="menu-text"><?php echo $lang['settings'] ?></p>
                 </div>
             </a>
         </td>
@@ -188,16 +188,16 @@
             <tr>
                 <td width="13%">
                     <a href="recent.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
-                            <font class="tn-in-text">Back</font>
+                            <font class="tn-in-text"><?php echo $lang['ddback'] ?></font>
                         </button></a>
                 </td>
                 <td>
-                    <p style="font-size: 23px;padding-left:12px;font-weight: 600;">Recent Consultancy</p>
+                    <p style="font-size: 23px;padding-left:12px;font-weight: 600;"><?php echo $lang['recentconsultancy'] ?></p>
 
                 </td>
                 <td width="15%">
                     <p style="font-size: 14px;color: rgb(119, 119, 119);padding: 0;margin: 0;text-align: right;">
-                        Today's Date
+                        <?php echo $lang['tddate'] ?>
                     </p>
                     <p class="heading-sub12" style="padding: 0;margin: 0;">
                         <?php
@@ -226,25 +226,25 @@
                                     </th>
                                     <th class="table-headin">
 
-                                        Appointment number
+                                        <?php echo $lang['apno'] ?>
 
                                     </th>
 
                                     <th class="table-headin">
 
-                                        Session Title
+                                        <?php echo $lang['sessiontitle'] ?>
 
                                     </th>
 
                                     <th class="table-headin">
 
-                                        Session Date & Time
+                                        <?php echo $lang['sdt'] ?>
 
                                     </th>
 
                                     <th class="table-headin">
 
-                                        Appointment Date
+                                        <?php echo $lang['apd'] ?>
 
                                     </th>
                             </thead>
@@ -305,54 +305,54 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;text-align:center;">Patient Details.</p><br><br>
+                                            <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;text-align:center;"><?php echo $lang['pdet'] ?></p><br><br>
                                         </td>
                                     </tr>
                                     <div>
                                         <tr>
                                             <td class="label-td" colspan="2">
                                                 <label for="pid" class="form-label">
-                                                    <w>Patient Id: </w><?php echo $pid ?>
+                                                    <w><?php echo $lang['pd'] ?></w><?php echo $pid ?>
                                                 </label>
                                                 <label for="name" class="form-label" style="margin-left: 8.5vw;">
-                                                    <w>Name: </w><?php echo $pname ?>
+                                                    <w><?php echo $lang['ne'] ?></w><?php echo $pname ?>
                                                 </label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="label-td" colspan="2">
                                                 <label for="pid" class="form-label">
-                                                    <w>Height: </w><?php echo $height  . ' cm' ?>
+                                                    <w><?php echo $lang['hg'] ?></w><?php echo $height  . ' cm' ?>
                                                 </label>
                                                 <label for="name" class="form-label" style="margin-left: 7.4vw;">
-                                                    <w>Weight: </w><?php echo $weight . ' kg' ?>
+                                                    <w><?php echo $lang['wg'] ?></w><?php echo $weight . ' kg' ?>
                                                 </label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="label-td" colspan="2">
                                                 <label for="pid" class="form-label">
-                                                    <w>Sugar: </w><?php echo $sugar  . ' mM' ?>
+                                                    <w><?php echo $lang['sr'] ?></w><?php echo $sugar  . ' mM' ?>
                                                 </label>
                                                 <label for="name" class="form-label" style="margin-left: 8vw;">
-                                                    <w>Blood Pressure: </w><?php echo $bp  . ' mmHg' ?>
+                                                    <w><?php echo $lang['bp'] ?></w><?php echo $bp  . ' mmHg' ?>
                                                 </label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="label-td" colspan="2">
                                                 <label for="pid" class="form-label">
-                                                    <w>Temperature: </w><?php echo $temp  . ' °F' ?>
+                                                    <w><?php echo $lang['tem'] ?>: </w><?php echo $temp  . ' °F' ?>
                                                 </label>
                                                 <label for="name" class="form-label" style="margin-left: 4.3vw;">
-                                                    <w>Allergy: </w><?php echo $allergy ?>
+                                                    <w><?php echo $lang['alg'] ?>: </w><?php echo $allergy ?>
                                                 </label>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="label-td" colspan="2">
                                                 <label for="name" class="form-label">
-                                                    <w>Reason: </w><?php echo $reason ?>
+                                                    <w><?php echo $lang['re'] ?></w><?php echo $reason ?>
                                                 </label>
                                             </td>
                                         </tr>
@@ -367,12 +367,12 @@
                                 $prescription = $row['prescription'];
                                 $report = $row['report'];
                                 ?>
-                                <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;text-align:center;">Prescription & Report.</p><br><br>
+                                <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;text-align:center;"><?php echo $lang['prre'] ?></p><br><br>
                                 <?php if ($prescription != null) { ?>
-                                    <a href="./view-file.php?prescription-view=<?php echo $prescription; ?>"><button class=" login-btn btn-primary-soft btn">View Prescription</button></a><br />
+                                    <a href="./view-file.php?prescription-view=<?php echo $prescription; ?>"><button class=" login-btn btn-primary-soft btn"><?php echo $lang['vpre'] ?></button></a><br />
                                 <?php }
                                 if ($report != null) { ?>
-                                    <a href="./view-file.php?report-view=<?php echo $report; ?>"><button class="login-btn btn-primary-soft btn">View Report</button></a>
+                                    <a href="./view-file.php?report-view=<?php echo $report; ?>"><button class="login-btn btn-primary-soft btn"><?php echo $lang['vr'] ?></button></a>
                                 <?php } ?>
                             </div>
                         </div>

@@ -1,5 +1,5 @@
 <?php
-session_start();
+include("./config.php");
 error_reporting(0);
 
 if (isset($_SESSION["user"])) {
@@ -43,7 +43,7 @@ if ($result->num_rows == 0) {
 <img src="../img/notfound.svg" width="25%">
 
 <br>
-<p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">No payment history found !</p>
+<p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">' . $lang['npayhis'] . '</p>
 </center>
 <br><br><br><br>
 </td>
@@ -81,7 +81,7 @@ if ($result->num_rows == 0) {
 ?>
         <tr style="height:40px; text-align:center; font-size:14px;">
             <td><?php echo substr($paid_at, 0, 10); ?></td>
-            <td><?php echo $title; ?></td>
+            <td><?php echo $lang[$title]; ?></td>
             <td><?php if ($discount > 0) {
                     echo '₹' . $discount;
                 } else {
@@ -95,15 +95,15 @@ if ($result->num_rows == 0) {
             </td>
             <?php if ($status == 1) { ?> <!--Payment Done to Hospital -->
                 <td>
-                    <p class=" btn" style="width: 13vw; margin: auto; background-color: #1b998a20; color:#13af9d; font-weight:500">Paid</p>
+                    <p class=" btn" style="width: 13vw; margin: auto; background-color: #1b998a20; color:#13af9d; font-weight:500"><?php echo $lang['paid'] ?></p>
                 </td>
             <?php } elseif ($status == 2) { ?> <!-- Refund intiated -->
                 <td>
-                    <p class="btn" style="width: 13vw; margin: auto; background-color: #ece2d040; color:#f8cf82; font-weight:500">Refund Initiated</p>
+                    <p class="btn" style="width: 13vw; margin: auto; background-color: #ece2d040; color:#f8cf82; font-weight:500"><?php echo $lang['refunini'] ?></p>
                 </td>
             <?php } elseif ($status == 3) { ?> <!-- Refund Completed -->
                 <td>
-                    <p class="btn" style="width: 13vw; margin: auto; background-color: #e7908e30; color:#ec7a78; font-weight:500">Refunded</p>
+                    <p class="btn" style="width: 13vw; margin: auto; background-color: #e7908e30; color:#ec7a78; font-weight:500"><?php echo $lang['refun'] ?></p>
                 </td>
             <?php } ?>
         </tr>
