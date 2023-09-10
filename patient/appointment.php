@@ -504,20 +504,13 @@
                                                 echo "</tr>";
                                             }
                                         }
-
-
                                         ?>
-
                                     </tbody>
-
                                 </table>
                             </div>
                         </center>
                     </td>
                 </tr>
-
-
-
             </table>
         </div>
     </div>
@@ -527,7 +520,6 @@
         $id = $_GET["id"];
         $action = $_GET["action"];
         if ($action == 'booking-added') {
-
             echo '
             <div id="popup1" class="overlay">
                     <div class="popup">

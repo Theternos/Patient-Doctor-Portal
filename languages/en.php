@@ -386,4 +386,9 @@ $lang = array(
     "bno-schedulefound" => "No Schedule found !",
     "bconsultfee" => "Consultancy fee : <b>₹ 250</b>",
     "bbookingfee" => "Booking fee: <b>₹ 100</b>",
+    #addons
+    "blood-needed-heading" => "Donating Blood can save ones Life",
+    "blood-donation-content" => "We are in urgent need of blood donations to save lives. Please call to +91 9442792601.",
+    "blood-type-units" => "Blood Type and Units Needed :",
+    "not-interested" => "Not Interested",
 );

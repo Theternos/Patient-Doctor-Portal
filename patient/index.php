@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <script src="../js/jquery-min.js"></script>
+
 
     <title>Dashboard</title>
     <style>
@@ -21,7 +23,8 @@
         }
 
         .sub-table,
-        .anime {
+        .anime,
+        .popup {
             animation: transitionIn-Y-bottom 0.5s;
         }
 
@@ -476,8 +479,56 @@
             </table>
         </div>
     </div>
+    <?php
+    $result = $database->query("SELECT blood_group_request.blood_group, blood_group_request.unit from blood_group_request INNER JOIN patient on blood_group_request.blood_group = patient.blood_group WHERE blood_group_request.`flag` = 0 and pid = '$userid'");
+    if ($result->num_rows) {
+        $row = $result->fetch_assoc();
+        if (($_COOKIE['Blood_Donation']) == NULL) {
+            echo $_COOKIE['Blood_Donation'];
+    ?><div id="popup1" class="overlay">
+                <div class="popup" style="margin-top:20vh">
+                    <center>
+                        <br><br>
+                        <h2><?php echo $lang['blood-needed-heading'] ?></h2>
+                        <a id="setCookieButton1" class="close" href="./index.php">&times;</a>
+                        <p>
+                            <?php echo $lang["blood-donation-content"] ?><br><br>
+                        </p>
+                        <p>
+                            <?php echo $lang["blood-type-units"] . '&nbsp;<b>' . $row['blood_group'] . '</b>&nbsp; - [ ' . $row['unit'] . '&nbsp;units ]' ?><br><br>
+                        </p>
+                        <div style="display: flex; justify-content: center;">
+                            <p id="setCookieButton" class="btn-primary btn" style="display: flex; justify-content: center; align-items: center; margin: 10px; padding: 10px;">
+                                <font class="tn-in-text">&nbsp;&nbsp;<?php echo $lang['not-interested'] ?>&nbsp;&nbsp;</font>
+                            </p>
+                        </div>
+                    </center>
+                </div>
+            </div>
 
+    <?php   }
+    }
+    ?>
 </body>
+<script>
+    function setCookie(name, value, days) {
+        var date = new Date();
+        date.setTime(date.getTime() + (days * 60 * 60 * 1000));
+        var expires = "expires=" + date.toUTCString();
+        document.cookie = name + "=" + value + "; " + expires + "; path=/";
+        window.location.href = './index.php';
+    }
+
+    // Add a click event listener to the button
+    document.getElementById("setCookieButton").addEventListener("click", function() {
+        // Set a cookie with the name "myCookie" and value "myValue" for 30 days
+        setCookie("Blood_Donation", "Not Interested", 1);
+    });
+    document.getElementById("setCookieButton1").addEventListener("click", function() {
+        // Set a cookie with the name "myCookie" and value "myValue" for 30 days
+        setCookie("Blood_Donation", "Not Interested", .003);
+    });
+</script>
 <script>
     !(function() {
         let e = document.createElement("script"),

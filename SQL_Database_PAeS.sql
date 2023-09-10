@@ -169,57 +169,56 @@ CREATE TABLE IF NOT EXISTS `medical_test` (
 -- Dumping data for table `medical_test`
 --
 
-INSERT INTO `medical_test` (`mtid`, `tname`, `price`, `imagename`) VALUES
-(1, 'Medical Test', 1000, '../img/tions/1.png'),
-(2, 'Endoscopy', 3500, '../img/tions/2.png'),
-(3, 'Blood Test', 650, '../img/tions/3.png'),
-(4, 'Pathology', 1000, '../img/tions/4.png'),
-(5, 'Physical Examination', 750, '../img/tions/5.png'),
-(6, 'C-Reactive Protein Test', 550, '../img/tions/6.png'),
-(7, 'Nuclear Medicine', 5500, '../img/tions/7.png'),
-(8, 'Platelet Count', 350, '../img/tions/8.png'),
-(9, 'Capsule Endoscopy', 6500, '../img/tions/9.png'),
-(10, 'White Blod Cell Count', 350, '../img/tions/10.png'),
-(11, 'Electrolytes Test', 550, '../img/tions/11.jpg'),
-(12, 'MRI', 5500, '../img/tions/12.png'),
-(13, 'Pap Test', 1000, '../img/tions/13.png'),
-(14, 'Lipase Test', 550, '../img/tions/14.jpg'),
-(15, 'Vitamin B12 & Folate test', 1000, '../img/tions/15.png'),
-(16, 'Lp(a) Test', 550, '../img/tions/16.png'),
-(17, 'Lithium Test', 550, '../img/tions/17.png'),
-(18, 'Biopsy', 2000, '../img/tions/18.png'),
-(19, 'Creatinine Clearance Test', 550, '../img/tions/19.jpeg'),
-(20, 'Kidney Function Test', 550, '../img/tions/20.png'),
-(21, 'D-dimer Test', 550, '../img/tions/21.jpeg'),
-(22, 'Radiology', 400, '../img/tions/22.png'),
-(23, 'AST Test', 550, '../img/tions/23.png'),
-(24, 'Coronary Catheterixation', 7500, '../img/tions/24.jpg'),
-(25, 'Liver function Test', 550, '../img/tions/25.png'),
-(26, 'Ferritin Test', 550, '../img/tions/26.jpeg'),
-(27, 'Albimin Test', 550, '../img/tions/27.jpeg'),
-(28, 'ASO Test', 550, '../img/tions/28.jpeg'),
-(29, 'HLA-B27 Test', 550, '../img/tions/29.jpeg'),
-(30, 'Adenosine Deaminase', 1000, '../img/tions/30.png'),
-(31, 'G6PD Test', 550, '../img/tions/31.png'),
-(32, 'Quantative immunoglobulins Test', 550, '../img/tions/32.jpeg'),
-(33, 'Bilirubin Test', 550, '../img/tions/33.png'),
-(34, 'Soduim Test', 350, '../img/tions/34.png'),
-(35, 'C-peptide Test', 550, '../img/tions/35.png'),
-(36, 'CD4 and CD8 Test', 550, '../img/tions/36.jpeg'),
-(37, 'Skin Allergy Test', 2000, '../img/tions/37.png'),
-(38, 'Hearing Test', 1000, '../img/tions/38.png'),
-(39, 'Semen Analysis', 1000, '../img/tions/49.png'),
-(40, 'Complete Blood Count', 350, '../img/tions/40.png'),
-(41, 'Calcium Test', 550, '../img/tions/41.png'),
-(42, 'Aldolase Test', 550, '../img/tions/42.png'),
-(43, 'Thyroid Antibodies Test', 550, '../img/tions/43.png'),
-(44, 'Thyroglobulin Test', 550, '../img/tions/44.jpeg'),
-(45, 'Sex Hormone Test', 1000, '../img/tions/45.png'),
-(46, 'Ultrasonography', 2000, '../img/tions/46.png'),
-(47, 'ALT Test', 550, '../img/tions/47.png'),
-(48, 'Uric Acid Test', 550, '../img/tions/48.png'),
-(49, 'Amylase Test', 550, '../img/tions/50.jpeg'),
-(50, 'Videonystagmography', 3500, '../img/tions/39.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (1,'medical-test',1000,'../img/tions/1.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (2,'endoscopy',3500,'../img/tions/2.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (3,'blood-test',650,'../img/tions/3.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (4,'pathology',1000,'../img/tions/4.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (5,'physical-examination',750,'../img/tions/5.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (6,'c-reactive-protein-test',550,'../img/tions/6.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (7,'nuclear-medicine',5500,'../img/tions/7.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (8,'platelet-count',350,'../img/tions/8.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (9,'capsule-endoscopy',6500,'../img/tions/9.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (10,'white-blod-cell-count',350,'../img/tions/10.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (11,'electrolytes-test',550,'../img/tions/11.jpg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (12,'mri',5500,'../img/tions/12.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (13,'pap-test',1000,'../img/tions/13.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (14,'lipase-test',550,'../img/tions/14.jpg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (15,'vitamin-b12-folate-test',1000,'../img/tions/15.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (16,'lpa-test',550,'../img/tions/16.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (17,'lithium-test',550,'../img/tions/17.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (18,'biopsy',2000,'../img/tions/18.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (19,'creatinine-clearance-test',550,'../img/tions/19.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (20,'kidney-function-test',550,'../img/tions/20.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (21,'d-dimer-test',550,'../img/tions/21.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (22,'radiology',400,'../img/tions/22.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (23,'ast-test',550,'../img/tions/23.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (24,'coronary-catheterixation',7500,'../img/tions/24.jpg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (25,'liver-function-test',550,'../img/tions/25.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (26,'ferritin-test',550,'../img/tions/26.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (27,'albimin-test',550,'../img/tions/27.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (28,'aso-test',550,'../img/tions/28.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (29,'hla-b27-test',550,'../img/tions/29.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (30,'adenosine-deaminase',1000,'../img/tions/30.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (31,'g6pd-test',550,'../img/tions/31.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (32,'quantative-immunoglobulins-test',550,'../img/tions/32.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (33,'bilirubin-test',550,'../img/tions/33.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (34,'soduim-test',350,'../img/tions/34.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (35,'c-peptide-test',550,'../img/tions/35.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (36,'cd4-and-cd8-test',550,'../img/tions/36.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (37,'skin-allergy-test',2000,'../img/tions/37.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (38,'hearing-test',1000,'../img/tions/38.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (39,'semen-analysis',1000,'../img/tions/49.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (40,'complete-blood-count',350,'../img/tions/40.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (41,'calcium-test',550,'../img/tions/41.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (42,'aldolase-test',550,'../img/tions/42.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (43,'thyroid-antibodies-test',550,'../img/tions/43.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (44,'thyroglobulin-test',550,'../img/tions/44.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (45,'sex-hormone-test',1000,'../img/tions/45.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (46,'ultrasonography',2000,'../img/tions/46.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (47,'alt-test',550,'../img/tions/47.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (48,'uric-acid-test',550,'../img/tions/48.png');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (49,'amylase-test',550,'../img/tions/50.jpeg');
+INSERT INTO `` (`mtid`,`tname`,`price`,`imagename`) VALUES (50,'videonystagmography',3500,'../img/tions/39.png');
 
 -- --------------------------------------------------------
 
