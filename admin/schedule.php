@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <?php include("../patient/config.php") ?>
 
     <title>Schedule</title>
     <style>
@@ -27,7 +28,6 @@
 
     //learn from w3schools.com
 
-    session_start();
 
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'a') {
@@ -56,7 +56,7 @@
                                 </td>
                                 <td style="padding:0px;margin:0px;">
                                     <p class="profile-title">Administrator</p>
-                                    <p class="profile-subtitle">admin@edoc.com</p>
+                                    <p class="profile-subtitle">admin@bitsathy.com</p>
                                 </td>
                             </tr>
                             <tr>
@@ -338,7 +338,7 @@
                                                 $nop = $row["nop"];
                                                 echo '<tr>
                                         <td> &nbsp;' .
-                                                    substr($title, 0, 30)
+                                                    substr($lang[$title], 0, 30)
                                                     . '</td>
                                         <td>
                                         ' . substr($docname, 0, 20) . '

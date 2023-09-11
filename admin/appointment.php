@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <?php include("../patient/config.php") ?>
 
     <title>Appointments</title>
     <style>
@@ -56,7 +57,7 @@
                                 </td>
                                 <td style="padding:0px;margin:0px;">
                                     <p class="profile-title">Administrator</p>
-                                    <p class="profile-subtitle">admin@edoc.com</p>
+                                    <p class="profile-subtitle">admin@bitsathy.com</p>
                                 </td>
                             </tr>
                             <tr>
@@ -281,7 +282,7 @@
                                         </th>
                                         <th class="table-headin">
 
-                                            Appointment number
+                                            Appnt. number
 
                                         </th>
 
@@ -296,7 +297,7 @@
 
                                         </th>
 
-                                        <th class="table-headin" style="font-size:10px">
+                                        <th class="table-headin" style="font-size:16px">
 
                                             Session Date & Time
 
@@ -304,7 +305,7 @@
 
                                         <th class="table-headin">
 
-                                            Appointment Date
+                                            Appnt. Date
 
                                         </th>
 
@@ -361,10 +362,10 @@
                                         ' . substr($docname, 0, 25) . '
                                         </td>
                                         <td>
-                                        ' . substr($title, 0, 15) . '
+                                        ' . substr($lang[$title], 0, 15) . '
                                         </td>
-                                        <td style="text-align:center;font-size:12px;">
-                                            ' . substr($scheduledate, 0, 10) . ' <br>' . substr($scheduletime, 0, 5) . '
+                                        <td style="text-align:center;font-size:14px;">
+                                            ' . substr($scheduledate, 0, 10) . ' @ ' . substr($scheduletime, 0, 5) . '
                                         </td>
                                         
                                         <td style="text-align:center;">

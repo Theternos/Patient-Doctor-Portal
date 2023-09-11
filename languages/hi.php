@@ -407,4 +407,9 @@ $lang = array(
     "booked-success-popup" => "सफलतापूर्वक बुक किया गया",
     "appointment-number" => "आपका अपॉइंटमेंट नंबर है",
     "ok" => "ठीक है",
+    #addon
+    "blood-needed-heading" => "रक्तदान एक जीवन को बचा सकता है",
+    "blood-donation-content" => "हमें जीवन बचाने के लिए रक्तदान की आत्महत्या आवश्यक है। कृपया +91 9442792601 पर कॉल करें।",
+    "blood-type-units" => "रक्त प्रकार और यूनिट आवश्यक हैं:",
+    "not-interested" => "रुचि नहीं",
 );

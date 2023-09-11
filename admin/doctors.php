@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
 
-
+    <?php include("../patient/config.php") ?>
     <title>Doctors</title>
     <style>
         .popup {
@@ -54,7 +54,6 @@
 
     //learn from w3schools.com
 
-    session_start();
 
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'a') {
@@ -296,14 +295,14 @@
                                         <td> &nbsp;' .
                                                 substr($name, 0, 30)
                                                 . '</td>
-                                        <td>
+                                        <td style="text-align:center">
                                         ' . substr($email, 0, 30) . '
                                         </td>
-                                        <td>
-                                            ' . substr($spcil_name, 0, 40) . '
+                                        <td style="text-align:center">
+                                            ' . substr($lang[$spcil_name], 0, 40) . '
                                         </td>
 
-                                        <td>
+                                        <td style="text-align:center">
                                         <div style="display:flex;justify-content: center;">
                                         <a href="?action=edit&id=' . $docid . '&error=0" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-edit"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">Edit</font></button></a>
                                         &nbsp;&nbsp;&nbsp;
