@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+error_reporting(0);
 if (isset($_SESSION["user"])) {
     if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'p') {
         header("location: ../login.php");
@@ -46,6 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" || $_GET['donate_type']) {
         $sql = $database->query("INSERT INTO organ_donation (pid, organ) VALUES ('$userid', 'Pancreas')");
         $sql = $database->query("INSERT INTO organ_donation (pid, organ) VALUES ('$userid', 'Tissue')");
         $sql = $database->query("INSERT INTO organ_donation (pid, organ) VALUES ('$userid', 'Small Bowel')");
+        header('Location: settings.php?action=donate_reg__success');
     } else {
         if ($heart == 'Yes')
             $sql = $database->query("INSERT INTO organ_donation (pid, organ) VALUES ('$userid', 'Heart')");

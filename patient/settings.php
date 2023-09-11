@@ -764,7 +764,7 @@
             echo $donate_type;
             if ($donate_type == 1) { ?>
                 <script>
-                    window.location.href = './donor_register.php?=';
+                    window.location.href = './donor_register.php?donate_type=1';
                 </script> <?php    } else {
                             ?> <div id="popup1" class="overlay">
                     <div class="popup" style="transform: scale(.95); margin-top: 2vh">
