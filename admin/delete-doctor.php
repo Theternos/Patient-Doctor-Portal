@@ -20,6 +20,8 @@ if ($_GET) {
     $sql = $database->query("delete from webuser where email='$email';");
     $sql = $database->query("delete from doctor where docemail='$email';");
     $sql = $database->query("delete from doc_language where docid='$id';");
+    $sql = $database->query("delete from review_machine where docid='$id';");
+
     //print_r($email);
     header("location: doctors.php");
 }

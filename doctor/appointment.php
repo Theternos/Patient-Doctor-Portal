@@ -13,6 +13,7 @@
     <script type="text/javascript" src="../js/webcam.js"></script>
     <script src="../js/bootstrap-min.js"></script>
     <title>Appointments</title>
+    <?php include("../patient/config.php") ?>
     <style>
         .popup {
             animation: transitionIn-Y-bottom 0.5s;
@@ -134,8 +135,6 @@
 
     //learn from w3schools.com
 
-    session_start();
-    error_reporting(0);
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'd') {
             header("location: ../login.php");
@@ -392,7 +391,7 @@
                                             <td style="text-align:center;">P-' . $pid . '</td>
                                             <td style="font-weight:600; text-align:center;">' . substr($pname, 0, 25) . '</td >
                                             <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">' . $apponum . '</td>
-                                            <td>' . substr($title, 0, 15) . '</td>
+                                            <td>' . substr($lang[$title], 0, 15) . '</td>
                                             <td style="text-align:center;;">' . substr($scheduledate, 0, 10) . ' @ ' . substr($scheduletime, 0, 8) . '</td>
                                             <td style="text-align:center;">' . $appodate . '</td>
                                             <td>
@@ -449,6 +448,10 @@
             </div>
             </div>
             ';
+        } elseif ($_GET['remove_review'] == 'true') {
+            $pid = $_GET["pid"];
+            $appoid = $_GET["appoid"];
+            $result = $database->query("DELETE from doc_review WHERE appoid = $appoid and pid = $pid and docid = $userid and seen_status = 0");
         } elseif ($action == 'consulting') {
             $pid = $_GET["pid"];
             $scheduleid = $_GET["scheduleid"];
@@ -466,15 +469,16 @@
             $reason = $row['reason'];
             $appoid = $row['appoid'];
             $uid = $row['uid'];
-
-
-
+            $result1 = $database->query("SELECT drid FROM doc_review WHERE docid = '$userid' and pid = '$pid' and appoid = '$appoid' and seen_status = '0'");
+            if ($result1 === null || $result1->num_rows === 0) {
+                $database->query("INSERT INTO doc_review (docid, pid, appoid, rating) VALUES ('$userid', '$pid', '$appoid', '0')");
+            }
 
     ?>
             <div id="popup1" class="overlay">
                 <div class="popup">
                     <center>
-                        <a class="close" href="appointment.php">&times;</a>
+                        <a class="close" href="appointment.php?remove_review=true&appoid=<?php echo $appoid ?>&pid=<?php echo $pid ?>">&times;</a>
                         <div style="display: flex;justify-content: center;">
                             <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                                 <form action="file-upload.php" id="uploadForm" method="post" enctype="multipart/form-data">
@@ -488,7 +492,6 @@
                                         </td>
                                     </tr>
                                     <div>
-
                                         <tr>
                                             <td class="label-td" colspan="2">
                                                 <label for="pid" class="form-label">

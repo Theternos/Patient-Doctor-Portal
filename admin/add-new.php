@@ -63,6 +63,20 @@
                 $sql2 = "insert into webuser values('$email','d')";
                 $database->query($sql1);
                 $database->query($sql2);
+                // Get docid based on docemail
+                $docid_sql = "SELECT docid FROM doctor WHERE docemail = ?";
+                $docid_stmt = $database->prepare($docid_sql);
+                $docid_stmt->bind_param('s', $email);
+                $docid_stmt->execute();
+                $docid_result = $docid_stmt->get_result();
+                $docid_row = $docid_result->fetch_assoc();
+                $docid_stmt->close();
+                $docid = $docid_row['docid'];
+                $rmemail = $docid . '@bitsathy.ac.in';
+                $sql3 = "insert into review_machine (docid, rmemail, rmpassword) values('$docid','$rmemail', '$password')";
+                $sql4 = "insert into webuser values('$rmemail','rm')";
+                $database->query($sql3);
+                $database->query($sql4);
 
                 if (!empty($_POST['language'])) {
                     $selectedLanguages = $_POST['language'];
@@ -79,6 +93,7 @@
                     if ($docid_row) {
                         $docid = $docid_row['docid'];
                         // Insert selected languages into the database
+
                         $insertQuery = "INSERT INTO doc_language (docid, `language`) VALUES (?, ?)";
                         $stmt = $database->prepare($insertQuery);
 

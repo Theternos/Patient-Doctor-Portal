@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <script src="../js/chart.js"></script>
+    <script src="../js/highcharts.js"></script>
+    <script src="../js/apexcharts.js"></script>
 
     <title>Dashboard</title>
     <style>
@@ -16,16 +19,45 @@
             animation: transitionIn-Y-over 0.5s;
         }
 
-        .filter-container {
+        .filter-container,
+        #splineAreaChartContainer,
+        .analytics,
+        #chart-container {
             animation: transitionIn-Y-bottom 0.5s;
+        }
+
+        .top-doctor {
+            animation: transitionIn-Zoom 0.5s;
         }
 
         .sub-table {
             animation: transitionIn-Y-bottom 0.5s;
         }
+
+        .top-doctor {
+            width: 300px;
+            height: 250px;
+            border-radius: 5px;
+            color: #f1f1f1;
+            background-color: #000562;
+            font-family: 'Montserrat', sans-serif;
+            padding: 1px 20px 10px 20px;
+            font-size: 12px;
+        }
+
+        .top-doctor h4 {
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .analytics {
+            width: 26vw;
+            height: 280px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
     </style>
-
-
 </head>
 
 <body>
@@ -175,37 +207,76 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td>
+                                        <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
+                                            <div class="flex-row">
+
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
                         </center>
                     </td>
                 </tr>
-                <tr>
-                    <div class="flex-row" style="justify-content: safe;">
-                        <div>
-                            <td>
-                                <div id="splineAreaChartContainer" style="width: 50vw; height: 300px; border: 1px solid #ccc; border-radius: 5px; margin-left: 20px"></div>
-                            </td>
-                        </div>
-                        <div>
-                            <td>
-                                <div id="chart-container" style="position: relative; border: 1px solid #ccc; border-radius: 5px; height: 300px; width: 300px; padding: 10px; background-color: #fcfcfc;">
-                                    <canvas id="myDoughnutChart" height="200px" width="200px"></canvas>
-                                    <div id="total-label" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 150%); font-size: 12px; font-weight: bold;"></div>
+            </table>
+            <div class="flex-row">
+                <div class="flex-column">
+                    <div style="margin-bottom: 20px;">
+                        <div id="splineAreaChartContainer" style="width: 54vw; height: 250px; border: 1px solid #ccc; border-radius: 5px;"></div>
+                    </div>
+                    <div class="flex-row" style="justify-content:space-between;">
+                        <div class="analytics" id="chart"></div>
+                        <div class="analytics"></div>
+                    </div>
+
+                </div>
+                <br>
+                <div class="flex-column">
+                    <div style="margin-bottom: 20px;">
+                        <div class="top-doctor">
+                            <h4>Popular Doctor List</h4>
+                            <div>
+                                <div class="flex-row" style="margin-top: 0;">
+                                    <h5>Doctor Name</h5>
+                                    <h5 style="margin-left: auto;">Rating</h4>
                                 </div>
-                            </td>
+                                <div class=" flex-row" style="margin-top: 0; border-bottom: 1px solid #ccc;">
+                                    <?php
+                                    $query = "SELECT doctor.docname, AVG(doc_review.rating) AS average_rating FROM doc_review INNER JOIN doctor ON doctor.docid = doc_review.docid GROUP BY doctor.docname";
+
+                                    $result = $database->query($query);
+
+                                    if (!$result) {
+                                        die("Query failed: " . $database->error);
+                                    }
+
+                                    // Loop through the results and display the average rating for each doctor
+                                    while ($row = $result->fetch_assoc()) {
+                                        $docname = $row['docname'];
+                                        $averageRating = $row['average_rating'];
+
+                                        // Display doctor name and average rating
+                                        echo "<p> $docname </p>";
+                                        echo '<p style="margin-left: auto;">' . substr($averageRating, 0, 3) . ' ⭐</p>';
+                                    }
+                                    ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </tr>
-            </table>
+                    <div id="chart-container" style="position: relative; border: 1px solid #ccc; border-radius: 5px; height: 280px; width: 300px; padding:0 0 5px 10px; background-color: #fcfcfc;">
+                        <canvas id="myDoughnutChart" height="200px" width="200px"></canvas>
+                        <div id="total-label" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, 130%); font-size: 12px; font-weight: bold;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
 
 </body>
 
-<script src="../js/chart.js"></script>
-<script src="../js/highcharts.js"></script>
 
 
 <?php
@@ -258,7 +329,7 @@ $test_report = $test_result->num_rows;
         },
         yAxis: {
             title: {
-                text: 'Values'
+                text: 'No.of Patients'
             }
         },
         series: data.series
@@ -316,7 +387,7 @@ if ($test_result->num_rows > 0) {
                 enabled: false, // Disable default tooltips
             },
             animation: {
-                duration: 1000, // Animation duration in milliseconds
+                duration: 1200, // Animation duration in milliseconds
                 easing: "easeOutBounce", //  Easing function for the animation
             },
         },
@@ -325,6 +396,76 @@ if ($test_result->num_rows > 0) {
     // Update the total in the center
     var totalLabel = document.getElementById("total-label");
     totalLabel.textContent = "Rs. " + total.toFixed(2);
+</script>
+<?php
+
+$sql = "SELECT DATE(paid_at) AS payment_date, COUNT(*) AS payment_count
+        FROM payment_history
+        GROUP BY payment_date
+        ORDER BY payment_date DESC LIMIT 7";
+
+$result = mysqli_query($database, $sql);
+
+if (!$result) {
+    die("Query failed: " . mysqli_error($database));
+}
+
+$dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+$paymentCounts = [];
+$xAxisCategories = [];
+
+while ($row = mysqli_fetch_assoc($result)) {
+    $paymentDate = date("Y-m-d", strtotime($row['payment_date']));
+    $dayOfWeek = date("w", strtotime($paymentDate)); // Get the numeric day of the week (0 = Sunday, 1 = Monday, ...)
+    $dayName = $dayNames[$dayOfWeek]; // Get the corresponding day name
+
+    $xAxisCategories[] = $dayName; // Store day name in x-axis categories array
+    $paymentCounts[] = $row['payment_count']; // Store payment count in payment counts array
+}
+
+?>
+<script>
+    var paymentCounts = <?php echo json_encode($paymentCounts); ?>;
+    var xAxisCategories = <?php echo json_encode($xAxisCategories); ?>;
+
+    var options = {
+        chart: {
+            type: 'bar'
+        },
+        series: [{
+            name: 'Patients',
+            data: paymentCounts
+        }],
+        title: {
+            text: 'Average Patient Visits '
+        },
+        xaxis: {
+            categories: xAxisCategories
+        },
+        plotOptions: {
+            bar: {
+                distributed: true
+            }
+        },
+        fill: {
+            type: 'gradient',
+            gradient: {
+                shade: 'light',
+                type: "horizontal",
+                shadeIntensity: 0.5,
+                gradientToColors: undefined,
+                inverseColors: true,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 50, 100],
+                colorStops: []
+            }
+        }
+    }
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+    chart.render();
 </script>
 
 </html>

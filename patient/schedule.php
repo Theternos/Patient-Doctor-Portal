@@ -367,7 +367,7 @@
                                             //echo $result->num_rows;
                                             for ($x = 0; $x < ($result->num_rows); $x++) {
                                                 echo "<tr>";
-                                                for ($q = 0; $q < 3; $q++) {
+                                                for ($q = 0; $q < 2; $q++) {
                                                     $row = $result->fetch_assoc();
                                                     if (!isset($row)) {
                                                         break;
