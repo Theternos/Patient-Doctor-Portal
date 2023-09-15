@@ -417,7 +417,7 @@
                                                         <div style="width:100%;">
                                                             <div style="display: flex; flex-direction:row; justify-content:space-between;">
                                                                 <div class="h1-search" style="display:flex; flex-direction:row; align-items:center; justify-content:center; font-size:17px; color:#006dd3; padding:5px 0 10px 0; letter-spacing:.5px;">
-                                                                    <div><?php echo substr($lang[$title], 0, 30) ?></div>&nbsp;
+                                                                    <div><?php echo substr($lang[$title], 0, 120) ?></div>&nbsp;
                                                                     <div class="h3-search" style="color:#000; font-size:14px; margin-top:0;"> - <?php
                                                                                                                                                 if ($mode == "Hospital Visit") {
                                                                                                                                                     echo $lang['hospital-visit'];
@@ -558,7 +558,7 @@
                         <div class="content">
                             ' . $lang["cancel-appoint-ques"] . '<br>
                             <red style = "color:red; font-size:13px">' . $lang["refund-policy"] . ' </red><br><br>
-                            ' . $lang['session-name'] . ' &nbsp;<b>' . substr($lang[$title], 0, 40) . '</b> - ' . substr($mode1, 0, 40) . '<br>
+                            ' . $lang['session-name'] . ' &nbsp;<b>' . substr($lang[$title], 0, 120) . '</b> - ' . substr($mode1, 0, 40) . '<br>
                             ' . $lang['dispdename'] . '&nbsp; : <b>' . substr($docname, 0, 40) . '</b><br><br>
                             
                         </div>
@@ -657,7 +657,7 @@
                                                     <?php } else { ?>
                                                     <td class="label-td flex-row" style="width: 100%;">
                                                     <?php } ?>
-                                                    <p class="form-label"><?php echo $test_row['tname'] ?></p>
+                                                    <p class="form-label"><?php echo $lang[$test_row['tname']]   ?></p>
                                                     <p style="margin-left: auto;" class="form-label"><?php echo '₹' . $test_row['price'] ?></p>
                                                     </td>
                                             </tr>

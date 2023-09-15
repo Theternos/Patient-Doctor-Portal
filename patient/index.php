@@ -459,7 +459,7 @@
                                             $apponum
                                             . '</td>
                                                         <td style="padding:20px;text-align:center;"> &nbsp;' .
-                                            substr($lang[$title], 0, 30)
+                                            substr($lang[$title], 0, 120)
                                             . '</td>
                                                         <td style="text-align:center;">
                                                         ' . substr($docname, 0, 20) . '

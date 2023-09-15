@@ -291,7 +291,7 @@
                                         
                                         </td>
                                         <td>
-                                        ' . substr($title, 0, 15) . '
+                                        ' . substr($lang[$title], 0, 120) . '
                                         </td>
                                         <td style="text-align:center;;">
                                             ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletimes, 0, 8) . '

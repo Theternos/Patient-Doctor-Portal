@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-
+    <?php include("../patient/config.php") ?>
     <title>Dashboard</title>
     <style>
         .dashbord-tables,
@@ -39,7 +39,6 @@
 
     //learn from w3schools.com
 
-    session_start();
 
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'd') {
@@ -335,7 +334,7 @@
                                                 $nop = $row["nop"];
                                                 echo '<tr>
                                                         <td style="padding:20px;"> &nbsp;' .
-                                                    substr($title, 0, 30)
+                                                    substr($lang[$title], 0, 35)
                                                     . '</td>
                                                         <td style="padding:20px;font-size:13px;">
                                                         ' . substr($scheduledate, 0, 10) . '

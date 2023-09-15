@@ -416,8 +416,6 @@
                     </td>
                     <td>
                         <form action="" method="post" class="header-search">
-
-
                             <?php if ($_GET['action'] == null) { ?>
                                 <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
                             <?php } else if ($_GET['action'] == 'book_test') { ?>
@@ -494,9 +492,6 @@
                         <?php } ?>
                     </td>
                 </tr>
-
-
-
                 <tr>
                     <td colspan="4">
                         <center>

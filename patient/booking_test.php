@@ -366,7 +366,7 @@
                                                             $result = $database->query("SELECT * FROM medical_test WHERE mtid = '$testIndex'");
                                                             $row = $result->fetch_assoc(); ?>
                                                             <div class="flex-row">
-                                                                <p style="text-align: left;"><?php echo $row['tname'] ?></p>
+                                                                <p style="text-align: left;"><?php echo $lang[$row['tname']] ?></p>
                                                                 <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $row['price'] ?></p>
                                                             </div>
                                                         <?php
@@ -414,7 +414,7 @@
                                                     <p style="margin-left: auto; margin-right:15px;">₹110</p>
                                                 </div>
                                                 <div class="flex-row">
-                                                    <p style="text-align: left;"><?php echo $lang['item'] ?>/p>
+                                                    <p style="text-align: left;"><?php echo $lang['item'] ?></p>
                                                     <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $total_amount ?></p>
                                                 </div>
                                                 <div class="flex-row">
@@ -463,6 +463,7 @@
                                                     $price = $row23['price'];
                                                 }
                                                 $total_paid = $price;
+                                                echo $total_paid;
                                                 if ($toggle == 1) {
                                                     $price += (110 / $length);
                                                     $item_price += (110 / $length);
@@ -495,19 +496,19 @@
                                                 }
 
 
-                                                // echo "<br>" . "INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')";
-                                                $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')");
+                                                echo "<br>" . "INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')";
+                                                // $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')");
                                             }
                                             $bonus = ($total_paid / 100) * 2.5;
                                             $insert_balance += $bonus;
-                                            // echo "<br>PEaS Wallet: " . $balance . "<br>";
+                                            echo "<br>PEaS Wallet: " . $balance . "<br>";
 
-                                            // echo "<br>" . "UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';" . "<br>";
-                                            $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';");
+                                            echo "<br>" . "UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';" . "<br>";
+                                            // $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';");
                                     ?>
-                                            <script>
+                                            <!-- <script>
                                                 window.location.href = './appointment.php';
-                                            </script>
+                                            </script> -->
                                 <?php        }
                                     }
                                 }

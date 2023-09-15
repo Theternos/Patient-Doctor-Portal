@@ -210,7 +210,8 @@
                                     <td>
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
                                             <div class="flex-row">
-
+                                                <h2><?php echo $schedulerow->num_rows  ?></h2>
+                                                <p class="h3-dashboard" style="margin-top: 22px; ">Sessions</p>
                                             </div>
                                         </div>
                                     </td>
