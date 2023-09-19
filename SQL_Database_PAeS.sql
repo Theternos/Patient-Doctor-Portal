@@ -47,7 +47,6 @@ INSERT INTO `admin` (`aemail`, `apassword`) VALUES
 --
 -- Table structure for table `appointment`
 --
-
 DROP TABLE IF EXISTS `appointment`;
 CREATE TABLE IF NOT EXISTS `appointment` (
   `appoid` int NOT NULL AUTO_INCREMENT,
@@ -59,12 +58,12 @@ CREATE TABLE IF NOT EXISTS `appointment` (
   `roomid` varchar(45) DEFAULT NULL,
   `room_flag` int DEFAULT '0',
   `payment_id` varchar(100) DEFAULT NULL,
-  `booking_date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `booking_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`appoid`),
   UNIQUE KEY `payment_id_UNIQUE` (`payment_id`),
   KEY `pid` (`pid`),
   KEY `scheduleid` (`scheduleid`)
-) ;
+);
 
 --
 -- Dumping data for table `appointment`
@@ -87,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `blood_group_request` (
   `blood_group` varchar(45) DEFAULT NULL,
   `unit` int DEFAULT NULL,
   `flag` int DEFAULT '0',
-  `timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`bgrid`),
   UNIQUE KEY `bgrid_UNIQUE` (`bgrid`)
 ) ;
@@ -419,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `metrices` (
   `temp` varchar(6) DEFAULT NULL,
   `reason` varchar(200) DEFAULT NULL,
   `allergy` varchar(3) DEFAULT 'No',
-  `timestamp` datetime DEFAULT CURRENT_TIMESTAMP,
+  `timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`uid`),
   UNIQUE KEY `uid_UNIQUE` (`uid`)
 ) ;
@@ -521,7 +520,7 @@ CREATE TABLE IF NOT EXISTS `payment_history` (
   `title` varchar(150) DEFAULT NULL,
   `payment_id` varchar(100) DEFAULT NULL,
   `total_paid` decimal(10,2) DEFAULT NULL,
-  `paid_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `paid_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `phstatus` int DEFAULT '1',
   PRIMARY KEY (`phid`),
   UNIQUE KEY `phid_UNIQUE` (`phid`)
@@ -641,7 +640,7 @@ CREATE TABLE IF NOT EXISTS `specialties` (
   `sname` varchar(50) DEFAULT NULL,
   `imgname` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ;
 
 --
 -- Dumping data for table `specialties`
@@ -719,7 +718,7 @@ CREATE TABLE IF NOT EXISTS `test_booking` (
   `mtid` int DEFAULT NULL,
   `status` int DEFAULT '0',
   `payment_id` varchar(100) DEFAULT NULL,
-  `booked_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  `booked_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`),
   UNIQUE KEY `tid_UNIQUE` (`tid`)
 );
@@ -746,7 +745,7 @@ CREATE TABLE IF NOT EXISTS `test_report` (
   `tid` int DEFAULT NULL,
   `mtid` int DEFAULT NULL,
   `file_name` varbinary(220) DEFAULT NULL,
-  `seen_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `seen_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`trid`),
   UNIQUE KEY `trid_UNIQUE` (`trid`)
 ) ;

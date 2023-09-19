@@ -9,9 +9,9 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-    <script src="../js/chart.js"></script>
-    <script src="../js/highcharts.js"></script>
-    <script src="../js/apexcharts.js"></script>
+    <script type="text/javascript" src="../js/chart.js"></script>
+    <script type="text/javascript" src="../js/highcharts.js"></script>
+    <script type="text/javascript" src="../js/apexcharts.js"></script>
 
     <title>Dashboard</title>
     <style>
@@ -79,6 +79,15 @@
     //import database
     include("../connection.php");
 
+    date_default_timezone_set('Asia/Kolkata');
+    $today = date('Y-m-d');
+    $patientrow = $database->query("select  * from  patient;");
+    $doctorrow = $database->query("select  * from  doctor;");
+    $appointmentrow = $database->query("select  * from  appointment where appodate>='$today';");
+    $schedulerow = $database->query("select  * from  schedule where scheduledate='$today';");
+    if (!$patientrow || !$doctorrow || !$appointmentrow || !$schedulerow) {
+        die("Database query error: " . $database->error);
+    }
 
     ?>
     <div class="container">
@@ -162,14 +171,6 @@
         </div>
         <div class="dash-body" style="margin-top: 15px">
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;">
-                <?php
-                date_default_timezone_set('Asia/Kolkata');
-                $today = date('Y-m-d');
-                $patientrow = $database->query("select  * from  patient;");
-                $doctorrow = $database->query("select  * from  doctor;");
-                $appointmentrow = $database->query("select  * from  appointment where appodate>='$today';");
-                $schedulerow = $database->query("select  * from  schedule where scheduledate='$today';");
-                ?>
                 <tr>
                     <td colspan="4">
                         <center>
@@ -210,8 +211,6 @@
                                     <td>
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
                                             <div class="flex-row">
-                                                <h2><?php echo $schedulerow->num_rows  ?></h2>
-                                                <p class="h3-dashboard" style="margin-top: 22px; ">Sessions</p>
                                             </div>
                                         </div>
                                     </td>
@@ -289,7 +288,7 @@ $hospital_row = $hospital_result->fetch_assoc();
 $test_report = $test_result->num_rows;
 
 ?>
-<script>
+<script type="text/javascript">
     var currentDate = new Date();
 
     // Create an array of real months for the past five months
@@ -361,7 +360,7 @@ if ($test_result->num_rows > 0) {
 } else
     $test_money = 0;
 ?>
-<script>
+<script type="text/javascript">
     var hospital_consultancy = <?php echo $hospital_consultancy_price ?>;
     var video_consultancy = <?php echo $video_consultancy_price ?>;
     var test_result = <?php echo $test_money ?>;
@@ -425,7 +424,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 ?>
-<script>
+<script type="text/javascript">
     var paymentCounts = <?php echo json_encode($paymentCounts); ?>;
     var xAxisCategories = <?php echo json_encode($xAxisCategories); ?>;
 

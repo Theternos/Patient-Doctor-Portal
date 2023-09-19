@@ -416,39 +416,37 @@
                     </td>
                     <td>
                         <form action="" method="post" class="header-search">
-                            <?php if ($_GET['action'] == null) { ?>
-                                <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Specialities" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
-                            <?php } else if ($_GET['action'] == 'book_test') { ?>
-                                <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Tests" list="doctors" value="<?php echo $insertkey ?>">&nbsp;&nbsp;
-                            <?php }
+                            <?php
+                            $action = isset($_GET['action']) ? $_GET['action'] : '';
 
-                            echo '<datalist id="doctors">';
-                            if ($_GET['action'] == null) {
-                                $list11 = $database->query("select DISTINCT * from  specialties;");
-                            } else if ($_GET['action'] == 'book_test') {
-                                $list11 = $database->query("select DISTINCT * from  medical_test;");
+                            if ($action === '') {
+                                $placeholder = "Search Specialities";
+                                $query = "SELECT DISTINCT * FROM specialties;";
+                            } elseif ($action === 'book_test') {
+                                $placeholder = "Search Tests";
+                                $query = "SELECT DISTINCT * FROM medical_test;";
                             }
-                            $list12 = $database->query("select DISTINCT * from  schedule GROUP BY title;");
 
-                            for ($y = 0; $y < $list11->num_rows; $y++) {
-                                $row00 = $list11->fetch_assoc();
-                                $d = $row00["docname"];
+                            $insertkey = isset($_POST['search']) ? $_POST['search'] : '';
 
-                                echo "<option value='$d'><br/>";
-                            };
+                            echo '<input type="search" name="search" class="input-text header-searchbar" placeholder="' . $placeholder . '" list="options" value="' . $insertkey . '">&nbsp;&nbsp;';
 
+                            // Fetch data and populate the datalist
+                            $list = $database->query($query);
 
-                            for ($y = 0; $y < $list12->num_rows; $y++) {
-                                $row00 = $list12->fetch_assoc();
-                                $d = $row00["title"];
+                            echo '<datalist id="options">';
 
-                                echo "<option value='$d'><br/>";
-                            };
+                            while ($row = $list->fetch_assoc()) {
+                                $value = $row["docname"] ?? $row["title"];
+                                echo "<option value='$value'>";
+                            }
 
-                            echo ' </datalist>';
+                            echo '</datalist>';
                             ?>
+
                             <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
                         </form>
+
                     </td>
                     <td>
                         <div class="flex-row" style="margin-left: auto;">
@@ -492,6 +490,9 @@
                         <?php } ?>
                     </td>
                 </tr>
+
+
+
                 <tr>
                     <td colspan="4">
                         <center>
@@ -579,7 +580,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="flex-column" style="border-top: 2px solid #202020;">
-                                                        <p class="bill-amount"><?php echo $lang['sp-total'] ?> &nbsp;&nbsp; - &nbsp;&nbsp; <b>₹</b><span id="total">0.00</span></p>
+                                                        <p class="bill-amount"><?php echo $lang['sp-total'] ?> &nbsp;&nbsp; - &nbsp;&nbsp; <b>Rs.</b><span id="total">0.00</span></p>
                                                         <p id="payButton" class="login-btn btn-primary-soft"><?php echo $lang['sp-checkout'] ?></p>
                                                     </div>
                                                 </div>
@@ -660,7 +661,7 @@
             const testContainer = document.createElement('div');
             testContainer.className = 'test-container';
             const newTest = document.createElement('p');
-            newTest.textContent = testName + ' - ₹' + testPrice; // Modified line
+            newTest.textContent = testName + ' - Rs. ' + testPrice; // Modified line
             newTest.setAttribute('data-sid', testIndex);
 
             console.log(testPrice);

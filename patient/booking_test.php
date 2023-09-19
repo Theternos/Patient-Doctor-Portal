@@ -297,33 +297,27 @@
                     </td>
                     <td>
                         <form action="schedule.php" method="post" class="header-search">
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="<?php echo $lang['scrded']; ?>" list="doctors">&nbsp;&nbsp;
+                            <datalist id="doctors">
+                                <?php
+                                $list11 = $database->query("select DISTINCT * from doctor;");
+                                $list12 = $database->query("select DISTINCT * from schedule GROUP BY title;");
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="<?php echo $lang['scrded'] ?>" list="doctors">&nbsp;&nbsp;
+                                for ($y = 0; $y < $list11->num_rows; $y++) {
+                                    $row00 = $list11->fetch_assoc();
+                                    $d = $row00["docname"];
 
-                            <?php
-                            echo '<datalist id="doctors">';
-                            $list11 = $database->query("select DISTINCT * from  doctor;");
-                            $list12 = $database->query("select DISTINCT * from  schedule GROUP BY title;");
+                                    echo "<option value='$d'><br/>";
+                                }
 
-                            for ($y = 0; $y < $list11->num_rows; $y++) {
-                                $row00 = $list11->fetch_assoc();
-                                $d = $row00["docname"];
+                                for ($y = 0; $y < $list12->num_rows; $y++) {
+                                    $row00 = $list12->fetch_assoc();
+                                    $d = $row00["title"];
 
-                                echo "<option value='$d'><br/>";
-                            };
-
-
-                            for ($y = 0; $y < $list12->num_rows; $y++) {
-                                $row00 = $list12->fetch_assoc();
-                                $d = $row00["title"];
-
-                                echo "<option value='$d'><br/>";
-                            };
-
-                            echo ' </datalist>';
-                            ?>
-
-
+                                    echo "<option value='$d'><br/>";
+                                }
+                                ?>
+                            </datalist>
                             <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
                         </form>
                     </td>
@@ -367,7 +361,7 @@
                                                             $row = $result->fetch_assoc(); ?>
                                                             <div class="flex-row">
                                                                 <p style="text-align: left;"><?php echo $lang[$row['tname']] ?></p>
-                                                                <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $row['price'] ?></p>
+                                                                <p style="margin-left: auto; margin-right:15px;"><?php echo 'Rs. ' . $row['price'] ?></p>
                                                             </div>
                                                         <?php
                                                             $total_amount += $row['price'];
@@ -411,15 +405,15 @@
 
                                                 <div class="flex-row">
                                                     <p style="text-align: left;"><?php echo $lang['regfee'] ?></p>
-                                                    <p style="margin-left: auto; margin-right:15px;">₹110</p>
+                                                    <p style="margin-left: auto; margin-right:15px;">Rs. 110</p>
                                                 </div>
                                                 <div class="flex-row">
                                                     <p style="text-align: left;"><?php echo $lang['item'] ?></p>
-                                                    <p style="margin-left: auto; margin-right:15px;"><?php echo '₹' . $total_amount ?></p>
+                                                    <p style="margin-left: auto; margin-right:15px;"><?php echo 'Rs. ' . $total_amount ?></p>
                                                 </div>
                                                 <div class="flex-row">
                                                     <p style="text-align: left;"><?php echo $lang['paam'] ?></p>
-                                                    <p id="payableAmount" style="margin-left: auto; margin-right:15px;"><?php echo '₹' . ($total_amount + 110) ?></p>
+                                                    <p id="payableAmount" style="margin-left: auto; margin-right:15px;"><?php echo 'Rs. ' . ($total_amount + 110) ?></p>
                                                 </div>
                                                 <p id="payButton" class="login-btn btn-primary btn"><?php echo $lang['pn'] ?></p>
                                             </div>
@@ -463,7 +457,7 @@
                                                     $price = $row23['price'];
                                                 }
                                                 $total_paid = $price;
-                                                echo $total_paid;
+                                                // echo $total_paid;
                                                 if ($toggle == 1) {
                                                     $price += (110 / $length);
                                                     $item_price += (110 / $length);
@@ -496,19 +490,19 @@
                                                 }
 
 
-                                                echo "<br>" . "INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')";
-                                                // $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')");
+                                                // echo "<br>" . "INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')";
+                                                $database->query("INSERT INTO payment_history (pid, tid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$tid', '$applied_discount', '$priceee', '$title','$payment_id', '$total_paid')");
                                             }
                                             $bonus = ($total_paid / 100) * 2.5;
                                             $insert_balance += $bonus;
-                                            echo "<br>PEaS Wallet: " . $balance . "<br>";
+                                            // echo "<br>PEaS Wallet: " . $balance . "<br>";
 
-                                            echo "<br>" . "UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';" . "<br>";
-                                            // $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';");
+                                            // echo "<br>" . "UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';" . "<br>";
+                                            $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + $bonus WHERE pid = '$userid';");
                                     ?>
-                                            <!-- <script>
+                                            <script>
                                                 window.location.href = './appointment.php';
-                                            </script> -->
+                                            </script>
                                 <?php        }
                                     }
                                 }
@@ -556,7 +550,7 @@
         let tempAmount = totalAmount + registrationFee - balance;
         let newPayableAmount = isChecked ? (tempAmount >= 1 ? tempAmount.toFixed(2) : '1.00') : (totalAmount + registrationFee).toFixed(2);
 
-        payableAmount.textContent = '₹' + newPayableAmount;
+        payableAmount.textContent = 'Rs. ' + newPayableAmount;
 
         var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
 
