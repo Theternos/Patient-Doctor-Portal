@@ -28,16 +28,23 @@ try:
         user='root',
         password=''
     )
+# try:
+# connection = mysql.connector.connect(
+#     host='sql12.freesqldatabase.com',
+#     database='sql12647197',
+#     user='sql12647197',
+#     password='iyz1Fh63tI'
+# )
 except Error as e:
     print("Error:", e)
   
-  
-account_sid = 'AC20a90cf6594e6b7d2318c6bdd79865cc'
-auth_token = '2a6d17d1eebcb02d47d2bef5bd323fab'
+  #pari Acc
+account_sid = 'AC503de9905cc284b03793cf56f09cb10e'
+auth_token = '054f5f0061d9ab57dca4996deac6de58'
 client = Client(account_sid, auth_token)
 
 message = client.messages.create(
-    from_='+18146377570',
+    from_='+15178360795',
     body='Your Booking have been confirmed with Dr. %s on %s @ %s and your appointment number is %s.' % (doc_name, app_date, app_time, app_num),
     to='+91%s' % (number)
 )
@@ -55,7 +62,7 @@ def doc_not_available():
             pemail = row[0]
             ptel = row[1]
             message = client.messages.create(
-                from_='+18146377570',
+                from_='+15178360795',
                 body='Sorry for the inconvinence, due to an emergency, your appointmet with doctor has been cancelled. So you are asked to book an alternate docter. Note: Need not to pay again.',
                 to='+91%s' % (ptel)
             )

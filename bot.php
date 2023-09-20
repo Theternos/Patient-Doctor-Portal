@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $query = $_POST["query"];
 
     // Call your Python script (bot.py) with the query and capture the response
-    $command = "python bot.py " . escapeshellarg($query);
+    $command = "python ./python/bot.py " . escapeshellarg($query);
     $response = shell_exec($command);
 
     // Attempt to decode the JSON response

@@ -13,11 +13,18 @@ try:
         user='root',
         password=''
     )
+# try:
+#     connection = mysql.connector.connect(
+#         host='sql12.freesqldatabase.com',
+#         database='sql12647197',
+#         user='sql12647197',
+#         password='iyz1Fh63tI'
+#     )
 except Error as e:
     print("Error:", e)
-
-account_sid = 'AC20a90cf6594e6b7d2318c6bdd79865cc'
-auth_token = '2a6d17d1eebcb02d47d2bef5bd323fab'
+#pari ACC
+account_sid = 'AC503de9905cc284b03793cf56f09cb10e'
+auth_token = '054f5f0061d9ab57dca4996deac6de58'
 client = Client(account_sid, auth_token)
 
 #####Remainder for doctors before 2 hours with slots booked so far  
@@ -61,7 +68,7 @@ client = Client(account_sid, auth_token)
 #                     doc_email = doc[1]
 #                     print(doc_tel, doc_email)
 #                     message = client.messages.create(
-#                         from_='+18146377570',
+#                         from_='+15178360795',
 #                         body='A gentle remainder for the upcoming schecdule on %s and %s seats booked of %s so far.' % (
 #                             scheduletime, seatbooked, totalbooked),
 #                         to='+91' + doc_tel
@@ -125,49 +132,81 @@ client = Client(account_sid, auth_token)
 #         update_sql = "UPDATE appointment SET roomid = %s where appoid = %s" % (roomid, appoid)
 #         cursor.execute(update_sql)
 #         message = client.messages.create(
-#             from_='+18146377570',
+#             from_='+15178360795',
 #             body = "Don't miss the video consultancy with Dr. %s scheduled at %s. The meeting link for your session is %s. NOTE : Kindly join the session before 5minutes of scheduled time." % (doc_name,meeting_time, link),
 #             to='+91' + patient_tel
 #         )
 #         update_sql = "UPDATE appointment SET room_flag = 1 where appoid = %s" % (appoid)
 #         cursor.execute(update_sql)
         
+        
+        
 ######## Blood Donation SMS alert!
+# cursor = connection.cursor()
+# patient_number = "SELECT ptel, bgrid, patient.blood_group, patient.pname, unit from patient INNER JOIN blood_group_request on blood_group_request.blood_group = patient.blood_group where flag = 0;"
+# cursor.execute(patient_number)
+# rows = cursor.fetchall()
+# bgrid = 0
+# for row in rows:
+#     number = row[0]
+#     bgrid = row[1]
+#     blood_group = row[2]
+#     pname = row[3]
+#     unit = row[4]
+#     number = '8072677947'    #This line need to be removed while Twillio uses live account
+#     body = '''
+# Urgent: Blood Needed
+
+# Dear %s,
+
+# We are in urgent need of blood donations to save lives. Please call to 9442792601 before coming.
+
+# Location: Sathyamangalam
+# Address: 2nd Street, Coimbatore Road, Sathy, 638401
+# Blood Type Needed: %s
+# Units Needed: %s
+
+# Your donation can help save lives. Thank you for your generosity.
+
+# Best Regards,
+# PEaS
+#     ''' % (pname, blood_group, unit)
+#     message = client.messages.create(
+#         from_='+15178360795',
+#         body = body,
+#         to='+91' + number
+#         )
+# if(bgrid != 0):
+#     update_sql = "UPDATE blood_group_request SET flag = 1 where bgrid = %s" % (bgrid)
+#     cursor.execute(update_sql)
+#     print("mesaged")
+
+
+####### Feedback form link
 cursor = connection.cursor()
-patient_number = "SELECT ptel, bgrid, patient.blood_group, patient.pname, unit from patient INNER JOIN blood_group_request on blood_group_request.blood_group = patient.blood_group where flag = 0;"
-cursor.execute(patient_number)
+review = "SELECT doc_review.docid, doc_review.pid, patient.pname, patient.ptel, drid FROM doc_review INNER JOIN patient ON patient.pid = doc_review.pid  WHERE seen_status = 1 and feedback_flag = 0"
+cursor.execute(review)
 rows = cursor.fetchall()
-bgrid = 0
 for row in rows:
-    number = row[0]
-    bgrid = row[1]
-    blood_group = row[2]
-    pname = row[3]
-    unit = row[4]
-    number = '8072677947'    #This line need to be removed while Twillio uses live account
-    body = '''
-Urgent: Blood Needed
+    pid = row[1]    
+    pname = row[2]
+    # number = row[3] 
+    drid = row[4]
+    number = '8072677947'  #remove this line in implementing
+    fblink = 'http://10.10.237.155:91/fbform/index.php?id=' + str(pid) + '&drid=' + str(drid)
+    body_content = '''Dear %s,
 
-Dear %s,
+We hope you're feeling better after your recent visit. Please share your feedback to help us improve by clicking this link: %s.
 
-We are in urgent need of blood donations to save lives. Please call to 9442792601 before coming.
+Your insights are valuable to us. Thank you for choosing us for your healthcare needs.
 
-Location: Sathyamangalam
-Address: 2nd Street, Coimbatore Road, Sathy, 638401
-Blood Type Needed: %s
-Units Needed: %s
-
-Your donation can help save lives. Thank you for your generosity.
-
-Best Regards,
-PEaS
-    ''' % (pname, blood_group, unit)
+Best regards,
+Team Sleek''' % (pname, fblink)
     message = client.messages.create(
-        from_='+18146377570',
-        body = body,
-        to='+91' + number
-        )
-if(bgrid != 0):
-    update_sql = "UPDATE blood_group_request SET flag = 1 where bgrid = %s" % (bgrid)
-    cursor.execute(update_sql)
-    print("mesaged")
+        from_= '+15178360795',
+        body= body_content,
+        to='+91%s' % (number)
+    )
+    print(body_content)
+    flag_update = "UPDATE doc_review SET feedback_flag = 1 WHERE drid = %d" % (drid)
+    cursor.execute(flag_update)
