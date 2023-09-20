@@ -519,7 +519,7 @@ $userid = $userfetch["rmid"];
             try {
                 this.el?.reset();
             } catch (err) {
-                console.error("Element isn’t a form.");
+                console.error("Element isn't a form.");
             }
         }
         updateRating(e) {

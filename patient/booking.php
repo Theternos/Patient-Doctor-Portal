@@ -226,10 +226,10 @@
             if (!isset($_COOKIE['insert_flag'])) {
                 $command = "python ../python/sms_confirmation.py " . escapeshellarg($docname) . "  " . escapeshellarg($scheduledate) . " " . escapeshellarg($scheduletime) . " " . escapeshellarg($phone_number)  . " " . escapeshellarg($apponum);
                 $output = shell_exec($command);
-                echo $command;
+                // echo $command . '<br>';
                 $sql2 = "INSERT into appointment(pid,apponum,scheduleid,appodate, payment_id) values ($userid,$apponum,$scheduleid,'$today', '$payment_id')";
                 $result = $database->query($sql2);
-                echo $sql2;
+                // echo $sql2 . '<br>';
                 $appo_result = $database->query("SELECT appoid from appointment where scheduleid='$scheduleid' and pid = '$userid' and payment_id='$payment_id'");
                 $appo_row = $appo_result->fetch_assoc();
                 $appoid = $appo_row['appoid'];
@@ -237,7 +237,7 @@
     ?>
                 <span id="balance">
                     <?php
-                    echo $_COOKIE['checkboxState'] . '<br>';
+                    // echo $_COOKIE['checkboxState'] . '<br>';
                     $toggle = $_COOKIE['checkboxState'];
                     $balance = 0;
                     if ($toggle == 1) {
@@ -258,7 +258,8 @@
                 </span>
         <?php
                 $database->query("UPDATE wallet SET balance = '$insert_balance', bonus = bonus + '$discount' WHERE pid = '$userid'");
-                $database->query("INSERT INTO payment_history (pid, appoid, discount, amount, title, payment_id) VALUES ('$userid', '$appoid', '$fetch_balance', '$price', '$title','$payment_id')");
+                $database->query("INSERT INTO payment_history (pid, appoid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$appoid', '$fetch_balance', '$price', '$title','$payment_id', '$price')");
+                // echo "INSERT INTO payment_history (pid, appoid, discount, amount, title, payment_id, total_paid) VALUES ('$userid', '$appoid', '$fetch_balance', '$price', '$title','$payment_id', '$price')" . "<br>";
             }
         } ?>
         <script>
@@ -412,12 +413,7 @@
                         </p>
                         <p class="heading-sub12" style="padding: 0;margin: 0;">
                             <?php
-
-
                             echo $today;
-
-
-
                             ?>
                         </p>
                     </td>
@@ -431,15 +427,13 @@
                         <center>
                             <div class="">
                                 <table width="100%" class="sub-table scrolldown" border="0" style="padding: 50px;border:none">
-
                                     <tbody>
-
                                         <?php
                                         if (isset($_POST['submitButton'])) {
                                             $mode = $_POST['modeSelect'];
                                             $id = $_POST['scheduleid'];
                                             $docid = $_POST['docid'];
-                                            $sqlmain1 = "SELECT * FROM DOCTOR INNER JOIN `SCHEDULE` on DOCTOR.docid = `SCHEDULE`.docid WHERE `SCHEDULE`.title = (SELECT sname from specialties where id = '$id') and DOCTOR.docid = '$docid' and `SCHEDULE`.scheduledate >= '$today';";
+                                            $sqlmain1 = "SELECT * FROM doctor INNER JOIN `schedule` on doctor.docid = `schedule`.docid WHERE `schedule`.title = (SELECT sname from specialties where id = '$id') and doctor.docid = '$docid' and `schedule`.scheduledate >= '$today';";
                                             $result = $database->query($sqlmain1);
                                             //echo $sqlmain;
                                             $row = $result->fetch_assoc();
@@ -794,12 +788,13 @@
                 const registrationFee = 0;
                 let newPayableAmount = isChecked ? totalAmount + registrationFee - <?php echo $balance ?> : totalAmount + registrationFee;
 
-                payableAmount.textContent = '₹' + newPayableAmount;
+                payableAmount.textContent = 'Rs. ' + newPayableAmount;
 
                 var selectedTestsValue = "<?php echo isset($_POST['selectedTests']) ? $_POST['selectedTests'] : ''; ?>";
 
                 if (selectedTestsValue !== '') {
                     document.cookie = 'selectedTestIndexes=' + encodeURIComponent(selectedTestsValue) + '; expires=' + new Date(new Date().getTime() + 3600 * 1000).toUTCString() + '; path=/';
+                    document.cookie = 'newPayableAmount=' + encodeURIComponent(newPayableAmount) + '; expires=' + new Date(new Date().getTime() + 100 * 1000).toUTCString() + '; path=/';
                 }
                 const payButton = document.getElementById('payButton');
 

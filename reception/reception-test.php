@@ -511,7 +511,7 @@
             $temperature = $_POST['temperature'];
             $reason = $_POST['reason'];
             $allergy = $_POST['allergy'];
-            $sql = "INSERT INTO `peas`.`metrices` (`pid`, `docid`, `appoid`, `scheduleid`, `weight`, `height`, `sugar`, `bp`, `temp`, `reason`, `allergy`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO `metrices` (`pid`, `docid`, `appoid`, `scheduleid`, `weight`, `height`, `sugar`, `bp`, `temp`, `reason`, `allergy`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             $stmt = $database->prepare($sql);
             $stmt->bind_param("sssssssssss", $pid, $docid, $appoid, $scheduleid, $weight, $height, $sugar, $blood_pressure, $temperature, $reason, $allergy);
             $stmt->execute(); ?>
@@ -531,7 +531,7 @@
             $temperature = $_POST['temperature'];
             $reason = $_POST['reason'];
             $allergy = $_POST['allergy'];
-            $sql = "UPDATE `peas`.`metrices` SET height = '$height', `weight` = '$weight', sugar = '$sugar', bp = '$blood_pressure', temp = '$temperature', reason = '$reason', allergy = '$allergy' WHERE appoid = '$appoid' and pid = '$pid'";
+            $sql = "UPDATE `metrices` SET height = '$height', `weight` = '$weight', sugar = '$sugar', bp = '$blood_pressure', temp = '$temperature', reason = '$reason', allergy = '$allergy' WHERE appoid = '$appoid' and pid = '$pid'";
             $result = $database->query($sql); ?>
             <script>
                 window.location.href = "./reception-test.php";

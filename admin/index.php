@@ -12,6 +12,9 @@
     <script type="text/javascript" src="../js/chart.js"></script>
     <script type="text/javascript" src="../js/highcharts.js"></script>
     <script type="text/javascript" src="../js/apexcharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <title>Dashboard</title>
     <style>
@@ -56,6 +59,54 @@
             height: 280px;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+
+        .notification-center {
+            color: #f1f1f1;
+            background-color: #000562;
+            width: 300px;
+            height: 250px;
+            border-radius: 5px;
+            position: absolute;
+            margin: 22px .9vw 0 0;
+            right: 0;
+            opacity: 0;
+            display: none;
+            transition: opacity 0.3s ease;
+            padding: 1px 20px 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .notification-center h4 {
+            font-size: 14px;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .notification-center.visible {
+            opacity: 1;
+        }
+
+        .accept,
+        .reject {
+            margin: 3px;
+            height: 26px;
+            width: 26px;
+            background-color: #f1f1f1;
+            padding: 6.5px 5px 5px 8px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #000;
+        }
+
+        .accept:hover {
+            background-color: green;
+            color: #fff;
+        }
+
+        .reject:hover {
+            background-color: red;
+            color: #fff;
         }
     </style>
 </head>
@@ -178,39 +229,76 @@
                                 <tr>
                                     <td style="width: 25%;">
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
-                                            <div class="flex-row">
-                                                <h2><?php echo $doctorrow->num_rows  ?></h2>
-                                                <p class="h3-dashboard" style="margin-top: 22px; ">Doctors</p>
+                                            <div class="flex-row" style="align-items:center;">
+                                                <img src="../img/icons/stethoscope.svg" alt="" width="40px" height="50px">
+                                                <div class="flex_column" style="justify-content:flex-start; align-items:center;">
+                                                    <h2 style="margin: 5px 0 0 0;"><?php echo $doctorrow->num_rows  ?></h2>
+                                                    <p class="h3-dashboard" style="margin:0 0 5px 0; ">Doctors</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width: 25%;">
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
-                                            <div class="flex-row">
-                                                <h2><?php echo $patientrow->num_rows  ?></h2>
-                                                <p class="h3-dashboard" style="margin-top: 22px; ">Patients</p>
+                                            <div class="flex-row" style="align-items:center;">
+                                                <img src="../img/icons/syringe.svg" alt="" width="40px" height="45px">
+                                                <div class="flex_column" style="justify-content:flex-start; align-items:center;">
+                                                    <h2 style="margin: 5px 0 0 0;"><?php echo $patientrow->num_rows  ?></h2>
+                                                    <p class="h3-dashboard" style="margin:0 0 5px 0; ">Patients</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width: 25%;">
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
-                                            <div class="flex-row">
-                                                <h2><?php echo $appointmentrow->num_rows  ?></h2>
-                                                <p class="h3-dashboard" style="margin-top: 22px; ">Appointments</p>
+                                            <div class="flex-row" style="align-items:center; margin: 0 5px 0 5px;">
+                                                <img src="../img/icons/appointment.svg" alt="" width="40px" height="40px">
+                                                <div class="flex_column" style="justify-content:flex-start; align-items:center;">
+                                                    <h2 style="margin: 5px 0 0 5px;"><?php echo $appointmentrow->num_rows  ?></h2>
+                                                    <p class="h3-dashboard" style="margin:0 0 5px 5px; ">Appointments</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td style="width: 25%;">
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
-                                            <div class="flex-row">
-                                                <h2><?php echo $schedulerow->num_rows  ?></h2>
-                                                <p class="h3-dashboard" style="margin-top: 22px; ">Sessions</p>
+                                            <div class="flex-row" style="align-items:center; margin: 0 5px 0 5px;">
+                                                <img src="../img/icons/admin_session.svg" alt="" width="40px" height="40px">
+                                                <div class="flex_column" style="justify-content:flex-start; align-items:center;">
+                                                    <h2 style="margin: 5px 0 0 5px;"><?php echo $schedulerow->num_rows  ?></h2>
+                                                    <p class="h3-dashboard" style="margin:0 0 5px 5px; ">Sessions</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="dashboard-items" style="margin:auto;width:70%;align-items:center;">
-                                            <div class="flex-row">
+                                            <div class="flex-row" style="padding: 17px; cursor:pointer">
+                                                <?php
+                                                $result = $database->query("SELECT * FROM schedule INNER JOIN doctor on doctor.docid = schedule.docid WHERE leave_status = 1 LIMIT 2");
+                                                if ($result->num_rows > 0) {
+                                                ?>
+                                                    <img src="../img/icons/bell-notofication.svg" id="notificationToggle" alt="" width="30px">
+                                                <?php } else { ?>
+                                                    <img src="../img/icons/bell.svg" alt="" width="30px">
+                                                <?php } ?>
+                                            </div>
+                                            <div class="notification-center" id="notificationCenter">
+                                                <h4>Notification Center</h4>
+                                                <div class=" flex-row" style="margin-top: 0; font-size:12px; border-bottom: 1px solid #ccc;">
+                                                    <?php
+                                                    for ($y = 0; $y < $result->num_rows; $y++) {
+                                                        $row = $result->fetch_assoc();
+                                                        $id = $row['scheduleid'];
+                                                    ?><div class="flex-column" style="justify-content: flex-start; align-items:flex-start;">
+                                                            <p style="font-weight: 500; margin-bottom: 0; padding: 0 0 0 0;"><?php echo $row['docname'] ?></p>
+                                                            <p><?php echo $row['leave_reason'] ?></p>
+                                                        </div>
+                                                        <div class="flex-row" style="margin: auto; margin-left: auto;">
+                                                            <a href="./delete-session.php?id=<?php echo $id ?>&status=accept" class="accept fa fa-check accept" style="padding-left: 7px;" aria-hidden="true" name="accept" onclick="return confirm('Are you sure you want to Accept?')"></a>
+                                                            <a href="./delete-session.php?id=<?php echo $id ?>&status=reject" class="reject fa fa-close reject" aria-hidden="true" name="reject" onclick="return confirm('Are you sure you want to Reject?')"></a>
+                                                        </div> <?php } ?>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
@@ -227,9 +315,11 @@
                     </div>
                     <div class="flex-row" style="justify-content:space-between;">
                         <div class="analytics" id="chart"></div>
-                        <div class="analytics"></div>
+                        <div class="analytics" style="padding-top: 0px;">
+                            <h4 style="text-align: center;">Top Reported Specialities - Last 5 Days</h4>
+                            <canvas id="hospitalChart"></canvas>
+                        </div>
                     </div>
-
                 </div>
                 <br>
                 <div class="flex-column">
@@ -273,7 +363,136 @@
             </div>
         </div>
     </div>
+    <?php
 
+    $result = $database->query("SELECT schedule.scheduledate, schedule.title,
+    schedule.scheduleid, COUNT(appointment.scheduleid) AS patient_count FROM schedule LEFT JOIN appointment ON appointment.scheduleid = schedule.scheduleid
+    WHERE schedule.scheduledate >= DATE_SUB(CURDATE(), INTERVAL 7 DAY) GROUP BY schedule.scheduledate, schedule.scheduleid ORDER BY patient_count DESC;");
+
+    // Initialize an array to store the sum of patient_count for each title
+    $titleCounts = array();
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $title = $row["title"];
+            $patientCount = $row["patient_count"];
+
+            if (!isset($titleCounts[$title])) {
+                $titleCounts[$title] = 0;
+            }
+
+            $titleCounts[$title] += $patientCount;
+        }
+    }
+
+
+    // Sort the titleCounts array in descending order by patient count
+    arsort($titleCounts);
+
+    // Get the top three titles
+    $topTitles = array_slice($titleCounts, 0, 3);
+
+    // Loop through the top three titles and fetch their schedule dates and patient counts
+    foreach ($topTitles as $title => $count) {
+        // echo "Title: $title<br>";
+        // echo "Schedule Date\tPatient Count<br>";
+
+        // Execute a new query to fetch schedule dates and patient counts for the title
+        $sql = "SELECT schedule.scheduledate, COUNT(appointment.scheduleid) AS patient_count 
+            FROM schedule 
+            LEFT JOIN appointment ON appointment.scheduleid = schedule.scheduleid 
+            WHERE schedule.title = '$title' 
+            GROUP BY schedule.scheduledate 
+            ORDER BY schedule.scheduledate ASC";
+
+        $result = $database->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $scheduleDate = $row["scheduledate"];
+                $patientCount = $row["patient_count"];
+
+                // echo "$scheduleDate\t$patientCount<br>";
+            }
+        }
+
+        // echo "<br>";
+    }
+
+    ?>
+    <script>
+        // Function to get day name for a given date
+        function getDayName(date) {
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            return days[date.getDay()];
+        }
+
+        // Get today's date
+        const today = new Date();
+
+        // Generate labels for the past 7 days
+        const labels = [];
+        for (let i = 4; i >= 0; i--) {
+            const pastDate = new Date(today);
+            pastDate.setDate(today.getDate() - i);
+            labels.push(getDayName(pastDate));
+        }
+
+        const config = {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                        label: 'Cardio',
+                        data: [45, 32, 56, 43, 67], // Replace with your hospital data
+                        borderColor: 'red',
+                        backgroundColor: 'rgba(255, 0, 0, 0.5)',
+                        yAxisID: 'y',
+                    },
+                    {
+                        label: 'General OP',
+                        data: [25, 42, 35, 62, 48], // Replace with your hospital data
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(0, 0, 255, 0.5)',
+                        yAxisID: 'y1',
+                    },
+                    {
+                        label: 'Ortho',
+                        data: [2, 24, 55, 12, 78], // Replace with your hospital data
+                        borderColor: 'green',
+                        backgroundColor: 'rgba(0, 255, 0, 0.5)',
+                        yAxisID: 'y2',
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                stacked: false,
+                scales: {
+                    y: {
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        grid: {
+                            drawOnChartArea: false,
+                        },
+                    },
+                }
+            },
+        };
+
+        const ctx = document.getElementById('hospitalChart').getContext('2d');
+        new Chart(ctx, config);
+    </script>
 
 </body>
 
@@ -377,9 +596,9 @@ if ($test_result->num_rows > 0) {
         }],
     };
 
-    var ctx = document.getElementById("myDoughnutChart").getContext("2d");
+    var ctx1 = document.getElementById("myDoughnutChart").getContext("2d");
 
-    var myDoughnutChart = new Chart(ctx, {
+    var myDoughnutChart = new Chart(ctx1, {
         type: "doughnut",
         data: data,
         options: {
@@ -466,6 +685,39 @@ while ($row = mysqli_fetch_assoc($result)) {
     var chart = new ApexCharts(document.querySelector("#chart"), options);
 
     chart.render();
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get references to the toggle button and notification center
+        const toggleButton = document.getElementById("notificationToggle");
+        const notificationCenter = document.getElementById("notificationCenter");
+
+        // Variable to keep track of the notification center state
+        let isNotificationCenterVisible = false;
+
+        // Function to toggle the visibility of the notification center
+        function toggleNotificationCenter() {
+            if (isNotificationCenterVisible) {
+                // Remove the "visible" class to hide with animation
+                notificationCenter.classList.remove("visible");
+                // Add a delay before hiding the element (same duration as the transition)
+                setTimeout(() => {
+                    notificationCenter.style.display = "none";
+                }, 300);
+            } else {
+                // Display with animation
+                notificationCenter.style.display = "block";
+                // Add the "visible" class to show with animation
+                setTimeout(() => {
+                    notificationCenter.classList.add("visible");
+                }, 0);
+            }
+            isNotificationCenterVisible = !isNotificationCenterVisible;
+        }
+
+        // Add a click event listener to the toggle button
+        toggleButton.addEventListener("click", toggleNotificationCenter);
+    });
 </script>
 
 </html>

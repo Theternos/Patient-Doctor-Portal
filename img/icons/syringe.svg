@@ -1,0 +1,11 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Transformed by: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="800px" height="800px" viewBox="0 0 24 24" id="syringe-left" data-name="Flat Color" xmlns="http://www.w3.org/2000/svg" class="icon flat-color">
+<g id="SVGRepo_bgCarrier" stroke-width="0"/>
+<g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="SVGRepo_iconCarrier">
+<path id="secondary" d="M7.27,8.27A1,1,0,0,0,8,8,1,1,0,0,0,8,6.57L4.71,3.29A1,1,0,0,0,3.29,4.71L6.57,8A1,1,0,0,0,7.27,8.27Z" style="fill: #006dd3;"/>
+<path id="primary" d="M20,15.75l-2.83-2.82h0a1,1,0,0,0,0-1.42l-5-4.94a4.07,4.07,0,0,0-5.65,0,4,4,0,0,0,0,5.65l4.94,5a1,1,0,0,0,1.41,0L15.75,20a1,1,0,0,0,1.42,0L20,17.17a1,1,0,0,0,.29-.71A1,1,0,0,0,20,15.75Z" style="fill: #000000;"/>
+<path id="secondary-2" data-name="secondary" d="M15.05,20.71a1,1,0,0,1,0-1.42l4.24-4.24a1,1,0,0,1,1.42,0,1,1,0,0,1,0,1.41l-4.25,4.25a1,1,0,0,1-.7.29A1,1,0,0,1,15.05,20.71Zm-3.54-2.54a1,1,0,0,0,.71-.29l5.66-5.66a1,1,0,0,0,0-1.41,1,1,0,0,0-1.42,0l-5.65,5.65a1,1,0,0,0,.7,1.71Z" style="fill: #006dd3;"/>
+</g>
+</svg>

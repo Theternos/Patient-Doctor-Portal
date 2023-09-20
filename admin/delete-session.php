@@ -1,28 +1,28 @@
 <?php
 
-    session_start();
+session_start();
 
-    if(isset($_SESSION["user"])){
-        if(($_SESSION["user"])=="" or $_SESSION['usertype']!='a'){
-            header("location: ../login.php");
-        }
-
-    }else{
+if (isset($_SESSION["user"])) {
+    if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'a') {
         header("location: ../login.php");
     }
-    
-    
-    if($_GET){
-        //import database
-        include("../connection.php");
-        $id=$_GET["id"];
-        //$result001= $database->query("select * from schedule where scheduleid=$id;");
-        //$email=($result001->fetch_assoc())["docemail"];
-        $sql= $database->query("delete from schedule where scheduleid='$id';");
-        //$sql= $database->query("delete from doctor where docemail='$email';");
-        //print_r($email);
+} else {
+    header("location: ../login.php");
+}
+
+
+if ($_GET) {
+    include("../connection.php");
+    $id = $_GET["id"];
+
+    if ($_GET['status'] == 'reject') {
+        $sql = $database->query("UPDATE schedule SET leave_status = 0");
+    } elseif ($_GET['status'] == 'accept' or $_GET['status'] == null) {
+        $sql = $database->query("delete from schedule where scheduleid='$id';");
+    }
+    if ($_GET['status'] == 'reject' || $_GET['status'] == 'accept') {
+        header("location: index.php");
+    } else {
         header("location: schedule.php");
     }
-
-
-?>
+}
