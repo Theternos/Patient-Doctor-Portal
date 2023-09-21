@@ -163,7 +163,7 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr>
                     <td width="13%">
-                        <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                        <a href="feedback.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                                 <font class="tn-in-text">Back</font>
                             </button></a>
                     </td>
@@ -185,8 +185,6 @@
 
                             echo ' </datalist>';
                             ?>
-
-
                             <input type="Submit" value="Search" class="login-btn btn-primary btn" style="padding-left: 25px;padding-right: 25px;padding-top: 10px;padding-bottom: 10px;">
 
                         </form>
@@ -209,36 +207,24 @@
                         <button class="btn-label" style="display: flex;justify-content: center;align-items: center;"><img src="../img/calendar.svg" width="100%"></button>
                     </td>
 
+                    <?php
+                    if ($_POST) {
+                        $keyword = $_POST["search"];
 
-                </tr>
-
-                <tr>
-                    <td colspan="2" style="padding-top:30px;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Add New Doctor</p>
-                    </td>
-                    <td colspan="2">
-                        <a href="?action=add&id=none&error=0" class="non-style-link"><button class="login-btn btn-primary btn button-icon btn-add-session" style="display: flex;justify-content: center;align-items: center;margin-left:75px;">Add New</font></button>
-                        </a>
-                    </td>
+                        $sqlmain = "SELECT * from feedback INNER JOIN patient ON patient.pid = feedback.pid where pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' or feedback='$keyword' or feedback like '$keyword%' or feedback like '%$keyword' or feedback like '%$keyword%' ORDER BY fbid DESC";
+                    } else {
+                        $sqlmain = "SELECT * from feedback INNER JOIN patient ON patient.pid = feedback.pid ORDER BY fbid DESC";
+                    }
+                    $result = $database->query($sqlmain);
+                    ?>
                 </tr>
                 <tr>
                     <td colspan="4" style="padding-top:10px;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Doctors (<?php echo $list11->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Feedbacks (<?php echo $result->num_rows; ?>)</p>
                     </td>
 
                 </tr>
-                <?php
-                if ($_POST) {
-                    $keyword = $_POST["search"];
 
-                    $sqlmain = "select * from doctor where docemail='$keyword' or docname='$keyword' or docname like '$keyword%' or docname like '%$keyword' or docname like '%$keyword%'";
-                } else {
-                    $sqlmain = "select * from doctor order by docid desc";
-                }
-
-
-
-                ?>
 
                 <tr>
                     <td colspan="4">
@@ -248,16 +234,13 @@
                                     <thead>
                                         <tr>
                                             <th class="table-headin">
-                                                Pid
+                                                Patient ID
                                             </th>
                                             <th class="table-headin">
                                                 Patient Name
                                             </th>
                                             <th class="table-headin">
-                                                Feedbacks
-                                            </th>
-                                            <th class="table-headin">
-                                                Events
+                                                Feedback
                                             </th>
                                         </tr>
                                     </thead>
@@ -266,7 +249,6 @@
                                         <?php
 
 
-                                        $result = $database->query($sqlmain);
 
                                         if ($result->num_rows == 0) {
                                             echo '<tr>
@@ -277,7 +259,7 @@
                                     
                                     <br>
                                     <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="doctors.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Doctors &nbsp;</font></button>
+                                    <a class="non-style-link" href="feedback.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Feedback &nbsp;</font></button>
                                     </a>
                                     </center>
                                     <br><br><br><br>
@@ -286,30 +268,18 @@
                                         } else {
                                             for ($x = 0; $x < $result->num_rows; $x++) {
                                                 $row = $result->fetch_assoc();
-                                                $docid = $row["docid"];
-                                                $name = $row["docname"];
-                                                $email = $row["docemail"];
-                                                $spe = $row["specialties"];
-                                                $spcil_res = $database->query("select sname from specialties where id='$spe'");
-                                                $spcil_array = $spcil_res->fetch_assoc();
-                                                $spcil_name = $spcil_array["sname"];
-                                                echo '<tr>
-                                        <td> &nbsp;' .
-                                                    substr($name, 0, 30)
+                                                $pid = $row["pid"];
+                                                $name = $row["pname"];
+                                                $feedback = $row["feedback"];
+                                                echo '<tr style="height:50px;">
+                                        <td width="10%" style="text-align:center"> &nbsp;' .
+                                                    substr('P-' . $pid, 0, 30)
                                                     . '</td>
-                                        <td style="text-align:center">
-                                        ' . substr($email, 0, 30) . '
+                                        <td width="25%" style="text-align:center">
+                                        ' . substr($name, 0, 40) . '
                                         </td>
                                         <td style="text-align:center">
-                                            ' . substr($lang[$spcil_name], 0, 40) . '
-                                        </td>
-
-                                        <td style="text-align:center">
-                                        <div style="display:flex;justify-content: center;">
-                                        &nbsp;&nbsp;&nbsp;
-                                        <a href="?action=view&id=' . $docid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       &nbsp;&nbsp;&nbsp;
-                                        </div>
+                                            ' . substr($feedback, 0, 1000) . '
                                         </td>
                                     </tr>';
                                             }

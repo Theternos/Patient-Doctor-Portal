@@ -183,30 +183,93 @@ client = Client(account_sid, auth_token)
 
 
 ####### Feedback form link
+# cursor = connection.cursor()
+# review = "SELECT doc_review.docid, doc_review.pid, patient.pname, patient.ptel, drid FROM doc_review INNER JOIN patient ON patient.pid = doc_review.pid  WHERE seen_status = 1 and feedback_flag = 0"
+# cursor.execute(review)
+# rows = cursor.fetchall()
+# for row in rows:
+#     pid = row[1]    
+#     pname = row[2]
+#     # number = row[3] 
+#     drid = row[4]
+#     number = '8072677947'  #remove this line in implementing
+#     fblink = 'http://10.10.237.155:91/fbform/index.php?id=' + str(pid) + '&drid=' + str(drid)
+#     body_content = '''Dear %s,
+
+# We hope you're feeling better after your recent visit. Please share your feedback to help us improve by clicking this link: %s.
+
+# Your insights are valuable to us. Thank you for choosing us for your healthcare needs.
+
+# Best regards,
+# Team Sleek''' % (pname, fblink)
+#     message = client.messages.create(
+#         from_= '+15178360795',
+#         body= body_content,
+#         to='+91%s' % (number)
+#     )
+#     print(body_content)
+#     flag_update = "UPDATE doc_review SET feedback_flag = 1 WHERE drid = %d" % (drid)
+#     cursor.execute(flag_update)
+    
+    
+###### Re-booking appointment sms
+
+
+import datetime
+
 cursor = connection.cursor()
-review = "SELECT doc_review.docid, doc_review.pid, patient.pname, patient.ptel, drid FROM doc_review INNER JOIN patient ON patient.pid = doc_review.pid  WHERE seen_status = 1 and feedback_flag = 0"
-cursor.execute(review)
+next_appointment = "SELECT * FROM report INNER JOIN patient ON patient.pid = report.pid WHERE next_appointment > 1 and nxt_apmt_flag = 0;"
+cursor.execute(next_appointment)
 rows = cursor.fetchall()
+today_date = datetime.datetime.now()
+
 for row in rows:
-    pid = row[1]    
-    pname = row[2]
-    # number = row[3] 
-    drid = row[4]
-    number = '8072677947'  #remove this line in implementing
-    fblink = 'http://10.10.237.155:91/fbform/index.php?id=' + str(pid) + '&drid=' + str(drid)
-    body_content = '''Dear %s,
+    repid = row[0]
+    pid = row[1]
+    docid = row[2]
+    # number = row[18]
+    number = '8072677947'   #remove this line in implementing
+    pname = row[13]  
+    # ...
+    visit_date_raw = row[11]
+    next_appointment = row[8]
+    sms_days = next_appointment - 1    
+    # Ensure visit_date_str is a string
+    if isinstance(visit_date_raw, str):
+        visit_date_str = visit_date_raw
+    else:
+        # If not a string, convert to string in an appropriate format
+        visit_date_str = visit_date_raw.strftime('%Y-%m-%d %H:%M:%S')
 
-We hope you're feeling better after your recent visit. Please share your feedback to help us improve by clicking this link: %s.
+    next_appointment = row[8]
+    sms_days = next_appointment - 1
 
-Your insights are valuable to us. Thank you for choosing us for your healthcare needs.
+    # Parse visit_date_str into a datetime object
+    visit_date = datetime.datetime.strptime(visit_date_str, '%Y-%m-%d %H:%M:%S')
+
+    # Add sms_days to visit_date
+    modified_visit_date = visit_date + datetime.timedelta(days=sms_days)
+
+    # Compare today's date with modified_visit_date
+    if today_date.date() == modified_visit_date.date():
+    # Rest of your code...
+
+    # Rest of your code...
+        fblink = 'http://10.10.237.155:91/patient/rebooking.php?pid=' + str(pid) + '&docid=' + str(docid)
+        body_content = '''Dear %s,
+
+Your doctor has recommended scheduling your next appointment for your continued care. To book your appointment, please click on the following link: %s
+
+We're here to ensure your health and well-being. Feel free to reach out if you have any questions or need assistance.
 
 Best regards,
 Team Sleek''' % (pname, fblink)
-    message = client.messages.create(
-        from_= '+15178360795',
-        body= body_content,
-        to='+91%s' % (number)
-    )
-    print(body_content)
-    flag_update = "UPDATE doc_review SET feedback_flag = 1 WHERE drid = %d" % (drid)
-    cursor.execute(flag_update)
+        message = client.messages.create(
+            from_= '+15178360795',
+            body= body_content,
+            to='+91%s' % (number)
+        )
+        print(body_content)
+        flag_update = "UPDATE report SET nxt_apmt_flag = 1 WHERE repid = %d" % (repid)
+        cursor.execute(flag_update)
+
