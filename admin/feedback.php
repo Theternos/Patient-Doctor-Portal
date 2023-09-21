@@ -10,7 +10,8 @@
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
 
-    <title>Patients</title>
+    <?php include("../patient/config.php") ?>
+    <title>Doctors</title>
     <style>
         .popup {
             animation: transitionIn-Y-bottom 0.5s;
@@ -18,6 +19,32 @@
 
         .sub-table {
             animation: transitionIn-Y-bottom 0.5s;
+        }
+
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: relative;
+            background-color: #f9f9f9;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content label {
+            display: block;
+            padding: 8px 16px;
+            cursor: pointer;
+        }
+
+        .dropdown-content label:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
         }
     </style>
 </head>
@@ -27,7 +54,6 @@
 
     //learn from w3schools.com
 
-    session_start();
 
     if (isset($_SESSION["user"])) {
         if (($_SESSION["user"]) == "" or $_SESSION['usertype'] != 'a') {
@@ -56,7 +82,7 @@
                                 </td>
                                 <td style="padding:0px;margin:0px;">
                                     <p class="profile-title">Administrator</p>
-                                    <p class="profile-subtitle">admin@bitsathy.com</p>
+                                    <p class="profile-subtitle">admin@bitsathy.ac.in</p>
                                 </td>
                             </tr>
                             <tr>
@@ -66,6 +92,7 @@
                             </tr>
                         </table>
                     </td>
+
                 </tr>
                 <tr class="menu-row">
                     <td class="menu-btn menu-icon-dashbord">
@@ -77,8 +104,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-doctor ">
-                        <a href="doctors.php" class="non-style-link-menu ">
+                    <td class="menu-btn menu-icon-doctor">
+                        <a href="doctors.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Doctors</p>
                             </div>
@@ -113,8 +140,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-patient  menu-active menu-icon-patient-active">
-                        <a href="patient.php" class="non-style-link-menu  non-style-link-menu-active">
+                    <td class="menu-btn menu-icon-patient">
+                        <a href="patient.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Patients</p>
                             </div>
@@ -122,8 +149,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-feedback">
-                        <a href="feedback.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-feedback-active menu-active">
+                        <a href="feedback.php" class="non-style-link-menu-active">
                             <div>
                                 <p class="menu-text">Feedbacks</p>
                             </div>
@@ -136,27 +163,24 @@
             <table border="0" width="100%" style=" border-spacing: 0;margin:0;padding:0;margin-top:25px; ">
                 <tr>
                     <td width="13%">
-                        <a href="patient.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
+                        <a href="doctors.php"><button class="login-btn btn-primary-soft btn btn-icon-back" style="padding-top:11px;padding-bottom:11px;margin-left:20px;width:125px">
                                 <font class="tn-in-text">Back</font>
-                            </button>
-                        </a>
+                            </button></a>
                     </td>
                     <td>
 
                         <form action="" method="post" class="header-search">
 
-                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Patient name or Email" list="patient">&nbsp;&nbsp;
+                            <input type="search" name="search" class="input-text header-searchbar" placeholder="Search Patient or Feedback" list="doctors">&nbsp;&nbsp;
 
                             <?php
-                            echo '<datalist id="patient">';
-                            $list11 = $database->query("select  pname,pemail from patient;");
+                            echo '<datalist id="doctors">';
+                            $list11 = $database->query("SELECT pname from patient INNER JOIN feedback on feedback.pid = patient.pid;");
 
                             for ($y = 0; $y < $list11->num_rows; $y++) {
                                 $row00 = $list11->fetch_assoc();
                                 $d = $row00["pname"];
-                                $c = $row00["pemail"];
                                 echo "<option value='$d'><br/>";
-                                echo "<option value='$c'><br/>";
                             };
 
                             echo ' </datalist>';
@@ -188,10 +212,18 @@
 
                 </tr>
 
-
+                <tr>
+                    <td colspan="2" style="padding-top:30px;">
+                        <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">Add New Doctor</p>
+                    </td>
+                    <td colspan="2">
+                        <a href="?action=add&id=none&error=0" class="non-style-link"><button class="login-btn btn-primary btn button-icon btn-add-session" style="display: flex;justify-content: center;align-items: center;margin-left:75px;">Add New</font></button>
+                        </a>
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="4" style="padding-top:10px;">
-                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Patients (<?php echo $list11->num_rows; ?>)</p>
+                        <p class="heading-main12" style="margin-left: 45px;font-size:18px;color:rgb(49, 49, 49)">All Doctors (<?php echo $list11->num_rows; ?>)</p>
                     </td>
 
                 </tr>
@@ -199,9 +231,9 @@
                 if ($_POST) {
                     $keyword = $_POST["search"];
 
-                    $sqlmain = "select * from patient where pemail='$keyword' or pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' ";
+                    $sqlmain = "select * from doctor where docemail='$keyword' or docname='$keyword' or docname like '$keyword%' or docname like '%$keyword' or docname like '%$keyword%'";
                 } else {
-                    $sqlmain = "select * from patient order by pid desc";
+                    $sqlmain = "select * from doctor order by docid desc";
                 }
 
 
@@ -212,39 +244,21 @@
                     <td colspan="4">
                         <center>
                             <div class="abc scroll">
-                                <table width="93%" class="sub-table scrolldown" style="border-spacing:0;">
+                                <table width="93%" class="sub-table scrolldown" border="0">
                                     <thead>
                                         <tr>
                                             <th class="table-headin">
-
-
-                                                Name
-
+                                                Pid
                                             </th>
                                             <th class="table-headin">
-
-
-                                                Aadhar
-
+                                                Patient Name
                                             </th>
                                             <th class="table-headin">
-
-
-                                                Telephone
-
+                                                Feedbacks
                                             </th>
                                             <th class="table-headin">
-                                                Email
-                                            </th>
-                                            <th class="table-headin">
-
-                                                Date of Birth
-
-                                            </th>
-                                            <th class="table-headin">
-
                                                 Events
-
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -263,7 +277,7 @@
                                     
                                     <br>
                                     <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="patient.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Patients &nbsp;</font></button>
+                                    <a class="non-style-link" href="doctors.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Doctors &nbsp;</font></button>
                                     </a>
                                     </center>
                                     <br><br><br><br>
@@ -272,34 +286,29 @@
                                         } else {
                                             for ($x = 0; $x < $result->num_rows; $x++) {
                                                 $row = $result->fetch_assoc();
-                                                $pid = $row["pid"];
-                                                $name = $row["pname"];
-                                                $email = $row["pemail"];
-                                                $nic = $row["pnic"];
-                                                $dob = $row["pdob"];
-                                                $tel = $row["ptel"];
-
+                                                $docid = $row["docid"];
+                                                $name = $row["docname"];
+                                                $email = $row["docemail"];
+                                                $spe = $row["specialties"];
+                                                $spcil_res = $database->query("select sname from specialties where id='$spe'");
+                                                $spcil_array = $spcil_res->fetch_assoc();
+                                                $spcil_name = $spcil_array["sname"];
                                                 echo '<tr>
                                         <td> &nbsp;' .
-                                                    substr($name, 0, 35)
+                                                    substr($name, 0, 30)
                                                     . '</td>
-                                        <td>
-                                        ' . substr($nic, 0, 12) . '
+                                        <td style="text-align:center">
+                                        ' . substr($email, 0, 30) . '
                                         </td>
-                                        <td>
-                                            ' . substr($tel, 0, 10) . '
+                                        <td style="text-align:center">
+                                            ' . substr($lang[$spcil_name], 0, 40) . '
                                         </td>
-                                        <td>
-                                        ' . substr($email, 0, 50) . '
-                                         </td>
-                                        <td>
-                                        ' . substr($dob, 0, 10) . '
-                                        </td>
-                                        <td >
+
+                                        <td style="text-align:center">
                                         <div style="display:flex;justify-content: center;">
-                                        
-                                        <a href="?action=view&id=' . $pid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       
+                                        &nbsp;&nbsp;&nbsp;
+                                        <a href="?action=view&id=' . $docid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
+                                       &nbsp;&nbsp;&nbsp;
                                         </div>
                                         </td>
                                     </tr>';
@@ -326,42 +335,47 @@
 
         $id = $_GET["id"];
         $action = $_GET["action"];
-        $sqlmain = "select * from patient where pid='$id'";
-        $result = $database->query($sqlmain);
-        $row = $result->fetch_assoc();
-        $name = $row["pname"];
-        $email = $row["pemail"];
-        $nic = $row["pnic"];
-        $dob = $row["pdob"];
-        $tele = $row["ptel"];
-        $address = $row["paddress"];
-        echo '
+        if ($action == 'drop') {
+            $nameget = $_GET["name"];
+            echo '
             <div id="popup1" class="overlay">
                     <div class="popup">
                     <center>
-                        <a class="close" href="patient.php">&times;</a>
+                        <h2>Are you sure?</h2>
+                        <a class="close" href="doctors.php">&times;</a>
                         <div class="content">
+                            You want to delete this record<br>(' . substr($nameget, 0, 40) . ').
+                            
+                        </div>
+                        <div style="display: flex;justify-content: center;">
+                        <a href="delete-doctor.php?id=' . $id . '" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"<font class="tn-in-text">&nbsp;Yes&nbsp;</font></button></a>&nbsp;&nbsp;&nbsp;
+                        <a href="doctors.php" class="non-style-link"><button  class="btn-primary btn"  style="display: flex;justify-content: center;align-items: center;margin:10px;padding:10px;"><font class="tn-in-text">&nbsp;&nbsp;No&nbsp;&nbsp;</font></button></a>
 
                         </div>
+                    </center>
+            </div>
+            </div>
+            ';
+        } elseif ($action == 'view') {
+            $sqlmain = "select * from feedback INNER JOIn Processing where docid='$id'";
+            $result = $database->query($sqlmain);
+            $row = $result->fetch_assoc();
+            $name = $row["docname"];
+            $email = $row["docemail"];
+            $spe = $row["specialties"];
+            echo '
+            <div id="popup1" class="overlay">
+                    <div class="popup">
+                    <center>
+                        <h2></h2>
+                        <a class="close" href="doctors.php">&times;</a>
                         <div style="display: flex;justify-content: center;">
                         <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                         
                             <tr>
                                 <td>
-                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details.</p><br><br>
+                                    <p style="padding: 0;margin: 0;text-align: left;font-size: 25px;font-weight: 500;">View Details</p><br><br>
                                 </td>
-                            </tr>
-                            <tr>
-                                
-                                <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Patient ID: </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                    P-' . $id . '<br><br>
-                                </td>
-                                
                             </tr>
                             
                             <tr>
@@ -388,7 +402,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="nic" class="form-label">Aadhar No: </label>
+                                    <label for="nic" class="form-label">Licence No: </label>
                                 </td>
                             </tr>
                             <tr>
@@ -408,49 +422,44 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    <label for="spec" class="form-label">Address: </label>
-                                    
+                                    <label for="spec" class="form-label">Specialties: </label>  
                                 </td>
                             </tr>
                             <tr>
                             <td class="label-td" colspan="2">
-                            ' . $address . '<br><br>
+                            ' . $spcil_name . '<br><br>
                             </td>
                             </tr>
-                            <tr>
-                                
-                                <td class="label-td" colspan="2">
-                                    <label for="name" class="form-label">Date of Birth: </label>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="label-td" colspan="2">
-                                    ' . $dob . '<br><br>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td colspan="2">
-                                    <a href="patient.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn" ></a>
-                                
-                                    
-                                </td>
-                
-                            </tr>
-                           
+                            <tr> '; ?>
+            <tr>
+                <td class="label-td" colspan="2">
+                    <label for="spec" class="form-label">Languages known: </label>
+                </td>
+            </tr>
+            <td class="label-td" colspan="2">
+                <?php
+                $doc_lang = "SELECT `language` from doc_language WHERE docid = '$id'";
+                $doc_lang_result = $database->query($doc_lang);
+                $languages = array(); // Initialize an array to hold languages
 
-                        </table>
-                        </div>
-                    </center>
-                    <br><br>
-            </div>
-            </div>
-            ';
+                while ($doc_lang_row = $doc_lang_result->fetch_assoc()) {
+                    $languages[] = $doc_lang_row['language'];
+                }
+                echo implode(', ', $languages);
+                ?><br><br>
+            </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <a href="doctors.php"><input type="button" value="OK" class="login-btn btn-primary-soft btn"></a>
+                </td>
+
+            </tr>
+            </center>
+    <?php
+        }
     };
-
-    ?>
-    </div>
-
+    ?> </div>
 </body>
 
 </html>

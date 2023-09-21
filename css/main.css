@@ -469,6 +469,18 @@ input[type=search]:focus {
   background-size: 23px 23px;
 }
 
+.menu-icon-feedback {
+  background-image: url('../img/icons/feedback.svg');
+  background-size: 23px 23px;
+}
+
+.menu-icon-feedback:hover,
+.menu-icon-feedback-active {
+  color: var(--primarycolor);
+  background-image: url('../img/icons/feedback-iceblue.svg');
+  background-size: 23px 23px;
+}
+
 .menu-icon-donation:hover,
 .menu-icon-donation-active {
   color: var(--primarycolor);
@@ -931,7 +943,7 @@ input[type=search]:focus {
 }
 
 /* Style the select container */
-select {
+.language-select select {
   padding: 10px;
   /* Add padding for spacing */
   font-size: 16px;

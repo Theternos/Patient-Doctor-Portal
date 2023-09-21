@@ -146,7 +146,15 @@
             </a></div>
         </td>
     </tr>
-
+    <tr class="menu-row">
+        <td class="menu-btn menu-icon-feedback">
+            <a href="feedback.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Feedbacks</p>
+                </div>
+            </a>
+        </td>
+    </tr>
     </table>
     </div>
     <div class="dash-body">
