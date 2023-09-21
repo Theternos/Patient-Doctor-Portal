@@ -732,8 +732,8 @@ input[type=search]:focus {
 .doctor-header {
   background-image: url(../img/b8.jpg);
   color: rgba(0, 0, 0, 0.87);
-  background-size: 100%;
   background-repeat: no-repeat;
+  background-size: cover;
   padding: 20px;
   padding-left: 35px;
 }
