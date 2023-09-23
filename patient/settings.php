@@ -148,6 +148,100 @@
         .custom-button:hover {
             background-color: #2980b9;
         }
+
+        /* Style the select container */
+        select {
+            padding: 10px;
+            /* Add padding for spacing */
+            font-size: 16px;
+            /* Increase font size */
+            border: 2px solid #ccc;
+            /* Add a border */
+            border-radius: 5px;
+            /* Rounded corners */
+            background-color: #fff;
+            /* White background */
+            color: #333;
+            /* Text color */
+            width: 100%;
+            /* Full width by default */
+            transition: border-color 0.2s ease;
+            /* Smooth border transition */
+        }
+
+        /* Style the select on hover and focus */
+        select:hover,
+        select:focus {
+            border-color: #555;
+            /* Darker border on hover/focus */
+        }
+
+        /* Style the dropdown arrow */
+        select::-ms-expand {
+            display: none;
+            /* Hide default arrow in IE/Edge */
+        }
+
+        select option {
+            font-size: 14px;
+            /* Font size for options */
+        }
+
+        /* Style the select when it's disabled */
+        select:disabled {
+            background-color: #f5f5f5;
+            /* Light gray background */
+            cursor: not-allowed;
+            /* Disabled cursor */
+        }
+
+        /* Style the select when it's in a disabled state */
+        select[disabled] option {
+            color: #999;
+            /* Grayed-out text for options */
+        }
+
+        /* Style the select when it's in a disabled state */
+        select[disabled]:hover,
+        select[disabled]:focus {
+            border-color: #ccc;
+            /* Lighter border on hover/focus */
+        }
+
+        .url-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 400px;
+        }
+
+        #url {
+            flex-grow: 1;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .copy-link {
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            outline: none;
+            width: 100px;
+            transition: background-color 0.3s;
+        }
+
+        .copy-link:hover {
+            background-color: #0056b3;
+        }
     </style>
 
 
@@ -338,8 +432,6 @@
                         </form>
                     </div>
                 </td>
-
-
             </tr>
             <tr>
                 <td colspan="4">
@@ -348,7 +440,29 @@
                         <table class="filter-container" style="border: none;" border="0">
                             <tr>
                                 <td colspan="4">
-                                    <p style="font-size: 20px">&nbsp;</p>
+                                    <p style="font-size: 5px">&nbsp;</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 25%;">
+                                    <a href="?action=share&id=<?php echo $userid ?>" class="non-style-link">
+                                        <div class="dashboard-items setting-tabs" style="padding:20px;margin:auto;width:95%;display: flex;">
+                                            <div class="btn-icon-back dashboard-icons-setting " style="background-image: url('../img/icons/view-iceblue.svg');"></div>
+                                            <div>
+                                                <div class="h1-dashboard">
+                                                    <?php echo $lang['share_docs'] ?>
+                                                </div><br>
+                                                <div class="h3-dashboard" style="font-size: 15px;">
+                                                    <?php echo $lang['view-pers-info'] ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4">
+                                    <p style="font-size: 4px">&nbsp;</p>
                                 </td>
                             </tr>
                             <tr>
@@ -440,7 +554,6 @@
                                         </div>
                                     </a>
                                 </td>
-
                             </tr>
                             <tr>
                                 <td colspan="4">
@@ -465,7 +578,6 @@
                                         </div>
                                     </a>
                                 </td>
-
                             </tr>
                         </table>
                     </center>
@@ -480,6 +592,26 @@
 
         $id = $_GET["id"];
         $action = $_GET["action"];
+        if ($action == 'share') {
+            $pid = $_GET["id"];
+            $link = "http://localhost/technoverse/view/docvault.php?pid=" . $pid;
+    ?>
+            <div id="popup1" class="overlay">
+                <div class="popup" style="margin-top: 40vh;">
+                    <center>
+                        <h2><?php echo $lang["share_docs"] ?></h2>
+                        <a class="close" href="settings.php">&times;</a>
+                        <div class="content">
+                            <div class="url-container">
+                                <p id="url"><?php echo $link ?></p>
+                                <button id="copyText" class="copy-link">Copy link</button>
+                            </div>
+                        </div>
+                    </center>
+                </div>
+            </div>
+        <?php
+        }
         if ($action == 'drop') {
             $nameget = $_GET["name"];
             echo '
@@ -785,65 +917,73 @@
                                             <label for="Tele" class="form-label"><?php echo $lang['org-choice'] ?></label>
                                         </td>
                                     </tr>
-                                    <form action="donor_register.php" method="post">
+                                    <form id="donorForm" action="donor_register.php" method="post">
                                         <input type="hidden" name="donate_type" value="<?php echo $donate_type ?>">
                                         <tr>
                                             <td class="td-label" colspan="2">
                                                 <div class="label-td display-text">
-                                                    <label for="heart"><?php echo $lang['dil'] ?></label>
-                                                    <select class="label-td display-text" name="heart" id="heart">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="heart" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['dil'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="lungs"><?php echo $lang['nurai-eeral'] ?></label>
-                                                    <select class="label-td display-text" name="lungs" id="lungs">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="lungs" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['nurai-eeral'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="kidneys"><?php echo $lang['siru-neeragam'] ?></label>
-                                                    <select class="label-td display-text" name="kidneys" id="kidneys">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="kidneys" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['siru-neeragam'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="liver"><?php echo $lang['eeral'] ?> </label>
-                                                    <select class="label-td display-text" name="liver" id="liver">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="liver" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['eeral'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="corneas"><?php echo $lang['cornea'] ?> </label>
-                                                    <select class="label-td display-text" name="corneas" id="corneas">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="corneas" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['cornea'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="pancreas"><?php echo $lang['pancreas'] ?> </label>
-                                                    <select class="label-td display-text" name="pancreas" id="pancreas">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="pancreas" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['pancreas'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="tissue"><?php echo $lang['tissuel'] ?> </label>
-                                                    <select class="label-td display-text" name="tissue" id="tissue">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="tissue" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['tissue'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                                 <div class="label-td display-text">
-                                                    <label for="small_bowel"><?php echo $lang['small-bowel'] ?> </label>
-                                                    <select class="label-td display-text" name="small_bowel" id="small_bowel">
-                                                        <option value="No"><?php echo $lang['no'] ?></option>
-                                                        <option value="Yes"><?php echo $lang['yes'] ?></option>
-                                                    </select><br>
+                                                    <label class="radio-label">
+                                                        <input type="radio" name="small_bowel" value="1">
+                                                        <span class="radio-custom"></span>
+                                                        <w class="display-text" style="font-size: 14px;"><?php echo $lang['small-bowel'] ?></w>
+                                                    </label>
+                                                    <br>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1034,6 +1174,20 @@
 
 </body>
 <script>
+    function selectOrgan(radio) {
+        var organ = radio.value;
+        var isSelected = radio.checked;
+
+        if (isSelected) {
+            // Set the value to 1 when the radio button is selected
+            document.querySelector('input[name="' + organ + '"]').value = "1";
+        } else {
+            // Set the value to 0 when the radio button is unselected
+            document.querySelector('input[name="' + organ + '"]').value = "0";
+        }
+    }
+</script>
+<script>
     const checkboxes = document.querySelectorAll('input[type="checkbox"][name^="organ"]');
 
     checkboxes.forEach(checkbox => {
@@ -1072,6 +1226,26 @@
 
         // Redirect to the new URL
         window.location.href = newURL;
+    });
+</script>
+<script>
+    document.getElementById('copyText').addEventListener('click', function() {
+        var urlElement = document.getElementById('url');
+        var textToCopy = urlElement.textContent;
+
+        var textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+
+        // Change the button text briefly to indicate success
+        this.textContent = 'Copied!';
+        setTimeout(function() {
+            document.getElementById('copyText').textContent = 'Copy link';
+        }, 1000);
     });
 </script>
 

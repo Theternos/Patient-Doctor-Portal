@@ -23,8 +23,12 @@ $scheduleid = $_POST['scheduleid'];
 $appoid = $_POST['appoid'];
 $uid = $_POST['uid'];
 $nextappointchoice = $_POST['nextappointchoice'];
-if ($nextappointchoice != NULL)
+if ($nextappointchoice != NULL) {
     $nextappointment = $_POST['nextappointment'];
+}
+if ($nextappointchoice == 'Not needed') {
+    $nextappointment = 0;
+}
 echo $pid . '<br>';
 echo $scheduleid . '<br>';
 echo $appoid . '<br>';
@@ -34,7 +38,7 @@ echo $nextappointment . '<br>';
 echo $prescription_name . '<br>';
 
 $uploadDirectory = '../uploads/report/' . $pid . $appoid . $scheduleid; // Specify the directory where you want to store uploaded files
-echo $uploadDirectory . '<br>';
+echo $uploadDirectory . 'upload <br>';
 $uploadedFile = $_FILES['uploadedFile']['name'];
 if ($uploadedFile) {
     $fileExtension = pathinfo($uploadedFile, PATHINFO_EXTENSION);
@@ -50,9 +54,10 @@ if ($uploadedFile) {
         echo "Error uploading file.";
     }
 }
-$sqll = "INSERT INTO report (pid, docid, scheduleid, appoid, `uid`, prescription, report, next_appointment) VALUES ('$pid', '$userid', '$scheduleid', '$appoid', '$uid', '$prescription_name', '$uploadPath', '$next_appointment')";
+$sqll = "INSERT INTO report (pid, docid, scheduleid, appoid, `uid`, prescription, report, next_appointment) VALUES ('$pid', '$userid', '$scheduleid', '$appoid', '$uid', '$prescription_name', '$uploadPath', '$nextappointment')";
+echo $sqll . "<br>";
+$sql = "UPDATE appointment SET `status` = 1 WHERE appoid = '$appoid'";
 echo $sql;
-$sql = "UPDATE appointment SET `status` = 1 WHERE appoid = $appoid";
 $result = $database->query($sqll);
 $result = $database->query($sql);
 header("location: appointment.php");

@@ -147,6 +147,15 @@
         </td>
     </tr>
     <tr class="menu-row">
+        <td class="menu-btn menu-icon-payment">
+            <a href="payment.php" class="non-style-link-menu">
+                <div>
+                    <p class="menu-text">Payments</p>
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr class="menu-row">
         <td class="menu-btn menu-icon-feedback">
             <a href="feedback.php" class="non-style-link-menu">
                 <div>

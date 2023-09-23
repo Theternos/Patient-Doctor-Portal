@@ -138,8 +138,8 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-home menu-active menu-icon-home-active">
-                        <a href="index.php" class="non-style-link-menu non-style-link-menu-active">
+                    <td class="menu-btn menu-icon-home">
+                        <a href="index.php" class="non-style-link-menu">
                             <div>
                                 <p class="menu-text">Home</p>
                             </div>
@@ -147,19 +147,10 @@
                     </td>
                 </tr>
                 <tr class="menu-row">
-                    <td class="menu-btn menu-icon-appoinment">
-                        <a href="reception-test.php" class="non-style-link-menu">
+                    <td class="menu-btn menu-icon-appoinment-active menu-active">
+                        <a href="medicine.php" class="non-style-link-menu-active">
                             <div>
-                                <p class="menu-text">Add Info</p>
-                            </div>
-                        </a>
-                    </td>
-                </tr>
-                <tr class="menu-row">
-                    <td class="menu-btn menu-icon-doctor">
-                        <a href="doctors.php" class="non-style-link-menu">
-                            <div>
-                                <p class="menu-text">All Doctors</p>
+                                <p class="menu-text">Medicines</p>
                             </div>
                         </a>
                     </td>
@@ -168,7 +159,7 @@
                     <td class="menu-btn menu-icon-patient">
                         <a href="patient.php" class="non-style-link-menu">
                             <div>
-                                <p class="menu-text">All Patients</p>
+                                <p class="menu-text">Today's Patients</p>
                             </div>
                         </a>
                     </td>

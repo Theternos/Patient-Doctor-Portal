@@ -27,8 +27,188 @@
 
     <script src="js/modernizr-2.6.2.min.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/divi.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
   </head>
   <style>
+    #chat-overlay {
+      background: rgba(255, 255, 255, 0.1);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      display: none;
+    }
+
+    #toolbar-title {
+      padding-left: 5px;
+      font-size: 14px;
+    }
+    .chat-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #006dd3;
+      color: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      transition: background-color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .chat-button:hover {
+      background-color: #0057a8;
+    }
+
+    .chat-containerr {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      height: 500px;
+      width: 400px; /* Adjust width as needed */
+      max-height: 80vh; /* Maximum height relative to viewport height */
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      display: none;
+      flex-direction: column;
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s ease-in-out;
+      will-change: transform;
+    }
+
+    .chat-containerr.opened {
+      transform: scaleY(1);
+    }
+
+    .chat-header {
+      background-color: #006dd3;
+      color: #fff;
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .minimise-button {
+      cursor: pointer;
+      margin-left: auto;
+      margin-right: 10px;
+    }
+
+    .chat-messages {
+      display: flex;
+
+      padding: 10px;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    .chat-input {
+      display: flex;
+      padding: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #chat-input {
+      color: #333333;
+      flex-grow: 1;
+      padding: 5px;
+      border: none;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    #send-button {
+      background-color: #006dd3;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      padding: 3px 6px;
+      font-size: 18px !important;
+    }
+
+    .message-bubble {
+      max-width: 70%; /* Limit message width */
+      padding: 10px;
+      margin: 5px;
+      border-radius: 10px;
+      font-size: 12px; /* Adjust font size as needed */
+      font-family: Open Sans;
+      word-wrap: break-word; /* Wrap long messages */
+    }
+
+    .user-message {
+      background-color: #006dd3;
+      color: #fff;
+      align-self: flex-end;
+      padding: 3px 10px 3px 10px; /* Right-align user messages */
+      border-radius: 5px;
+    }
+
+    .bot-message {
+      background-color: #e1e1e1;
+      color: #000;
+      justify-content: flex-start; /* Left-align bot messages */
+    }
+
+    .chat-messages {
+      /* ... */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* Align messages to the left by default */
+    }
+
+    .message-container {
+      display: flex;
+      justify-content: flex-end; /* Right-align user messages */
+      margin-bottom: 10px; /* Add some spacing between messages */
+    }
+
+    .bot-message {
+      background-color: #ffffff;
+      color: #000;
+      justify-content: flex-start; /* Left-align bot messages */
+    }
+
+    #chat-input:focus {
+      outline: none;
+      border: none;
+    }
+
+    #online-status {
+      width: 10px;
+      height: 10px;
+      margin-left: 8px;
+      margin-top: 2px;
+      padding-left: 15px;
+      background-color: #4caf50; /* Green color for online */
+      border-radius: 50%;
+      margin-right: 5px; /* Add some spacing to adjust as needed */
+      display: inline-block;
+    }
+
+    #openAI-message {
+      font-size: 10px;
+      color: #747474;
+      margin-bottom: 4px;
+      font-weight: 100;
+      margin-left: 5px;
+      font-style: italic;
+    }
     @media only screen and (min-width: 992px) {
       .oc_work .et_pb_row_18:before {
         border-left: 0px dotted #3d94c1 !important;
@@ -104,7 +284,7 @@
       margin-top: auto !important;
     }
     .chat-container {
-      width: 50%;
+      width: 100%;
       min-height: 500px;
       max-height: 518px;
       background-color: #fff;
@@ -292,7 +472,34 @@
           </div>
         </div>
       </header>
-
+      <div>
+        <div class="chat-button" id="chat-button">
+          <i class="material-icons">chat</i>
+        </div>
+        <div class="chat-containerr" id="chat-container">
+          <div class="chat-container">
+            <div class="chat-header">SleekBot Assistant
+              <span class="minimise-button" id="minimise-button">
+                <i class="material-icons">close</i>
+              </span>
+            </div>
+              <div class="chat-messages" id="response-container">
+                <!-- Chat messages will be displayed here -->
+              </div>
+              <div class="chat-input">
+                <input
+                  type="text"
+                  id="query"
+                  name="query"
+                  placeholder="Enter your query..."
+                  required
+                />
+                <button type="button" id="search-button">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="container"></div>
       <aside id="fh5co-hero" class="js-fullheight">
         <div class="flexslider js-fullheight">
@@ -306,7 +513,7 @@
                   <div class="slider-text-inner">
                     <h2>Start Your Health Journey with Our Hospital</h2>
                     <p>
-                      <a href="#" class="btn btn-primary btn-lg">Get started</a>
+                      <a href="login.php" class="btn btn-primary btn-lg">Get started</a>
                     </p>
                   </div>
                 </div>
@@ -320,7 +527,7 @@
                   <div class="slider-text-inner">
                     <h2>Elevate Your Health and Well-being Today!</h2>
                     <p>
-                      <a href="#" class="btn btn-primary btn-lg">Get started</a>
+                      <a href="login.php" class="btn btn-primary btn-lg">Get started</a>
                     </p>
                   </div>
                 </div>
@@ -334,7 +541,7 @@
                   <div class="slider-text-inner">
                     <h2>Nurturing Innovative Healthcare Solutions</h2>
                     <p>
-                      <a href="#" class="btn btn-primary btn-lg">Get started</a>
+                      <a href="login.php" class="btn btn-primary btn-lg">Get started</a>
                     </p>
                   </div>
                 </div>
@@ -344,59 +551,6 @@
         </div>
       </aside>
       <div id="fh5co-work-section" class="fh5co-light-grey-section">
-        <div class="bot-container container">
-          <div class="chatbot_header" style="width: 50%">
-            <div class="row">
-              <div class="col-md-4 animate-box" style="width: 80%">
-                <div class="services">
-                  <div
-                    class="desc"
-                    style="margin-top: 20px; text-align: center"
-                  >
-                    <h2>The MediSearch Assistant</h2>
-                    <p>
-                      Introducing our healthcare Medisearch Bot: a virtual
-                      assistant designed to provide accurate and timely health
-                      information to patients. This AI-powered bot is here to
-                      answer your health-related questions, offer guidance on
-                      symptoms, and provide general wellness advice, ensuring
-                      you have the information you need to make informed
-                      decisions about your health.
-                    </p>
-                  </div>
-                  <div class="desc" style="margin-top: 50px">
-                    <h2>The MediSearch Assistant</h2>
-                    <p>
-                      Introducing our healthcare Medisearch Bot: a virtual
-                      assistant designed to provide accurate and timely health
-                      information to patients. This AI-powered bot is here to
-                      answer your health-related questions, offer guidance on
-                      symptoms, and provide general wellness advice, ensuring
-                      you have the information you need to make informed
-                      decisions about your health.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="chat-container">
-            <div class="chat-header">MediSearch Assistant</div>
-            <div class="chat-messages" id="response-container">
-              <!-- Chat messages will be displayed here -->
-            </div>
-            <div class="chat-input">
-              <input
-                type="text"
-                id="query"
-                name="query"
-                placeholder="Enter your query..."
-                required
-              />
-              <button type="button" id="search-button">Send</button>
-            </div>
-          </div>
-        </div>
         <div id="fh5co-services-section">
           <div class="container">
             <div class="row">
@@ -883,7 +1037,7 @@
               <li><a href="#">Medi Search</a></li>
               <li><a href="#">Online Pharmacy</a></li>
               <li><a href="#">Scans & X-Rays</a></li>
-              <li><a href="#">Assintant</a></li>
+              <li><a href="#">Assistant</a></li>
             </ul>
           </div>
 
@@ -910,7 +1064,7 @@
           <div class="col-md-12 fh5co-copyright text-center">
             <p>
               <span
-                >Designed with ❤️ by
+                >Designed with ❤ by
                 <a href="http://freehtml5.co/" target="_blank"></a>
                 Team Sleek
               </span>
@@ -1005,5 +1159,63 @@
         xhr.send("query=" + encodeURIComponent(query));
       });
     });
+  </script>
+  <script>
+    const chatButton = document.getElementById("chat-button");
+    const chatContainer = document.getElementById("chat-container");
+    const minimiseButton = document.getElementById("minimise-button");
+    const chatInput = document.getElementById("chat-input");
+    const sendButton = document.getElementById("send-button");
+    const chatMessages = document.getElementById("chat-messages");
+
+    let isChatOpen = false;
+
+    chatButton.addEventListener("click", () => {
+      isChatOpen = !isChatOpen;
+      if (isChatOpen) {
+        chatContainer.style.transform = "scaleY(1)";
+        chatContainer.style.display = "flex";
+      } else {
+        chatContainer.style.transform = "scaleY(0)";
+        setTimeout(() => {
+          chatContainer.style.display = "none";
+        }, 300); // Delay hiding to allow the animation to complete
+      }
+    });
+
+    minimiseButton.addEventListener("click", () => {
+      isChatOpen = false;
+      chatContainer.style.transform = "scaleY(0)";
+      setTimeout(() => {
+        chatContainer.style.display = "none";
+      }, 300); // Delay hiding to allow the animation to complete
+    });
+
+    sendButton.addEventListener("click", () => {
+      const message = chatInput.value.trim();
+      if (message !== "") {
+        sendMessage(message, "user");
+        chatInput.value = "";
+      }
+    });
+
+    function sendMessage(message) {
+      const messageDiv = document.createElement("div");
+      messageDiv.className = "user-message";
+      messageDiv.innerHTML = `<div class="message-bubble">${message}</div>`;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function sendMessage(message, sender) {
+      const messageDiv = document.createElement("div");
+      messageDiv.className =
+        sender === "user"
+          ? "user-message message-bubble"
+          : "bot-message message-bubble";
+      messageDiv.textContent = message;
+      chatMessages.appendChild(messageDiv);
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
   </script>
 </html>

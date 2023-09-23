@@ -369,10 +369,16 @@
                                     <tr>
                                         <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
                                             <label style="margin-top: 8px; margin-right:8px;" for="spec" class="form-label">Allergy:&nbsp; </label>
-                                            <select name="allergy" class="input-text">
-                                                <option>No</option>
-                                                <option>Yes</option>
+                                            <select name="allergy" class="input-text" id="allergySelect">
+                                                <option value="no">No</option>
+                                                <option value="yes">Yes</option>
                                             </select>
+                                        </td>
+                                    </tr>
+                                    <tr id="infoRow" style="display:none;">
+                                        <td class="label-td" colspan="2" style="display:flex; flex-direction:row;">
+                                            <label style="margin-top: 8px; margin-right:8px;" for="spec" class="form-label">Info:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                                            <input name="what_allergy" class="input-text" placeholder="To what you are Allergic?" id="infoInput" style="min-width: 100%;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -542,5 +548,24 @@
     </div>
 
 </body>
+<script>
+    // Get references to the select and input elements
+    const allergySelect = document.getElementById('allergySelect');
+    const infoRow = document.getElementById('infoRow');
+    const infoInput = document.getElementById('infoInput');
+
+    // Add an event listener to the select element
+    allergySelect.addEventListener('change', function() {
+        if (allergySelect.value === 'yes') {
+            // If "Yes" is selected, show the info input box
+            infoRow.style.display = 'flex';
+        } else {
+            // If "No" is selected, hide the info input box
+            infoRow.style.display = 'none';
+            // Clear the input field when hiding
+            infoInput.value = '';
+        }
+    });
+</script>
 
 </html>

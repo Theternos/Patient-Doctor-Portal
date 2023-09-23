@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <?php include("../patient/config.php") ?>
 
     <title>Dashboard</title>
     <style>
@@ -225,7 +226,7 @@
                     <td colspan="4">
                         <table border="0" width="100%"">
                             <tr>
-                                <td width=" 50%">
+                                <td width=" 25%">
                             <center>
                                 <table class="filter-container" style="border: none;" border="0">
                                     <tr>
@@ -235,7 +236,7 @@
                                     </tr>
                                     <tr>
                                         <td style="width: 25%;">
-                                            <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex">
+                                            <div class="dashboard-items" style="padding:20px;width:100%;display: flex; justify-content:flex-start;">
                                                 <div>
                                                     <div class="h1-dashboard">
                                                         <?php echo $doctorrow->num_rows  ?>
@@ -247,8 +248,10 @@
                                                 <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/doctors-hover.svg');"></div>
                                             </div>
                                         </td>
+                                    </tr>
+                                    <tr>
                                         <td style="width: 25%;">
-                                            <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex;">
+                                            <div class="dashboard-items" style="padding:20px;width:100%;display: flex; justify-content:flex-start;">
                                                 <div>
                                                     <div class="h1-dashboard">
                                                         <?php echo $patientrow->num_rows  ?>
@@ -261,36 +264,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td style="width: 25%;">
-                                            <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex; ">
-                                                <div>
-                                                    <div class="h1-dashboard">
-                                                        <?php echo "96%"  ?>
-                                                    </div><br>
-                                                    <div class="h3-dashboard">
-                                                        Oxygen Level&nbsp;&nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/oxygen-iceblue.svg'); background-size: 25px 25px;"></div>
-                                            </div>
-                                        </td>
 
-                                        <td style="width: 25%;">
-                                            <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex;padding-top:21px;padding-bottom:21px;">
-                                                <div>
-                                                    <div class="h1-dashboard">
-                                                        <?php echo "72"  ?>
-                                                    </div><br>
-                                                    <div class="h3-dashboard">
-                                                        Heart Rate&nbsp;
-                                                    </div>
-                                                </div>
-                                                <div class="btn-icon-back dashboard-icons" style="background-image: url('../img/icons/pulse-iceblue.svg'); background-size: 25px 25px;"></div>
-                                            </div>
-                                        </td>
-
-                                    </tr>
                                 </table>
                             </center>
 
@@ -306,7 +280,7 @@
                                             <th class="table-headin">
 
 
-                                                Appoint. Number
+                                                Session ID
 
                                             </th>
                                             <th class="table-headin">
@@ -331,7 +305,7 @@
 
                                         <?php
                                         $nextweek = date("Y-m-d", strtotime("+1 week"));
-                                        $sqlmain = "select * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  patient.pid=$userid  and schedule.scheduledate>='$today' order by schedule.scheduledate asc";
+                                        $sqlmain = "select * from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid where schedule.scheduledate>='$today' order by schedule.scheduledate asc";
                                         //echo $sqlmain;
                                         $result = $database->query($sqlmain);
 
@@ -365,7 +339,7 @@
                                                     $apponum
                                                     . '</td>
                                                         <td style="padding:20px;"> &nbsp;' .
-                                                    substr($title, 0, 30)
+                                                    substr($lang[$title], 0, 30)
                                                     . '</td>
                                                         <td>
                                                         ' . substr($docname, 0, 20) . '

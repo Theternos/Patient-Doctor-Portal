@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
-
+    <?php include("../patient/config.php") ?>
     <title>Schedule</title>
     <style>
         .popup {
@@ -282,7 +282,7 @@
                                             $nop = $row["nop"];
                                             echo '<tr>
                                         <td> &nbsp;' .
-                                                substr($title, 0, 30)
+                                                substr($lang[$title], 0, 40)
                                                 . '</td>
                                         
                                         <td style="text-align:center;">
@@ -511,7 +511,7 @@
                             </tr>
                             <tr>
                                 <td class="label-td" colspan="2">
-                                    ' . $title . '<br><br>
+                                    ' . $lang[$title] . '<br><br>
                                 </td>
                                 
                             </tr>

@@ -365,15 +365,17 @@
                                 <table class="filter-container" style="border: none;" border="0">
                                     <tr>
                                         <td colspan="4">
-                                            <p style="font-size: 20px;font-weight:600;padding-left: 30px; margin-top:0;" class="anime"><?php echo $lang['livestatuss'] ?></p>
+                                            <p style="font-size: 20px; font-weight: 600; padding-left: 30px; margin-top: 0;" class="anime">
+                                                <?php echo $lang['livestatus'] ?>
+                                            </p>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 25%; transform:scale(.85)">
-                                            <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex">
+                                        <td style="width: 25%; transform: scale(.85)">
+                                            <div class="dashboard-items" style="padding: 20px; margin: auto; width: 95%; display: flex">
                                                 <div>
-                                                    <div class="h1-dashboard">
-                                                        <?php echo "72"  ?>
+                                                    <div class="h1-dashboard" id="heartRate">
+                                                        <!-- Heart Rate will be displayed here -->
                                                     </div><br>
                                                     <div class="h3-dashboard">
                                                         <?php echo $lang['heartrate'] ?>&nbsp;&nbsp;
@@ -384,17 +386,17 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 25%;transform:scale(.85)">
-                                            <div class="dashboard-items" style="padding:20px;margin:auto;width:95%;display: flex; ">
+                                        <td style="width: 25%; transform: scale(.85)">
+                                            <div class="dashboard-items" style="padding: 20px; margin: auto; width: 95%; display: flex; ">
                                                 <div>
-                                                    <div class="h1-dashboard">
-                                                        <?php echo "96%"  ?>
+                                                    <div class="h1-dashboard" id="spo2">
+                                                        <!-- SPO2 will be displayed here -->
                                                     </div><br>
                                                     <div class="h3-dashboard">
                                                         <?php echo $lang['oxygenlevel'] ?>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     </div>
                                                 </div>
-                                                <div class="btn-icon-back dashboard-icons" style="margin-left: 0px;background-image: url('../img/icons/oxygen-iceblue.svg'); background-size: 25px 25px;"></div>
+                                                <div class="btn-icon-back dashboard-icons" style="margin-left: 0px; background-image: url('../img/icons/oxygen-iceblue.svg'); background-size: 25px 25px;"></div>
                                             </div>
                                         </td>
                                     </tr>
@@ -584,6 +586,24 @@
 
         // Redirect to the new URL
         window.location.href = newURL;
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        function updateHeartRate() {
+            var heartRate = Math.floor(Math.random() * (91 - 88 + 1)) + 71;
+            $("#heartRate").text(heartRate + " BPM");
+        }
+
+        function updateSpo2() {
+            var spo2 = Math.floor(Math.random() * (98 - 96 + 1)) + 96;
+            $("#spo2").text(spo2 + "%");
+        }
+
+        updateHeartRate();
+        updateSpo2();
+        setInterval(updateHeartRate, 5000);
+        setInterval(updateSpo2, 7000);
     });
 </script>
 

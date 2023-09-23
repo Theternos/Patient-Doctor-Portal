@@ -1,0 +1,8 @@
+twilio
+mysql.connector
+smtplib
+sys
+uuid
+json
+medisearch_client
+requests

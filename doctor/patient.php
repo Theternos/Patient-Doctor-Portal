@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/admin.css">
     <link rel="icon" href="../img/logo.png" type="image/x-icon">
+    <?php include("../patient/config.php") ?>
 
     <title>Patients</title>
     <style>
@@ -132,23 +133,23 @@
             if (isset($_POST["search"])) {
                 $keyword = $_POST["search12"];
 
-                $sqlmain = "select * from patient where pemail='$keyword' or pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' ";
-                $selecttype = "my";
+                $sqlmain = "SELECT * from patient where pemail='$keyword' or pname='$keyword' or pname like '$keyword%' or pname like '%$keyword' or pname like '%$keyword%' ";
+                $selecttype = "My";
             }
 
             if (isset($_POST["filter"])) {
-                if ($_POST["showonly"] == 'all') {
-                    $sqlmain = "select * from patient";
+                if ($_POST["showonly"] == 'All') {
+                    $sqlmain = "SELECT  patient.pid, appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid where appointment.status=1";
                     $selecttype = "All";
                     $current = "All patients";
                 } else {
-                    $sqlmain = "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.docid=$userid;";
+                    $sqlmain = "SELECT  patient.pid, appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid where doctor.docid=$userid and appointment.status=1";
                     $selecttype = "My";
-                    $current = "My patients Only";
+                    $current = "My Patients Only";
                 }
             }
         } else {
-            $sqlmain = "select * from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid where schedule.docid=$userid;";
+            $sqlmain = "SELECT patient.pid, appointment.appoid,schedule.scheduleid,schedule.title,doctor.docname,patient.pname,schedule.scheduledate,schedule.scheduletime,appointment.apponum,appointment.appodate from schedule inner join appointment on schedule.scheduleid=appointment.scheduleid inner join patient on patient.pid=appointment.pid inner join doctor on schedule.docid=doctor.docid  where  doctor.docid=$userid and appointment.status=1";
             $selecttype = "My";
         }
 
@@ -233,61 +234,56 @@
                                     <td width="30%">
                                         <select name="showonly" id="" class="box filter-container-items" style="width:90% ;height: 37px;margin: 0;">
                                             <option value="" disabled selected hidden><?php echo $current   ?></option><br />
-                                            <option value="my">My Patients Only</option><br />
-                                            <option value="all">All Patients</option><br />
-
-
+                                            <option value="My">My Patients Only</option><br />
+                                            <option value="All">All Patients</option><br />
                                         </select>
                                     </td>
                                     <td width="12%">
                                         <input type="submit" name="filter" value=" Filter" class=" btn-primary-soft btn button-icon btn-filter" style="padding: 15px; margin :0;width:100%">
+                                    </td>
                                 </form>
+                            </table>
+                        </center>
                     </td>
-
                 </tr>
             </table>
-
-            </center>
-            </td>
-
-            </tr>
 
             <tr>
                 <td colspan="4">
                     <center>
                         <div class="abc scroll">
-                            <table width="93%" class="sub-table scrolldown" style="border-spacing:0;">
+                            <table width="93%" class="sub-table scrolldown" border="0">
                                 <thead>
                                     <tr>
                                         <th class="table-headin">
-
-
-                                            Name
-
-                                        </th>
+                                            Patient Name </th>
                                         <th class="table-headin">
 
-
-                                            Aadhar
-
-                                        </th>
-                                        <th class="table-headin">
-
-
-                                            Telephone
+                                            <?php echo $lang['apno'] ?>
 
                                         </th>
-                                        <th class="table-headin">
-                                            Email
-                                        </th>
+
                                         <th class="table-headin">
 
-                                            Date of Birth
+                                            <?php echo $lang['sessiontitle'] ?>
 
                                         </th>
+
                                         <th class="table-headin">
 
-                                            Events
+                                            <?php echo $lang['sdt'] ?>
+
+                                        </th>
+
+                                        <th class="table-headin">
+
+                                            <?php echo $lang['apd'] ?>
+
+                                        </th>
+
+                                        <th class="table-headin">
+
+                                            <?php echo $lang['drevents'] ?>
 
                                     </tr>
                                 </thead>
@@ -295,65 +291,64 @@
 
                                     <?php
 
-
                                     $result = $database->query($sqlmain);
-                                    //echo $sqlmain;
-                                    if ($result->num_rows == 0) {
-                                        echo '<tr>
-                                    <td colspan="4">
-                                    <br><br><br><br>
-                                    <center>
-                                    <img src="../img/notfound.svg" width="25%">
-                                    
-                                    <br>
-                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)">We  couldnt find anything related to your keywords !</p>
-                                    <a class="non-style-link" href="patient.php"><button  class="login-btn btn-primary-soft btn"  style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; Show all Patients &nbsp;</font></button>
-                                    </a>
-                                    </center>
-                                    <br><br><br><br>
-                                    </td>
-                                    </tr>';
-                                    } else {
+
+                                    if ($result->num_rows == 0) { ?>
+                                        <tr>
+                                            <td colspan="7">
+                                                <br><br><br><br>
+                                                <center>
+                                                    <img src="../img/notfound.svg" width="25%">
+                                                    <br>
+                                                    <p class="heading-main12" style="margin-left: 45px;font-size:20px;color:rgb(49, 49, 49)"><?php echo $lang['notconsdr'] ?></p>
+                                                    <a class="non-style-link" href="appointment.php"><button class="login-btn btn-primary-soft btn" style="display: flex;justify-content: center;align-items: center;margin-left:20px;">&nbsp; <?php echo $lang['Consnow'] ?> &nbsp;</font></button>
+                                                    </a>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    <?php  } else {
                                         for ($x = 0; $x < $result->num_rows; $x++) {
                                             $row = $result->fetch_assoc();
+                                            $appoid = $row["appoid"];
+                                            $scheduleid = $row["scheduleid"];
+                                            $title = $row["title"];
+                                            $docname = $row["docname"];
+                                            $scheduledate = $row["scheduledate"];
+                                            $scheduletime = $row["scheduletime"];
+                                            $scheduletimes = date("h:i A", strtotime($scheduletime));
+                                            $pname = $row["pname"];
+                                            $apponum = $row["apponum"];
+                                            $appodate = $row["appodate"];
                                             $pid = $row["pid"];
-                                            $name = $row["pname"];
-                                            $email = $row["pemail"];
-                                            $nic = $row["pnic"];
-                                            $dob = $row["pdob"];
-                                            $tel = $row["ptel"];
+                                            echo '<tr >
+                                        <td style="font-weight:600; text-align: center;"> &nbsp;' .
 
-                                            echo '<tr>
-                                        <td> &nbsp;' .
-                                                substr($name, 0, 35)
-                                                . '</td>
-                                        <td>
-                                        ' . substr($nic, 0, 12) . '
-                                        </td>
-                                        <td>
-                                            ' . substr($tel, 0, 10) . '
-                                        </td>
-                                        <td>
-                                        ' . substr($email, 0, 45) . '
-                                         </td>
-                                        <td>
-                                        ' . substr($dob, 0, 10) . '
-                                        </td>
-                                        <td >
-                                        <div style="display:flex;justify-content: center;">
+                                                substr($pname, 0, 25)
+                                                . '</td >
+                                        <td style="text-align:center;font-size:23px;font-weight:500; color: var(--btnnicetext);">
+                                        ' . $apponum . '
                                         
-                                        <a href="?action=view&id=' . $pid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">View</font></button></a>
-                                       
-                                        </div>
+                                        </td>
+                                        <td>
+                                        ' . substr($lang[$title], 0, 120) . '
+                                        </td>
+                                        <td style="text-align:center;;">
+                                            ' . substr($scheduledate, 0, 10) . ' @' . substr($scheduletimes, 0, 8) . '
+                                        </td>
+                                        
+                                        <td style="text-align:center;">
+                                            ' . $appodate . '
+                                        </td>
+
+                                        <td>
+                                        <div style="display:flex;justify-content: center;">
+                                       <a href="detailed-recent.php?view&pid=' . $pid . '&id=' . $appoid . '&appodate=' . $appodate . '&session=' . $title . '&apponum=' . $apponum . '&pname=' . $pname . '&scheduledate=' . $scheduledate . '&scheduletime=' . $scheduletime . '&scheduleid=' . $scheduleid . '" class="non-style-link"><button  class="btn-primary-soft btn button-icon btn-view"  style="padding-left: 40px;padding-top: 12px;padding-bottom: 12px;margin-top: 10px;"><font class="tn-in-text">' . $lang['view'] . '</font></button></a>
+                                       &nbsp;&nbsp;&nbsp;</div>
                                         </td>
                                     </tr>';
                                         }
-                                    }
-
-                                    ?>
-
+                                    } ?>
                                 </tbody>
-
                             </table>
                         </div>
                     </center>
