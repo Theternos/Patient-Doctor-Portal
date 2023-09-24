@@ -159,7 +159,6 @@
                             <?php
                             echo '<datalist id="patient">';
                             $list11 = $database->query("select  pname,pemail from patient;");
-
                             for ($y = 0; $y < $list11->num_rows; $y++) {
                                 $row00 = $list11->fetch_assoc();
                                 $d = $row00["pname"];

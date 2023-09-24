@@ -18,8 +18,9 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `peas`
+-- Database: `peas`    -    Patient Enagement and Service
 --
+CREATE DATABASE 'peas'    
 USE `peas`;
 
 -- --------------------------------------------------------

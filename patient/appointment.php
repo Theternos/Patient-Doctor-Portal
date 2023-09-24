@@ -387,6 +387,7 @@
                                             for ($x = 0; $x < ($result->num_rows); $x++) {
                                                 echo '<tr>';
                                                 for ($q = 0; $q < 2; $q++) {
+                                                    echo '<td>';
                                                     $row = $result->fetch_assoc();
                                                     if (!isset($row)) {
                                                         break;
@@ -411,7 +412,6 @@
                                                     if ($scheduleid == "") {
                                                         break;
                                                     }
-
                                                 ?>
                                                     <div class="dashboard-items search-items" style="padding-left: 20px;">
                                                         <div style="width:100%;">
@@ -500,6 +500,7 @@
 
                                                     </div>
                                         <?php
+                                                    echo '</td>';
                                                 }
                                                 echo "</tr>";
                                             }
@@ -718,6 +719,41 @@
         // Redirect to the new URL
         window.location.href = newURL;
     });
+</script>
+<script>
+    !(function() {
+        let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+        // Replace 1.x.x with the version that you want
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default({
+                    title: "Virtual Assistant",
+                    subtitle: "powered by SLEEK",
+
+                    initPayload: '/greet',
+                    customData: {
+                        language: "en",
+                    },
+                    socketUrl: "http://localhost:5005",
+                    profileAvatar: "../img/user.png",
+                    params: {
+                        images: {
+                            dims: {
+                                width: 200,
+                                height: 100,
+                            },
+                        },
+                        storage: "session",
+                    },
+                    // add other props here
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+    })();
 </script>
 
 </html>

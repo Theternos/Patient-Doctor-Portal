@@ -33,6 +33,26 @@
     />
   </head>
   <style>
+    @media (max-width: 480px) {
+        .chat-containerr {
+        position:fixed;
+        bottom: 5px;
+        right: 5px;
+        left: 7px;
+        height: 75px;
+        width: 35px; /* Adjust width as needed */
+        max-height: 9vh; /* Maximum height relative to viewport height */
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(203, 183, 183, 0.2);
+        display: none;
+        flex-direction: column;
+        transform: scaleY(0);
+        transform-origin: bottom;
+        transition: transform 0.5s ease-in-out;
+        will-change: transform;
+      }
+    }
     #chat-overlay {
       background: rgba(255, 255, 255, 0.1);
       position: absolute;
@@ -362,7 +382,12 @@
         transform: scale(0.6);
       }
     }
-
+    #fh5co-offcanvas{
+      z-index: 1;
+    }
+    .slides{
+      z-index: -2;
+    }
     /* Chat Input */
     .chat-input {
       align-items: center;

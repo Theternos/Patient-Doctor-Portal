@@ -255,6 +255,134 @@ if ($_GET) {
     button {
         border: 0px solid #ccc;
     }
+
+    /* Add custom styles here */
+
+    /* Background and text color palette */
+    body {
+        background-color: #f5f5f5;
+        /* Light gray background */
+        font-size: 16px;
+        color: #333;
+        /* Dark text color */
+    }
+
+    .navbar-fixed nav {
+        background-color: #ffffff;
+        /* White navbar background */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-fixed .search-wrapper input[type="search"] {
+        background-color: #f0f0f0;
+        /* Light gray search input background */
+        color: #555;
+        /* Gray text color for search input */
+    }
+
+    /* Folder cards */
+    .card-panel.folder {
+        background-color: #ffffff;
+        /* White card background */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .card-panel.folder:hover {
+        transform: scale(1.05);
+        /* Slightly grow on hover */
+    }
+
+    .subheader {
+        color: #666;
+        /* Gray subheader text color */
+        font-weight: 500;
+    }
+
+    /* Icon colors */
+    .material-icons {
+        color: #4285f4;
+        /* Google blue for icons */
+    }
+
+
+    /* Add animations to folder icons */
+    .card-panel.folder i.material-icons {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card-panel.folder:hover i.material-icons {
+        transform: rotate(360deg);
+    }
+
+    /* Custom styles for a sleek and colorful UI */
+
+    /* Background and text color palette */
+    body {
+        background-color: #f8f8f8;
+        /* Light gray background */
+        font-size: 16px;
+        color: #333;
+        /* Dark text color */
+    }
+
+    .navbar-fixed nav {
+        background-color: #2196F3;
+        /* Material blue for navbar background */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-fixed .search-wrapper input[type="search"] {
+        background-color: #ffffff;
+        /* White search input background */
+        color: #333;
+        /* Dark text color for search input */
+    }
+
+    /* Folder cards */
+    .card-panel.folder {
+        background-color: #ffffff;
+        /* White card background */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease-in-out;
+        cursor: pointer;
+    }
+
+    .card-panel.folder:hover {
+        transform: translateY(-5px);
+        /* Slight vertical lift on hover */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        /* Enhanced shadow on hover */
+    }
+
+    .subheader {
+        color: #666;
+        /* Gray subheader text color */
+        font-weight: 500;
+    }
+
+    /* Icon colors */
+    .material-icons {
+        color: #FF5722;
+        /* Deep orange for icons */
+    }
+
+    /* Button styles */
+    button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    /* Add animations to folder icons */
+    .card-panel.folder i.material-icons {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .card-panel.folder:hover i.material-icons {
+        transform: rotate(20deg);
+    }
 </style>
 
 <body>

@@ -125,7 +125,6 @@
             </table>
         </div>
         <?php
-
         $selecttype = "My";
         $current = "My patients Only";
         if ($_POST) {

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>
+    const apiKey = ''; // The Razor API key must me included here
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -798,7 +801,6 @@
                 }
                 const payButton = document.getElementById('payButton');
 
-                const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
 
                 document.getElementById('payButton').addEventListener('click', () => {
                     const options = {
@@ -847,8 +849,6 @@
             }
             const payButton = document.getElementById('payButton');
 
-            const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
-
             document.getElementById('payButton').addEventListener('click', () => {
                 const options = {
                     key: apiKey,
@@ -885,5 +885,38 @@
         </script>
 </body>
 
+<script>
+    !(function() {
+        let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default({
+                    title: "Virtual Assistant",
+                    subtitle: "powered by SLEEK",
+
+                    initPayload: '/greet',
+                    customData: {
+                        language: "en",
+                    },
+                    socketUrl: "http://localhost:5005",
+                    profileAvatar: "../img/user.png",
+                    params: {
+                        images: {
+                            dims: {
+                                width: 200,
+                                height: 100,
+                            },
+                        },
+                        storage: "session",
+                    },
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+    })();
+</script>
 
 </html>

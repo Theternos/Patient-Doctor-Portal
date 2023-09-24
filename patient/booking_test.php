@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<script>
+    const apiKey = ''; // The Razor API key must me included here
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -560,14 +563,12 @@
         }
         const payButton = document.getElementById('payButton');
 
-        const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
-
         document.getElementById('payButton').addEventListener('click', () => {
             const options = {
                 key: apiKey,
                 amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
                 currency: 'INR',
-                name: 'TEAM SLEEK - PEaS',
+                name: 'TEAM SLEEK - PEaS', // Customize as per your need
                 description: 'Payment for Services',
                 handler: response => {
                     handlePaymentResponse(response);
@@ -609,14 +610,12 @@
     }
     const payButton = document.getElementById('payButton');
 
-    const apiKey = 'rzp_test_FwDdTAoRqmPj0o';
-
     document.getElementById('payButton').addEventListener('click', () => {
         const options = {
             key: apiKey,
-            amount: calculateDynamicAmount(), // Amount in paise (e.g., ₹100 = 10000 paise)
+            amount: calculateDynamicAmount(),
             currency: 'INR',
-            name: 'TEAM SLEEK - PEaS',
+            name: 'TEAM SLEEK - PEaS', // Cutomize as per yout Need
             description: 'Payment for Services',
             handler: response => {
                 handlePaymentResponse(response);
@@ -628,7 +627,7 @@
     });
 
     function calculateDynamicAmount() {
-        return (newPayableAmount * 100);
+        return (newPayableAmount * 100); // Amount in paise (e.g., ₹100 = 10000 paise)
     }
 
     function handlePaymentResponse(response) {
@@ -644,6 +643,41 @@
             console.log('Payment failed! Reason: ' + response.error.description);
         }
     }
+</script>
+<script>
+    !(function() {
+        let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+        // Replace 1.x.x with the version that you want
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default({
+                    title: "Virtual Assistant",
+                    subtitle: "powered by SLEEK",
+
+                    initPayload: '/greet',
+                    customData: {
+                        language: "en",
+                    },
+                    socketUrl: "http://localhost:5005",
+                    profileAvatar: "../img/user.png",
+                    params: {
+                        images: {
+                            dims: {
+                                width: 200,
+                                height: 100,
+                            },
+                        },
+                        storage: "session",
+                    },
+                    // add other props here
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+    })();
 </script>
 
 </html>

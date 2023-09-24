@@ -1,8 +1,7 @@
 twilio
-mysql.connector
-smtplib
-sys
+mysql-connector-python
+secure-smtplib
 uuid
 json
-medisearch_client
+medisearch-client
 requests

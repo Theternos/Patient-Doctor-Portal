@@ -16,27 +16,59 @@ nlu:
     - yes
     - s
     - ok
-- intent: deny
+- intent: deny1
   examples: |
-    - no
+    - deny1
     - never
     - n
-- intent: day
+- intent: deny2
   examples: |
-    - less than 24 hours
-    - more than 24 hours
-    - less
-    - more
-    - l
-    - m
-
+    - deny2
+    - never
+    - n
+- intent: deny3
+  examples: |
+    - deny3
+    - never
+    - n
+- intent: deny4
+  examples: |
+    - deny4
+    - never
+    - n
+- intent: deny5
+  examples: |
+    - deny5
+    - never
+    - n
+- intent: deny6
+  examples: |
+    - deny6
+    - never
+    - n
+- intent: deny7
+  examples: |
+    - deny7
+    - never
+    - n
+- intent: deny8
+  examples: |
+    - deny8
+    - never
+    - n
 - intent: stomach_symptom
   examples: |
     - stomachache
-    -stomachpain
+    - stomachpain
     - pain in stomach
     - stomach ache
     - stomach
+    - i have stomach pain
+    - i have mild stomach ache
+    - stomach pain for past 2 days
+    - stomachache
+    - upper stomach pain 
+    - stomachpain for 2days
 - intent: bot_challenge
   examples: |
     - are you a bot?
@@ -86,4 +118,91 @@ nlu:
     - earpain
     - ear pain
     - ear
-
+- intent: bookstmch
+  examples: |
+    - bookstmch
+    - books
+    - bookstmch
+- intent: bookheart
+  examples: |
+    - bookheart
+    - booksh
+    - bookshea
+- intent: bookrash
+  examples: |
+    - bookrash
+    - bookrs
+    - booksrashes
+- intent: bookfever
+  examples: |
+    - bookfever
+    - bookfev
+    - bookviral
+- intent: bookcold
+  examples: |
+    - bookcold
+    - bookcolder
+    - bookhighcold
+- intent: bookdiarr
+  examples: |
+    - bookdiarr
+    - bookdiarrs
+    - bookdiarre
+- intent: bookthroat
+  examples: |
+    - bookthroat
+    - bookthro
+    - booksthr
+- intent: bookear
+  examples: |
+    - bookear
+    - bookears
+    - booksearg
+- intent: day1
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day1
+- intent: day2
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day2
+- intent: day3
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day3
+- intent: day4
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day4
+- intent: day5
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day5
+- intent: day6
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day6
+- intent: day7
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day7
+- intent: day8
+  examples: |
+    - less than 24 hours
+    - more than 24 hours
+    - less
+    - day8

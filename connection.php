@@ -1,7 +1,13 @@
 <?php
 
-//$database = new mysqli("sql12.freesqldatabase.com", "sql12647197", "iyz1Fh63tI", "sql12647197");
-$database = new mysqli("localhost", "root", "", "peas");
+# Change the below details according to your Backend Needs
+$host = '';
+$user = '';
+$password = '';
+$database_name = '';
+
+
+$database = new mysqli($host, $user, $password, $database_name);
 
 if ($database->connect_error) {
     die("Connection failed:  " . $database->connect_error);

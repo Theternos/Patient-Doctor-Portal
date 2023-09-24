@@ -8,26 +8,23 @@ import random
 
 try:
     connection = mysql.connector.connect(
-        host='localhost',
-        database='peas',
-        user='root',
-        password=''
+        host='',    #Your Host
+        database='',    #your Database Name
+        user='',        #MYSQL Username
+        password=''         #MYSQL Password
     )
-# try:
-#     connection = mysql.connector.connect(
-#         host='sql12.freesqldatabase.com',
-#         database='sql12647197',
-#         user='sql12647197',
-#         password='iyz1Fh63tI'
-#     )
+
 except Error as e:
     print("Error:", e)
-#pari ACC
-account_sid = 'AC503de9905cc284b03793cf56f09cb10e'
-auth_token = '054f5f0061d9ab57dca4996deac6de58'
+    
+# Twilio Account Setup
+account_sid = ''    #  Your twilo Authentication ID 
+auth_token = ''        #  Your twilo Authentication Token
+twilio_number = ''      #Your twilio Provided phone number
 client = Client(account_sid, auth_token)
 
-#####Remainder for doctors before 2 hours with slots booked so far  
+
+# Remainder for doctors before 2 hours with slots booked so far  
 
 while(1):
     if connection.is_connected():
@@ -46,13 +43,12 @@ while(1):
             current_time = datetime.now()
 
             t = current_time.strftime("%H:%M:%S")
-            t = "19:03:00"            #to be removed while at live
             import datetime
             time_delta = datetime.datetime.strptime(
                 t, "%H:%M:%S") - datetime.datetime(1900, 1, 1)
             print("Current_time:", time_delta, type(time_delta))
             if (mail_time <= time_delta):
-                print("hola")
+                print("inside if")
                 row_count = "select COUNT(*) from appointment inner join patient on patient.pid=appointment.pid inner join schedule on schedule.scheduleid=appointment.scheduleid;"
                 cursor.execute(row_count)
                 seatbooked = cursor.fetchone()[0]
@@ -68,7 +64,7 @@ while(1):
                         doc_email = doc[1]
                         print(doc_tel, doc_email)
                         message = client.messages.create(
-                            from_='+15178360795',
+                            from_=twilio_number,
                             body='A gentle remainder for the upcoming schecdule on %s and %s seats booked of %s so far.' % (
                                 scheduletime, seatbooked, totalbooked),
                             to='+91' + doc_tel
@@ -100,7 +96,7 @@ Ph: 04295-226122, 226123
 
 
 
-    ##### Generating Room ID for video consultancy
+    # Generating Room ID for video consultancy
 
 
     import datetime
@@ -113,6 +109,7 @@ Ph: 04295-226122, 226123
         current_time = datetime.datetime.now()  # Use datetime.datetime.now()
         fetched_time = row[1]
         patient_tel = row[2]
+        patient_number = '8072677947'
         doc_name = row[3]
         apponum = row[4]
         mode = row[5]
@@ -123,7 +120,6 @@ Ph: 04295-226122, 226123
             message_time = fetched_time - datetime.timedelta(hours=2, minutes=0)
         current_time = datetime.datetime.now()
         t = current_time.strftime("%H:%M:%S")
-        t = "15:35:00"  # to be removed while at live
         time_delta = datetime.datetime.strptime(t, "%H:%M:%S") - datetime.datetime(1900, 1, 1)
 
         if (message_time <= time_delta):
@@ -132,7 +128,7 @@ Ph: 04295-226122, 226123
             update_sql = "UPDATE appointment SET roomid = %s where appoid = %s" % (roomid, appoid)
             cursor.execute(update_sql)
             message = client.messages.create(
-                from_='+15178360795',
+                from_=twilio_number,
                 body = "Don't miss the video consultancy with Dr. %s scheduled at %s. The meeting link for your session is %s. NOTE : Kindly join the session before 5minutes of scheduled time." % (doc_name,meeting_time, link),
                 to='+91' + patient_tel
             )
@@ -141,7 +137,7 @@ Ph: 04295-226122, 226123
             
             
             
-    ####### Blood Donation SMS alert!
+    # Blood Donation SMS alert!
     cursor = connection.cursor()
     patient_number = "SELECT ptel, bgrid, patient.blood_group, patient.pname, unit from patient INNER JOIN blood_group_request on blood_group_request.blood_group = patient.blood_group where flag = 0;"
     cursor.execute(patient_number)
@@ -153,7 +149,6 @@ Ph: 04295-226122, 226123
         blood_group = row[2]
         pname = row[3]
         unit = row[4]
-        number = '8072677947'    #This line need to be removed while Twillio uses live account
         body = '''
 Urgent: Blood Needed
 
@@ -172,7 +167,7 @@ Best Regards,
 PEaS
         ''' % (pname, blood_group, unit)
         message = client.messages.create(
-            from_='+15178360795',
+            from_=twilio_number,
             body = body,
             to='+91' + number
             )
@@ -182,7 +177,7 @@ PEaS
         print("mesaged")
 
 
-    ###### Feedback form link
+    # Feedback form link
     cursor = connection.cursor()
     review = "SELECT doc_review.docid, doc_review.pid, patient.pname, patient.ptel, drid FROM doc_review INNER JOIN patient ON patient.pid = doc_review.pid  WHERE seen_status = 1 and feedback_flag = 0"
     cursor.execute(review)
@@ -192,8 +187,7 @@ PEaS
         pname = row[2]
         # number = row[3] 
         drid = row[4]
-        number = '8072677947'  #remove this line in implementing
-        fblink = 'http://10.10.237.155:91/fbform/index.php?id=' + str(pid) + '&drid=' + str(drid)
+        fblink = 'http://10.10.179.213/technoverse/fbform/index.php?id=' + str(pid) + '&drid=' + str(drid)          # The Directory link need to be customized
         body_content = '''Dear %s,
 
 We hope you're feeling better after your recent visit. Please share your feedback to help us improve by clicking this link: %s.
@@ -203,7 +197,7 @@ Your insights are valuable to us. Thank you for choosing us for your healthcare 
 Best regards,
     Team Sleek''' % (pname, fblink)
         message = client.messages.create(
-            from_= '+15178360795',
+            from_= twilio_number,
             body= body_content,
             to='+91%s' % (number)
         )
@@ -212,7 +206,7 @@ Best regards,
         cursor.execute(flag_update)
         
         
-    ###### Re-booking appointment sms
+    # Re-booking appointment sms
 
 
     import datetime
@@ -227,10 +221,8 @@ Best regards,
         repid = row[0]
         pid = row[1]
         docid = row[2]
-        # number = row[18]
-        number = '8072677947'   #remove this line in implementing
+        number = row[18]
         pname = row[13]  
-        # ...
         visit_date_raw = row[11]
         next_appointment = row[8]
         sms_days = next_appointment - 1    
@@ -255,7 +247,7 @@ Best regards,
         # Rest of your code...
 
         # Rest of your code...
-            fblink = 'http://10.10.237.155:91/patient/rebooking.php?pid=' + str(pid) + '&docid=' + str(docid)
+            fblink = 'http://10.10.179.213/technoverse/patient/rebooking.php?pid=' + str(pid) + '&docid=' + str(docid)          # The Directory link need to be customized
             body_content = '''Dear %s,
 
 Your doctor has recommended scheduling your next appointment for your continued care. To book your appointment, please click on the following link: %s
@@ -265,7 +257,7 @@ We're here to ensure your health and well-being. Feel free to reach out if you h
 Best regards,
     Team Sleek''' % (pname, fblink)
             message = client.messages.create(
-                from_= '+15178360795',
+                from_= twilio_number,
                 body= body_content,
                 to='+91%s' % (number)
             )

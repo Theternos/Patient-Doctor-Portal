@@ -266,7 +266,7 @@
                                         . '</td >
 
                                 <td style="font-weight:600;text-align:center;">
-                                ' . substr($tname, 0, 15) . '
+                                ' . substr($lang[$tname], 0, 100) . '
                                 </td>
                                 <td style="text-align:center;">
                                     ' . substr($booked_time, 0, 10) . '
@@ -321,6 +321,41 @@
         // Redirect to the new URL
         window.location.href = newURL;
     });
+</script>
+<script>
+    !(function() {
+        let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+        // Replace 1.x.x with the version that you want
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default({
+                    title: "Virtual Assistant",
+                    subtitle: "powered by SLEEK",
+
+                    initPayload: '/greet',
+                    customData: {
+                        language: "en",
+                    },
+                    socketUrl: "http://localhost:5005",
+                    profileAvatar: "../img/user.png",
+                    params: {
+                        images: {
+                            dims: {
+                                width: 200,
+                                height: 100,
+                            },
+                        },
+                        storage: "session",
+                    },
+                    // add other props here
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+    })();
 </script>
 
 </html>

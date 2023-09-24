@@ -451,6 +451,10 @@
             </div>
             </div>
             ';
+        } elseif ($_GET['remove_review'] == 'true') {
+            $pid = $_GET["pid"];
+            $appoid = $_GET["appoid"];
+            $result = $database->query("DELETE from doc_review WHERE appoid = $appoid and pid = $pid and docid = $userid and seen_status = 0");
         } elseif ($action == 'consulting') {
             $pid = $_GET["pid"];
             $scheduleid = $_GET["scheduleid"];
@@ -468,7 +472,10 @@
             $reason = $row['reason'];
             $appoid = $row['appoid'];
             $uid = $row['uid'];
-
+            $result1 = $database->query("SELECT drid FROM doc_review WHERE docid = '$userid' and pid = '$pid' and appoid = '$appoid' and seen_status = '0'");
+            if ($result1 === null || $result1->num_rows === 0) {
+                $database->query("INSERT INTO doc_review (docid, pid, appoid, rating) VALUES ('$userid', '$pid', '$appoid', '0')");
+            }
 
 
 
@@ -476,7 +483,7 @@
             <div id="popup1" class="overlay">
                 <div class="popup">
                     <center>
-                        <a class="close" href="appointment.php">&times;</a>
+                        <a class="close" href="appointment.php?remove_review=true&appoid=<?php echo $appoid ?>&pid=<?php echo $pid ?>">&times;</a>
                         <div style="display: flex;justify-content: center;">
                             <table width="80%" class="sub-table scrolldown add-doc-form-container" border="0">
                                 <form action="file-upload.php" id="uploadForm" method="post" enctype="multipart/form-data">

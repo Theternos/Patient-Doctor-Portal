@@ -4,7 +4,7 @@ import sys
 from medisearch_client import MediSearchClient
 
 # Set your API key here
-api_key = "85c92678-0fac-4f60-b02c-9400ca591b9e"
+api_key = ""    # Your MediSearch API
 client = MediSearchClient(api_key=api_key)
 
 def search(query):

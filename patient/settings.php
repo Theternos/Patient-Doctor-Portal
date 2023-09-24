@@ -594,7 +594,7 @@
         $action = $_GET["action"];
         if ($action == 'share') {
             $pid = $_GET["id"];
-            $link = "http://localhost/technoverse/view/docvault.php?pid=" . $pid;
+            $link = "http://10.10.179.213/technoverse/view/docvault.php?pid=" . $pid;
     ?>
             <div id="popup1" class="overlay">
                 <div class="popup" style="margin-top: 40vh;">
@@ -1247,6 +1247,41 @@
             document.getElementById('copyText').textContent = 'Copy link';
         }, 1000);
     });
+</script>
+<script>
+    !(function() {
+        let e = document.createElement("script"),
+            t = document.head || document.getElementsByTagName("head")[0];
+        (e.src = "https://cdn.jsdelivr.net/npm/rasa-webchat/lib/index.js"),
+        // Replace 1.x.x with the version that you want
+        (e.async = !0),
+        (e.onload = () => {
+            window.WebChat.default({
+                    title: "Virtual Assistant",
+                    subtitle: "powered by SLEEK",
+
+                    initPayload: '/greet',
+                    customData: {
+                        language: "en",
+                    },
+                    socketUrl: "http://localhost:5005",
+                    profileAvatar: "../img/user.png",
+                    params: {
+                        images: {
+                            dims: {
+                                width: 200,
+                                height: 100,
+                            },
+                        },
+                        storage: "session",
+                    },
+                    // add other props here
+                },
+                null
+            );
+        }),
+        t.insertBefore(e, t.firstChild);
+    })();
 </script>
 
 </html>

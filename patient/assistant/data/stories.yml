@@ -14,12 +14,12 @@ stories:
 - story: stomach ache 
   steps: 
     - intent: stomach_symptom
-    - action: utter_day
-    - intent: day
+    - action: utter_day1
+    - intent: day1
     - action: utter_stomach_types
-    - intent: deny
+    - intent: deny1
     - action: utter_poison_response_stomach
-    - intent: book
+    - intent: bookstmch
     - action: utter_link1
 
 
@@ -27,82 +27,82 @@ stories:
   steps:
     - intent: heart_burn_symptom
     - action: utter_heart_burn_symptom
-    - intent: deny
+    - intent: deny2
     - action: utter_heart_burn_remedies
-    - action: utter_day
-    - intent: day
+    - action: utter_day2
+    - intent: day2
     - action: utter_poison_response_heart
-    - intent: book
+    - intent: bookheart
     - action: utter_link2
 
 - story: rash
   steps:
     - intent: rash_symptom
-    - action: utter_day
-    - intent: day
+    - action: utter_day3
+    - intent: day3
     - action: utter_rash_symptom
-    - intent: deny
-    - action: utter_poison_response
-    - intent: book
+    - intent: deny3
+    - action: utter_poison_response_rash
+    - intent: bookrash
     - action: utter_link3
 
 - story: fever
   steps:
     - intent: fever_symptom
-    - action: utter_day
-    - intent: day
+    - action: utter_day4
+    - intent: day4
     - action: utter_fever_symptom
-    - intent: deny
+    - intent: deny4
     - action: utter_poison_response_fever
-    - intent: book
+    - intent: bookfever
     - action: utter_link4
 
 - story: cold
   steps:
     - intent: cold_symptom
     - action: utter_cold_symptom
-    - intent: deny
+    - intent: deny5
     - action: utter_cold_remedies
-    - action: utter_day
-    - intent: day
+    - action: utter_day5
+    - intent: day5
     - action: utter_poison_response_cold
-    - intent: book
+    - intent: bookcold
     - action: utter_link5
 
 - story: Diarrhea
   steps:
     - intent: Diarrhea_symptom
     - action: utter_Diarrhea_symptom
-    - intent: deny
+    - intent: deny6
     - action: utter_Diarrhea_remedies
-    - action: utter_day
-    - intent: day
+    - action: utter_day6
+    - intent: day6
     - action: utter_poison_response_Diarrhea
-    - intent: book
+    - intent: bookdiarr
     - action: utter_link6
 
 - story: sorethroat
   steps:
     - intent: sorethroat_symptom
     - action: utter_sorethroat_symptom
-    - intent: deny
+    - intent: deny7
     - action: utter_sorethroat_remedies
-    - action: utter_day
-    - intent: day
+    - action: utter_day7
+    - intent: day7
     - action: utter_poison_response_sorethroat
-    - intent: book
+    - intent: bookthroat
     - action: utter_link7
 
 - story: earpain
   steps:
     - intent: earpain_symptom
     - action: utter_earpain_symptom
-    - intent: deny
+    - intent: deny8
     - action: utter_earpain_remedies
-    - action: utter_day
-    - intent: day
+    - action: utter_day8
+    - intent: day8
     - action: utter_poison_response_earpainn
-    - intent: book
+    - intent: bookear
     - action: utter_link8
 
 
