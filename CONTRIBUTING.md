@@ -38,6 +38,6 @@ If you encounter bugs or have suggestions for improvements, please [create an is
 
 ## License
 
-By contributing to this project, you agree that your contributions will be licensed under the [LICENSE](LICENSE) file of this project.
+By contributing to this project, you agree that your contributions will be licensed under the [LICENSE](LICENSE.md) file of this project.
 
 Thank you for contributing to Patient-Doctor-Portal!
