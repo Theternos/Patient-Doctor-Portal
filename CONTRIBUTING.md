@@ -6,7 +6,7 @@ Thank you for your interest in contributing to Patient-Doctor-Portal! We welcome
 
 - If you're new to open source, you can start by looking at the [issues labeled as "good first issue"](https://github.com/Theternos/Patient-Doctor-Portal/labels/good%20first%20issue). These are issues that are suitable for beginners.
 - If you have questions or need help, please don't hesitate to reach out by [creating an issue](https://github.com/Theternos/Patient-Doctor-Portal/issues/new).
-- Before contributing, please read and adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+- Before contributing, please read and adhere to our [Code of Conduct](https://github.com/Theternos/Patient-Doctor-Portal/blob/main/CODE_OF_CONDUCT.md).
 
 ## How to Contribute
 
@@ -37,7 +37,6 @@ We follow a specific code style in this project. Please ensure your code adheres
 If you encounter bugs or have suggestions for improvements, please [create an issue](https://github.com/Theternos/Patient-Doctor-Portal/issues/new). Include as much detail as possible to help us understand and address the problem.
 
 ## License
-
-By contributing to this project, you agree that your contributions will be licensed under the [LICENSE](LICENSE.md) file of this project.
+By contributing to this project, you agree that your contributions will be licensed under the [LICENSE](https://github.com/Theternos/Patient-Doctor-Portal/blob/main/LICENCE.MD) file of this project.
 
 Thank you for contributing to Patient-Doctor-Portal!
