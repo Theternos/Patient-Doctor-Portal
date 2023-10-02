@@ -20,7 +20,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `peas`    -    Patient Enagement and Service
 --
-CREATE DATABASE 'peas'    
+CREATE DATABASE `peas`;    
 USE `peas`;
 
 -- --------------------------------------------------------
