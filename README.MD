@@ -26,57 +26,57 @@ Before you start using the system, you need to perform some setup steps:
 
 ## 🌟 Features
 
-### 1. Patient Portal 👩‍⚕️📆
+### 1. Patient Portal 👩‍⚕️
 
-- Book hospital and video consultations 🏨📹.
-- Add multiple medical tests to the cart 💼🧪.
-- Supports multiple languages: English, Tamil, Kannada, Telugu, Malayalam, and Hindi 🌐🗣️.
-- Track payments with an internal wallet 💰.
-- View upcoming appointments and access previous consultancy reports and prescriptions 📆📋.
-- Register for organ donation with a cancellation option 🫀❤️.
-- Share reports and prescriptions seamlessly with a link 🔗.
-- Receive SMS and email confirmations on successful bookings, as well as SMS reminders 📲📧.
-- Includes a chatbot with basic symptom and precaution information 🤖.
+- Book hospital and video consultations .
+- Add multiple medical tests to the cart.
+- Supports multiple languages: English, Tamil, Kannada, Telugu, Malayalam, and Hindi.
+- Track payments with an internal wallet.
+- View upcoming appointments and access previous consultancy reports and prescriptions.
+- Register for organ donation with a cancellation option.
+- Share reports and prescriptions seamlessly with a link.
+- Receive SMS and email confirmations on successful bookings, as well as SMS reminders.
+- Includes a chatbot with basic symptom and precaution information.
 
-### 2. Doctor Portal 👨‍⚕️📅
+### 2. Doctor Portal 👨‍⚕️
 
-- Schedule sessions with a specified number of slots 📅⏰.
-- View the number of registered patients 👥.
-- Upload patient prescriptions and reports 📄💊.
-- Access patient health records 📂🩺.
-- Receive SMS and email notifications regarding the number of patients booked for a session two hours before the session 📲📧.
+- Schedule sessions with a specified number of slots.
+- View the number of registered patients.
+- Upload patient prescriptions and reports .
+- Access patient health records.
+- Receive SMS and email notifications regarding the number of patients booked for a session two hours before the session.
 
-### 3. Reception Portal 🧾🏥
+### 3. Reception Portal 🧾
 
-- Access all patient details 👀📋.
-- Upload basic metrics to patient data upon their arrival at the hospital 📈🏥.
-- Send SMS notifications to patients with required blood groups in a single click 🩸📲.
-- View patients registered for organ donation 🫀📋.
+- Access all patient details.
+- Upload basic metrics to patient data upon their arrival at the hospital .
+- Send SMS notifications to patients with required blood groups in a single click.
+- View patients registered for organ donation.
 
-### 4. Medical Lab Technician Portal 🧪👨‍🔬
+### 4. Medical Lab Technician Portal 🧪
 
-- View patients registered for the day 📅📋.
-- Upload patient reports 📄🩺.
-- View reports uploaded by patients 📂👀.
+- View patients registered for the day .
+- Upload patient reports.
+- View reports uploaded by patients.
 
-### 5. Pharmacy Portal 💊💼
+### 5. Pharmacy Portal 💊
 
-- View prescriptions uploaded by doctors and bill the prescribed medicines 💰💊.
-- Search and view all available medicines with their prices 🔍💰.
+- View prescriptions uploaded by doctors and bill the prescribed medicines.
+- Search and view all available medicines with their prices.
 
-### 6. Admin Portal 🛡️👩‍💼
+### 6. Admin Portal 🛡️
 
-- Features a dashboard with monetized information from all portals 📊📈.
-- View and edit patient, doctor, and lab assistant records 📂✏️.
-- Access total payment details with graphical representation 📊💰.
-- See the top 3 rated doctors and the 3 most booked specialties for the past 5 days 🌟📅.
-- Approve emergency leave for doctors 🚑📆.
-- Schedule sessions for doctors 📅⏰.
-- Search and view feedback provided by patients 📝🔎.
+- Features a dashboard with monetized information from all portals.
+- View and edit patient, doctor, and lab assistant records.
+- Access total payment details with graphical representation.
+- See the top 3 rated doctors and the 3 most booked specialties for the past 5 days.
+- Approve emergency leave for doctors.
+- Schedule sessions for doctors.
+- Search and view feedback provided by patients.
 
-### Dynamic Feedback System 🌟📝
+### Dynamic Feedback System 🌟
 
-After a doctor's visit, patients can rate their experience out of 5 stars ⭐⭐⭐⭐⭐. Upon submitting their ratings, a dynamic feedback form is sent to the patient's registered mobile number 📲📝.
+After a doctor's visit, patients can rate their experience out of 5 stars ⭐⭐⭐⭐⭐. Upon submitting their ratings, a dynamic feedback form is sent to the patient's registered mobile number.
 
 ## Conclusion 🎉
 
