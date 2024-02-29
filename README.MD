@@ -78,6 +78,6 @@ Before you start using the system, you need to perform some setup steps:
 
 After a doctor's visit, patients can rate their experience out of 5 stars ⭐⭐⭐⭐⭐. Upon submitting their ratings, a dynamic feedback form is sent to the patient's registered mobile number.
 
-## Conclusion 🎉
+## Conclusion
 
 This Hospital Management System offers a comprehensive solution for patient appointment booking and hospital administration. It streamlines the process for patients, doctors, receptionists, medical lab technicians, pharmacists, and administrators. Customize the configuration, follow the installation steps, and enjoy the efficient management of hospital resources and patient care. 🏥👩‍⚕️💼
