@@ -1,4 +1,4 @@
-# 🏥 Appointment Booking for Patients with Hospital Management 📅
+# 🏥 Appointment Booking for Patients with Hospital Management
 
 Welcome to the **Appointment Booking for Patients with Hospital Management** project! This comprehensive system allows patients to book hospital consultations, video consultations, and medical tests. It includes multiple features for patients, doctors, receptionists, medical lab technicians, pharmacists, and administrators. The stack used in this project includes HTML, CSS, JavaScript, MySQL, PHP, Python, SCSS, jQuery, and the Rasa Framework.
 
